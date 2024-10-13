@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Repositories;
+using SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
 using SeahawkSaverBackend.Persistence.Repositories;
+using SeahawkSaverBackend.Persistence.Transactions;
 
 /**
  * <summary>
@@ -39,6 +41,7 @@ public static class ServiceRegistration
 
 		services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 		services.AddScoped(typeof(IReadOnlyRepository<>), typeof(ReadOnlyRepository<>));
+		services.AddScoped<IQueryTransaction, QueryTransaction>();
 
 		return services;
 	}
