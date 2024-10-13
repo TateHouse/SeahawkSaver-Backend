@@ -5,8 +5,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Repositories;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
+using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
 using SeahawkSaverBackend.Persistence.Repositories;
 using SeahawkSaverBackend.Persistence.Transactions;
+using SeahawkSaverBackend.Persistence.Utilities;
 
 /**
  * <summary>
@@ -36,7 +38,7 @@ public static class ServiceRegistration
 
 		services.AddDbContext<DatabaseContext>(optionsAction =>
 		{
-			ServiceRegistration.ConfigureDatabaseContext(optionsAction, databaseSettings);
+			ServiceRegistration.ConfigureDatabaseContext(services, optionsAction, databaseSettings);
 		});
 
 		services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
@@ -49,13 +51,15 @@ public static class ServiceRegistration
 
 	/**
 	 * <summary>
-	 * Configures the application's Entity Framework Core <see cref="DatabaseContext"/>.
+	 * Configures the application's Entity Framework Core <see cref="DatabaseContext"/> and database seeder.
 	 * </summary>
+	 * <param name="services">The service collection.</param>
 	 * <param name="optionsBuilder">The <see cref="DbContextOptionsBuilder"/>.</param>
 	 * <param name="databaseSettings">The database settings.</param>
 	 * <exception cref="NotSupportedException">Thrown if the database provider is not supported.</exception>
 	 */
-	private static void ConfigureDatabaseContext(DbContextOptionsBuilder optionsBuilder,
+	private static void ConfigureDatabaseContext(IServiceCollection services,
+												 DbContextOptionsBuilder optionsBuilder,
 												 DatabaseSettings databaseSettings)
 	{
 		switch (databaseSettings.Provider)
@@ -66,6 +70,8 @@ public static class ServiceRegistration
 				{
 					warningsConfigurationBuilderAction.Ignore(InMemoryEventId.TransactionIgnoredWarning);
 				});
+
+				services.AddScoped<IDatabaseSeeder, InMemoryDatabaseSeeder>();
 
 				break;
 
