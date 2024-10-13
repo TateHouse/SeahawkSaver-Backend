@@ -26,4 +26,10 @@
       <ProjectReference Include="..\..\..\Source\API\SeahawkSaverBackend.API\SeahawkSaverBackend.API.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="AppSettings.IntegrationTest.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
