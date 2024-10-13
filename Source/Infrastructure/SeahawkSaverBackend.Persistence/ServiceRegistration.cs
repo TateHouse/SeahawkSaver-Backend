@@ -29,17 +29,25 @@ public static class ServiceRegistration
 	public static IServiceCollection RegisterPersistenceServices(this IServiceCollection services,
 																 IConfiguration configuration)
 	{
-		var databaseSettings = configuration.GetSection("Database").Get<DatabaseSettings>();
-
-		if (databaseSettings == null)
-		{
-			throw new InvalidOperationException("At least one fo the provided database settings was invalid.");
-		}
+		var databaseSettings = new DatabaseSettings(configuration);
+		services.AddScoped<DatabaseSettings>();
 
 		services.AddDbContext<DatabaseContext>(optionsAction =>
 		{
-			ServiceRegistration.ConfigureDatabaseContext(services, optionsAction, databaseSettings);
+			ServiceRegistration.ConfigureDatabaseContext(optionsAction, databaseSettings);
 		});
+
+		switch (databaseSettings.Provider)
+		{
+			case "InMemory":
+				services.AddScoped<IDatabaseDataset, InMemoryDatabaseDataset>();
+				services.AddScoped<IDatabaseSeeder, InMemoryDatabaseSeeder>();
+
+				break;
+
+			default:
+				throw new NotSupportedException($"Unsupported database provider: {databaseSettings.Provider}");
+		}
 
 		services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 		services.AddScoped(typeof(IReadOnlyRepository<>), typeof(ReadOnlyRepository<>));
@@ -53,13 +61,11 @@ public static class ServiceRegistration
 	 * <summary>
 	 * Configures the application's Entity Framework Core <see cref="DatabaseContext"/> and database seeder.
 	 * </summary>
-	 * <param name="services">The service collection.</param>
 	 * <param name="optionsBuilder">The <see cref="DbContextOptionsBuilder"/>.</param>
 	 * <param name="databaseSettings">The database settings.</param>
 	 * <exception cref="NotSupportedException">Thrown if the database provider is not supported.</exception>
 	 */
-	private static void ConfigureDatabaseContext(IServiceCollection services,
-												 DbContextOptionsBuilder optionsBuilder,
+	private static void ConfigureDatabaseContext(DbContextOptionsBuilder optionsBuilder,
 												 DatabaseSettings databaseSettings)
 	{
 		switch (databaseSettings.Provider)
@@ -70,8 +76,6 @@ public static class ServiceRegistration
 				{
 					warningsConfigurationBuilderAction.Ignore(InMemoryEventId.TransactionIgnoredWarning);
 				});
-
-				services.AddScoped<IDatabaseSeeder, InMemoryDatabaseSeeder>();
 
 				break;
 

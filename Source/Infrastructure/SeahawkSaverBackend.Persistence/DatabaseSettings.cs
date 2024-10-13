@@ -1,4 +1,6 @@
 ﻿namespace SeahawkSaverBackend.Persistence;
+using Microsoft.Extensions.Configuration;
+
 /**
  * <summary>
  * The database settings.
@@ -20,14 +22,24 @@ public sealed record DatabaseSettings
 	 */
 	public string Provider { get; init; }
 
-	public DatabaseSettings(string name, string provider)
-	{
-		if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(provider))
-		{
-			throw new ArgumentException("The Database:Name and Database:Provider must be provided.");
-		}
+	/**
+	 * <summary>
+	 * Whether the database should be seeded.
+	 * </summary>
+	 */
+	public bool Seed { get; init; }
 
-		Name = name;
-		Provider = provider;
+	/**
+	 * <summary>
+	 * Instantiates a new <see cref="DatabaseSettings"/> instance.
+	 * </summary>
+	 * <param name="configuration">The application's key/value pair configurations.</param>
+	 * <exception cref="InvalidOperationException">Thrown if the Database:Name or Database:Provider are not provided.</exception>
+	 */
+	public DatabaseSettings(IConfiguration configuration)
+	{
+		Name = configuration.GetValue<string>("Database:Name") ?? throw new InvalidOperationException("The Database:Name must be provided.");
+		Provider = configuration.GetValue<string>("Database:Provider") ?? throw new InvalidOperationException("The Database:Provider must be provided.");
+		Seed = configuration.GetValue<bool>("Database:Seed");
 	}
 }
