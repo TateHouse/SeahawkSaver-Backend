@@ -42,6 +42,7 @@ public static class ServiceRegistration
 		services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 		services.AddScoped(typeof(IReadOnlyRepository<>), typeof(ReadOnlyRepository<>));
 		services.AddScoped<IQueryTransaction, QueryTransaction>();
+		services.AddScoped<ICommandTransaction, CommandTransaction>();
 
 		return services;
 	}
