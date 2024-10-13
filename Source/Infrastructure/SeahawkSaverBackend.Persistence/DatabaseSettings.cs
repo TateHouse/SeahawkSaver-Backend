@@ -13,21 +13,21 @@ public sealed record DatabaseSettings
 	 * The name of the database.
 	 * </summary>
 	 */
-	public string Name { get; init; }
+	public string Name { get; }
 
 	/**
 	 * <summary>
 	 * The name of the database provider.
 	 * </summary>
 	 */
-	public string Provider { get; init; }
+	public string Provider { get; }
 
 	/**
 	 * <summary>
 	 * Whether the database should be seeded.
 	 * </summary>
 	 */
-	public bool Seed { get; init; }
+	public bool Seed { get; }
 
 	/**
 	 * <summary>
