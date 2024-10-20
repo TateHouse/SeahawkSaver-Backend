@@ -22,6 +22,8 @@ public static class StartupExtensions
 		builder.Configuration.Sources.Clear();
 		builder.Configuration.AddJsonFile("AppSettings.json", false, true);
 		builder.Configuration.AddJsonFile($"AppSettings.{builder.Environment.EnvironmentName}.json", true, true);
+		builder.Configuration.AddUserSecrets<Program>();
+		builder.Configuration.AddEnvironmentVariables();
 
 		builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(configureOptions =>
 		{
