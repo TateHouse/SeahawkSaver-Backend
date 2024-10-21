@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SeahawkSaverBackend.Application.Abstractions.Authentication;
+using SeahawkSaverBackend.Authentication.Services;
 using System.Text;
 
 /**
@@ -22,6 +24,8 @@ public static class ServiceRegistration
 	{
 		var authenticationSettings = new AuthenticationSettings(configuration);
 		services.AddSingleton<AuthenticationSettings>();
+		services.AddScoped<IPasswordHasher, PasswordHasher>();
+		services.AddScoped<ITokenGenerator, TokenGenerator>();
 
 		services.AddAuthentication(configureOptions =>
 		{
