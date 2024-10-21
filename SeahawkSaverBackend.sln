@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeahawkSaverBackend.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeahawkSaverBackend.Persistence.IntegrationTest", "Test\Infrastructure\SeahawkSaverBackend.Persistence.IntegrationTest\SeahawkSaverBackend.Persistence.IntegrationTest.csproj", "{4BB3AE31-483A-4594-831F-DA7D14BEF123}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeahawkSaverBackend.Authentication", "Source\Infrastructure\SeahawkSaverBackend.Authentication\SeahawkSaverBackend.Authentication.csproj", "{6422F561-F7E2-4572-B01D-079B3327C218}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{4BB3AE31-483A-4594-831F-DA7D14BEF123}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BB3AE31-483A-4594-831F-DA7D14BEF123}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BB3AE31-483A-4594-831F-DA7D14BEF123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6422F561-F7E2-4572-B01D-079B3327C218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6422F561-F7E2-4572-B01D-079B3327C218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6422F561-F7E2-4572-B01D-079B3327C218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6422F561-F7E2-4572-B01D-079B3327C218}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3F391D73-6355-4926-9E48-10FFCE28696A} = {9AC06526-C96E-49F0-AA5B-ACD35450805A}
@@ -86,5 +92,6 @@ Global
 		{8CDBF1E9-5C06-4434-9C5A-ABDDC470CF5D} = {CBDD3A2E-640C-431C-B1A0-137D1A86C1B6}
 		{732018BE-C3C2-48E7-8495-0E84921E2A9D} = {CBDD3A2E-640C-431C-B1A0-137D1A86C1B6}
 		{4BB3AE31-483A-4594-831F-DA7D14BEF123} = {03982C14-E687-438E-ACDD-193A815CA987}
+		{6422F561-F7E2-4572-B01D-079B3327C218} = {625446F6-1218-44D3-8834-65BC0FE2268D}
 	EndGlobalSection
 EndGlobal

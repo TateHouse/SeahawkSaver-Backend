@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\Core\SeahawkSaverBackend.Application\SeahawkSaverBackend.Application.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\SeahawkSaverBackend.Authentication\SeahawkSaverBackend.Authentication.csproj" />
       <ProjectReference Include="..\..\Infrastructure\SeahawkSaverBackend.Persistence\SeahawkSaverBackend.Persistence.csproj" />
     </ItemGroup>
 
