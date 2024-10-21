@@ -8,6 +8,7 @@
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
         <RootNamespace>SeahawkSaverBackend.Authentication.UnitTest</RootNamespace>
+        <UserSecretsId>4b41a05e-398e-4282-925f-5c5a5fe98ab3</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
