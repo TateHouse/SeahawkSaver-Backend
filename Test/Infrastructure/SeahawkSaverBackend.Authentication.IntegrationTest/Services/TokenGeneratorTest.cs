@@ -54,7 +54,8 @@ public sealed class TokenGeneratorTest
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(securityToken.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value, Is.EqualTo(user.UserId.ToString()));
+			Assert.That(securityToken.Subject, Is.EqualTo(user.UserId.ToString()));
+			Assert.That(securityToken.Claims.First(claim => claim.Type == "email").Value, Is.EqualTo(user.Email));
 			Assert.That(securityToken.Issuer, Is.EqualTo(authenticationSettings.Issuer));
 			Assert.That(securityToken.Audiences.First(), Is.EqualTo(authenticationSettings.Audience));
 		});

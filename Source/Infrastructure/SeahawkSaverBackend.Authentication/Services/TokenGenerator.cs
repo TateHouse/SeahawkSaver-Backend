@@ -14,6 +14,7 @@ using System.Text;
 public sealed class TokenGenerator : ITokenGenerator
 {
 	private readonly AuthenticationSettings authenticationSettings;
+	private readonly DateTime now;
 	private readonly DateTime expires;
 
 	/**
@@ -25,25 +26,33 @@ public sealed class TokenGenerator : ITokenGenerator
 	public TokenGenerator(AuthenticationSettings authenticationSettings)
 	{
 		this.authenticationSettings = authenticationSettings;
-		expires = DateTime.UtcNow.AddHours(1);
+		now = DateTime.UtcNow;
+		expires = now.AddHours(1);
 	}
 
 	public string GenerateToken(User user)
 	{
-		var claims = new[]
+		var key = Encoding.UTF8.GetBytes(authenticationSettings.SecretKey);
+		var tokenDescriptor = new SecurityTokenDescriptor
 		{
-			new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString())
+			Subject = new ClaimsIdentity(new[]
+			{
+				new Claim("sub", user.UserId.ToString())
+			}),
+			Issuer = authenticationSettings.Issuer,
+			Audience = authenticationSettings.Audience,
+			Claims = new Dictionary<string, object>
+			{
+				{ ClaimTypes.Email, user.Email }
+			},
+			IssuedAt = now,
+			NotBefore = now,
+			Expires = expires,
+			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 		};
 
 		var tokenHandler = new JwtSecurityTokenHandler();
-		var key = Encoding.UTF8.GetBytes(authenticationSettings.SecretKey);
-		var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature);
-		var token = new JwtSecurityToken(authenticationSettings.Issuer,
-										 authenticationSettings.Audience,
-										 claims,
-										 null,
-										 expires,
-										 signingCredentials);
+		var token = tokenHandler.CreateToken(tokenDescriptor);
 
 		return tokenHandler.WriteToken(token);
 	}
