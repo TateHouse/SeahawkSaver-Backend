@@ -1,5 +1,4 @@
 ﻿namespace SeahawkSaverBackend.Application.Features.User.Commands.Login;
-using FluentValidation;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
@@ -23,16 +22,13 @@ public sealed class LoginUserCommandHandler : CommandHandler<LoginUserCommand, L
 	 * Instantiates a new <see cref="LoginUserCommandHandler"/> instance.
 	 * </summary>
 	 * <param name="transaction">The "unit of work" used during the command execution.</param>
-	 * <param name="validator">An optional validator for the command. If provided, it will be used to validate the
-	 * command before execution. Otherwise, no validation will occur.</param>
 	 * <param name="passwordHasher">A password hasher.</param>
 	 * <param name="tokenGenerator">A token generator.</param>
 	 */
 	public LoginUserCommandHandler(ICommandTransaction transaction,
-								   IValidator<LoginUserCommand>? validator,
 								   IPasswordHasher passwordHasher,
 								   ITokenGenerator tokenGenerator)
-		: base(transaction, validator)
+		: base(transaction, null)
 	{
 		this.passwordHasher = passwordHasher;
 		this.tokenGenerator = tokenGenerator;

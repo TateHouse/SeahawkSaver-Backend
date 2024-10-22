@@ -29,7 +29,6 @@ public sealed class LoginUserCommandHandlerTest
 		mockPasswordHasher = new Mock<IPasswordHasher>();
 		mockTokenGenerator = new Mock<ITokenGenerator>();
 		commandHandler = new LoginUserCommandHandler(mockTransaction.Object,
-													 null,
 													 mockPasswordHasher.Object,
 													 mockTokenGenerator.Object);
 	}
@@ -67,7 +66,7 @@ public sealed class LoginUserCommandHandlerTest
 	}
 
 	[Test]
-	public async Task GivenEmailThatExistsAndPasswordThatExists_WhenHandle_ThenReturnsTokenAndUserIdAndEmail()
+	public async Task GivenEmailThatExistsAndValidPassword_WhenHandle_ThenReturnsTokenAndUserIdAndEmail()
 	{
 		var user = UserFactory.Create(Guid.NewGuid(), LoginUserCommandHandlerTest.Email, LoginUserCommandHandlerTest.Password);
 		const string token = "TestToken";
