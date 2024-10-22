@@ -1,5 +1,6 @@
 ﻿namespace SeahawkSaverBackend.API;
 using Microsoft.OpenApi.Models;
+using SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.Application;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
 using SeahawkSaverBackend.Authentication;
@@ -104,6 +105,8 @@ public static class StartupExtensions
 				setupAction.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Seahawk Saver API 1.0.0");
 			});
 		}
+
+		application.MapUserEndpoints();
 
 		await StartupExtensions.SeedDatabaseASync(application);
 
