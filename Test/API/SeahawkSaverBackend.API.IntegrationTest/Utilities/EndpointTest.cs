@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
 using SeahawkSaverBackend.Persistence;
+using System.Net.Http.Json;
 
 /**
  * <summary>
@@ -41,5 +42,22 @@ public abstract class EndpointTest
 		var databaseDataset = scope.ServiceProvider.GetRequiredService<IDatabaseDataset>();
 		var databaseSeeder = scope.ServiceProvider.GetRequiredService<IDatabaseSeeder>();
 		await databaseSeeder.SeedDatabaseAsync(databaseDataset);
+	}
+
+	/**
+	 * <summary>
+	 * Asynchronously sends a POST request to the specified <paramref name="url"/>.
+	 * </summary>
+	 * <param name="url">The url to send the request to.</param>
+	 * <param name="request">The request to send to the endpoint.</param>
+	 * <returns>A task that represents the asynchronous operation, and it contains the <see cref="HttpResponseMessage"/>
+	 * returned by the endpoint.</returns>
+	 */
+	protected async Task<HttpResponseMessage> PostAsync<TRequest>(string url, TRequest request)
+	{
+		using var client = WebApplicationFactory.CreateClient();
+		var content = JsonContent.Create(request);
+
+		return await client.PostAsync(url, content);
 	}
 }

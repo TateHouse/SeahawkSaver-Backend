@@ -30,7 +30,7 @@ public static class ServiceRegistration
 																 IConfiguration configuration)
 	{
 		var databaseSettings = new DatabaseSettings(configuration);
-		services.AddScoped<DatabaseSettings>();
+		services.AddSingleton<DatabaseSettings>();
 
 		services.AddDbContext<DatabaseContext>(optionsAction =>
 		{

@@ -1,5 +1,6 @@
 ﻿namespace SeahawkSaverBackend.Persistence;
 using Microsoft.EntityFrameworkCore;
+using SeahawkSaverBackend.Domain.Entities;
 
 /**
  * <summary>
@@ -8,6 +9,13 @@ using Microsoft.EntityFrameworkCore;
  */
 public sealed class DatabaseContext : DbContext
 {
+	/**
+	 * <summary>
+	 * The <see cref="User"/> entities in the database.
+	 * </summary>
+	 */
+	public DbSet<User> Users { get; set; }
+
 	/**
 	 * <summary>
 	 * Instantiates a new <see cref="DatabaseContext"/> instance.

@@ -4,15 +4,17 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>8648c6ab-c108-4d56-a442-00ebc9529d01</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.5"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\Core\SeahawkSaverBackend.Application\SeahawkSaverBackend.Application.csproj" />
+      <ProjectReference Include="..\..\Infrastructure\SeahawkSaverBackend.Authentication\SeahawkSaverBackend.Authentication.csproj" />
       <ProjectReference Include="..\..\Infrastructure\SeahawkSaverBackend.Persistence\SeahawkSaverBackend.Persistence.csproj" />
     </ItemGroup>
 

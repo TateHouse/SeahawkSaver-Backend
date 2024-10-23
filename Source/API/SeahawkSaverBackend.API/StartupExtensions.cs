@@ -1,7 +1,9 @@
 ﻿namespace SeahawkSaverBackend.API;
 using Microsoft.OpenApi.Models;
+using SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.Application;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
+using SeahawkSaverBackend.Authentication;
 using SeahawkSaverBackend.Persistence;
 
 /**
@@ -22,6 +24,8 @@ public static class StartupExtensions
 		builder.Configuration.Sources.Clear();
 		builder.Configuration.AddJsonFile("AppSettings.json", false, true);
 		builder.Configuration.AddJsonFile($"AppSettings.{builder.Environment.EnvironmentName}.json", true, true);
+		builder.Configuration.AddUserSecrets<Program>();
+		builder.Configuration.AddEnvironmentVariables();
 
 		builder.Services.Configure<Microsoft.AspNetCore.Http.Json.JsonOptions>(configureOptions =>
 		{
@@ -35,18 +39,8 @@ public static class StartupExtensions
 
 		builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		builder.Services.RegisterApplicationServices();
+		builder.Services.RegisterAuthenticationServices(builder.Configuration);
 		builder.Services.RegisterPersistenceServices(builder.Configuration);
-
-		builder.Services.AddCors(setupAction =>
-		{
-			setupAction.AddPolicy("Open",
-								  policy =>
-								  {
-									  policy.AllowAnyOrigin();
-									  policy.AllowAnyMethod();
-									  policy.AllowAnyHeader();
-								  });
-		});
 
 		builder.Services.AddEndpointsApiExplorer();
 		builder.Services.AddSwaggerGen(setupAction =>
@@ -60,6 +54,30 @@ public static class StartupExtensions
 									   Title = "Seahawk Saver API",
 									   Version = version
 								   });
+
+			setupAction.AddSecurityDefinition("Bearer",
+											  new OpenApiSecurityScheme
+											  {
+												  In = ParameterLocation.Header,
+												  Name = "Authorization",
+												  Type = SecuritySchemeType.ApiKey,
+												  Scheme = "Bearer"
+											  });
+
+			setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
+			{
+				{
+					new OpenApiSecurityScheme
+					{
+						Reference = new OpenApiReference
+						{
+							Type = ReferenceType.SecurityScheme,
+							Id = "Bearer"
+						}
+					},
+					Array.Empty<string>()
+				}
+			});
 
 			setupAction.CustomSchemaIds(schemaIdSelector => schemaIdSelector.FullName);
 		});
@@ -75,7 +93,8 @@ public static class StartupExtensions
 	 */
 	public async static Task<WebApplication> ConfigureMiddleware(this WebApplication application)
 	{
-		application.UseCors("Open");
+		application.UseAuthentication();
+		application.UseAuthorization();
 
 		if (application.Environment.IsDevelopment())
 		{
@@ -86,6 +105,8 @@ public static class StartupExtensions
 				setupAction.SwaggerEndpoint("/swagger/1.0.0/swagger.json", "Seahawk Saver API 1.0.0");
 			});
 		}
+
+		application.MapUserEndpoints();
 
 		await StartupExtensions.SeedDatabaseASync(application);
 

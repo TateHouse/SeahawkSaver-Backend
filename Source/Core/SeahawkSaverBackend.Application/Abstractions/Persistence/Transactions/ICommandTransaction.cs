@@ -1,6 +1,16 @@
 ﻿namespace SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
+using SeahawkSaverBackend.Application.Abstractions.Persistence.Repositories;
+using SeahawkSaverBackend.Domain.Entities;
+
 public interface ICommandTransaction
 {
+	/**
+	 * <summary>
+	 * A read-write repository for <see cref="User"/> entities.
+	 * </summary>
+	 */
+	public IRepository<User> UserRepository { get; }
+
 	/**
 	 * <summary>
 	 * A value indicating whether the database transaction has started.
