@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using SeahawkSaverBackend.Authentication.Services;
 using SeahawkSaverBackend.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
 [TestFixture]
 public sealed class TokenGeneratorTest
@@ -20,6 +19,8 @@ public sealed class TokenGeneratorTest
 			UserId = Guid.NewGuid(),
 			Email = "test.user@example.com",
 			Password = "$2a$04$cuKSyWCrNH35niKtV5miyO.CiQtZXZ2BtV1D/Rhb.dtU1.WufrAXS",
+			FirstName = "TestFirstName",
+			LastName = "TestLastName"
 		};
 
 		var settings = new Dictionary<string, string?>

@@ -6,6 +6,7 @@ using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
 using SeahawkSaverBackend.Application.Exceptions;
 using SeahawkSaverBackend.Application.Features.User.Commands.Login;
+using SeahawkSaverBackend.Application.UnitTest.Utilities;
 using SeahawkSaverBackend.Domain.Entities;
 using SeahawkSaverBackend.Domain.Factories;
 
@@ -14,6 +15,8 @@ public sealed class LoginUserCommandHandlerTest
 {
 	private const string Email = "test.user@example.com";
 	private const string Password = "#Password4Testing";
+	private const string FirstName = "TestFirstName";
+	private const string LastName = "TestLastName";
 
 	private CommandSettings commandSettings;
 	private Mock<ICommandTransaction> mockTransaction;
@@ -24,11 +27,13 @@ public sealed class LoginUserCommandHandlerTest
 	[SetUp]
 	public void SetUp()
 	{
+		var mapper = MapperFactory.Create<LoginUserCommandProfile>();
 		commandSettings = new CommandSettings(true, true);
 		mockTransaction = new Mock<ICommandTransaction>();
 		mockPasswordHasher = new Mock<IPasswordHasher>();
 		mockTokenGenerator = new Mock<ITokenGenerator>();
 		commandHandler = new LoginUserCommandHandler(mockTransaction.Object,
+													 mapper,
 													 mockPasswordHasher.Object,
 													 mockTokenGenerator.Object);
 	}
@@ -39,7 +44,9 @@ public sealed class LoginUserCommandHandlerTest
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(() => null);
 
-		var request = LoginUserCommandFactory.Create(commandSettings, LoginUserCommandHandlerTest.Email, LoginUserCommandHandlerTest.Password);
+		var request = LoginUserCommandFactory.Create(commandSettings,
+													 LoginUserCommandHandlerTest.Email,
+													 LoginUserCommandHandlerTest.Password);
 
 		Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(request, CancellationToken.None));
 
@@ -49,7 +56,11 @@ public sealed class LoginUserCommandHandlerTest
 	[Test]
 	public async Task GivenEmailThatExistsAndInvalidPassword_WhenHandle_ThenThrowsUnauthorizedException()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), LoginUserCommandHandlerTest.Email, LoginUserCommandHandlerTest.Password);
+		var user = UserFactory.Create(Guid.NewGuid(),
+									  LoginUserCommandHandlerTest.Email,
+									  LoginUserCommandHandlerTest.Password,
+									  LoginUserCommandHandlerTest.FirstName,
+									  LoginUserCommandHandlerTest.LastName);
 
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(user);
@@ -68,7 +79,12 @@ public sealed class LoginUserCommandHandlerTest
 	[Test]
 	public async Task GivenEmailThatExistsAndValidPassword_WhenHandle_ThenReturnsTokenAndUserIdAndEmail()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), LoginUserCommandHandlerTest.Email, LoginUserCommandHandlerTest.Password);
+		var user = UserFactory.Create(Guid.NewGuid(),
+									  LoginUserCommandHandlerTest.Email,
+									  LoginUserCommandHandlerTest.Password,
+									  LoginUserCommandHandlerTest.FirstName,
+									  LoginUserCommandHandlerTest.LastName);
+
 		const string token = "TestToken";
 
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
@@ -88,6 +104,8 @@ public sealed class LoginUserCommandHandlerTest
 			Assert.That(response.Token, Is.EqualTo(token));
 			Assert.That(response.User.UserId, Is.EqualTo(user.UserId));
 			Assert.That(response.User.Email, Is.EqualTo(user.Email));
+			Assert.That(response.User.FirstName, Is.EqualTo(user.FirstName));
+			Assert.That(response.User.LastName, Is.EqualTo(user.LastName));
 		});
 	}
 }

@@ -1,4 +1,5 @@
 ﻿namespace SeahawkSaverBackend.Application.Features.User.Commands.Login;
+using AutoMapper;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
@@ -14,6 +15,7 @@ using SeahawkSaverBackend.Domain.Entities;
  */
 public sealed class LoginUserCommandHandler : CommandHandler<LoginUserCommand, LoginUserCommandResponse>
 {
+	private readonly IMapper mapper;
 	private readonly IPasswordHasher passwordHasher;
 	private readonly ITokenGenerator tokenGenerator;
 
@@ -22,14 +24,17 @@ public sealed class LoginUserCommandHandler : CommandHandler<LoginUserCommand, L
 	 * Instantiates a new <see cref="LoginUserCommandHandler"/> instance.
 	 * </summary>
 	 * <param name="transaction">The "unit of work" used during the command execution.</param>
+	 * <param name="mapper">The mapper to use.</param>
 	 * <param name="passwordHasher">A password hasher.</param>
 	 * <param name="tokenGenerator">A token generator.</param>
 	 */
 	public LoginUserCommandHandler(ICommandTransaction transaction,
+								   IMapper mapper,
 								   IPasswordHasher passwordHasher,
 								   ITokenGenerator tokenGenerator)
 		: base(transaction, null)
 	{
+		this.mapper = mapper;
 		this.passwordHasher = passwordHasher;
 		this.tokenGenerator = tokenGenerator;
 	}
@@ -56,11 +61,7 @@ public sealed class LoginUserCommandHandler : CommandHandler<LoginUserCommand, L
 		return new LoginUserCommandResponse
 		{
 			Token = token,
-			User = new LoginUserCommandUserResponse
-			{
-				UserId = user.UserId,
-				Email = user.Email
-			}
+			User = mapper.Map<LoginUserCommandUserResponse>(user)
 		};
 	}
 }
