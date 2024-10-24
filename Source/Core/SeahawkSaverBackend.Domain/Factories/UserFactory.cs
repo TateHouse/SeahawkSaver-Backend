@@ -15,14 +15,22 @@ public static class UserFactory
 	 * <param name="userId">The user's id.</param>
 	 * <param name="email">The user's email.</param>
 	 * <param name="password">The hash of the user's password.</param>
+	 * <param name="firstName">The user's first name.</param>
+	 * <param name="lastName">The user's last name.</param>
 	 */
-	public static User Create(Guid userId, string email, string password)
+	public static User Create(Guid userId,
+							  string email,
+							  string password,
+							  string firstName,
+							  string lastName)
 	{
 		return new User
 		{
 			UserId = userId,
 			Email = email,
-			Password = password
+			Password = password,
+			FirstName = firstName,
+			LastName = lastName
 		};
 	}
 }
