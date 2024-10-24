@@ -15,5 +15,5 @@ public interface ITokenGenerator
 	 * <param name="user">The user to generate the token for.</param>
 	 * <returns>A string representation of the generated token.</returns>
 	 */
-	public string GenerateToken(User user);
+	public string GenerateToken(User user, DateTime expirationDateTime);
 }

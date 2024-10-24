@@ -56,7 +56,8 @@ public sealed class LoginUserCommandHandler : CommandHandler<LoginUserCommand, L
 			throw new UnauthorizedException("Invalid email or password.");
 		}
 
-		var token = tokenGenerator.GenerateToken(user);
+		var tokenExpirationDateTime = DateTime.UtcNow.AddHours(1);
+		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
 
 		return new LoginUserCommandResponse
 		{

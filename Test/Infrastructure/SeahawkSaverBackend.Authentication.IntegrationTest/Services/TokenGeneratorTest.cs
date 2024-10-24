@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 public sealed class TokenGeneratorTest
 {
 	private User user;
+	private DateTime tokenExpirationDateTime;
 	private TokenGenerator tokenGenerator;
 	private AuthenticationSettings authenticationSettings;
 
@@ -23,6 +24,7 @@ public sealed class TokenGeneratorTest
 			LastName = "TestLastName"
 		};
 
+		tokenExpirationDateTime = DateTime.UtcNow.AddMinutes(5);
 		var settings = new Dictionary<string, string?>
 		{
 			{ "JwtSettings:Issuer", "TestIssuer" },
@@ -41,7 +43,7 @@ public sealed class TokenGeneratorTest
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenReturnsToken()
 	{
-		var token = tokenGenerator.GenerateToken(user);
+		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
 
 		Assert.That(token, Is.Not.Empty);
 	}
@@ -49,7 +51,7 @@ public sealed class TokenGeneratorTest
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenTokenPropertiesAreSet()
 	{
-		var token = tokenGenerator.GenerateToken(user);
+		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 
@@ -65,7 +67,7 @@ public sealed class TokenGeneratorTest
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenExpiresAfterOneHour()
 	{
-		var token = tokenGenerator.GenerateToken(user);
+		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 

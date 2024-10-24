@@ -15,7 +15,6 @@ public sealed class TokenGenerator : ITokenGenerator
 {
 	private readonly AuthenticationSettings authenticationSettings;
 	private readonly DateTime now;
-	private readonly DateTime expires;
 
 	/**
 	 * <summary>
@@ -27,10 +26,9 @@ public sealed class TokenGenerator : ITokenGenerator
 	{
 		this.authenticationSettings = authenticationSettings;
 		now = DateTime.UtcNow;
-		expires = now.AddHours(1);
 	}
 
-	public string GenerateToken(User user)
+	public string GenerateToken(User user, DateTime expirationDateTime)
 	{
 		var key = Encoding.UTF8.GetBytes(authenticationSettings.SecretKey);
 		var tokenDescriptor = new SecurityTokenDescriptor
@@ -47,7 +45,7 @@ public sealed class TokenGenerator : ITokenGenerator
 			},
 			IssuedAt = now,
 			NotBefore = now,
-			Expires = expires,
+			Expires = expirationDateTime,
 			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 		};
 
