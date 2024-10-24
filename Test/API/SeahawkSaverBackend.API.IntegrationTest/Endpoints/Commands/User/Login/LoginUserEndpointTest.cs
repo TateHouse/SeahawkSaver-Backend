@@ -17,7 +17,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = ""
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 	}
@@ -33,7 +33,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = "#Password4Testing"
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 	}
@@ -49,7 +49,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = "#Password4Peter"
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 	}
@@ -65,7 +65,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = "#Password4Peter"
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
 		var content = await response.Content.ReadFromJsonAsync<LoginUserEndpointResponse>();
 
 		Assert.That(content, Is.Not.Null);

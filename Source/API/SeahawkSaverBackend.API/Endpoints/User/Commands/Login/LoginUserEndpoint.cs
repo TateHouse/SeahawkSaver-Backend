@@ -23,7 +23,7 @@ public static class LoginUserEndpoint
 	 */
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
-		groupBuilder.MapPost("/", LoginUserEndpoint.HandleAsync)
+		groupBuilder.MapPost("/login", LoginUserEndpoint.HandleAsync)
 					.WithName("User-Login")
 					.WithTags(tags)
 					.WithSummary("An endpoint for a user to login.")

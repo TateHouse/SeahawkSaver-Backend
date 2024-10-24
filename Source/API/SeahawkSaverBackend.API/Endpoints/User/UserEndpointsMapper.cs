@@ -12,7 +12,7 @@ public static class UserEndpointsMapper
 	 * <summary>The shared prefix for all <see cref="SeahawkSaverBackend.Domain.Entities.User"/> related endpoints.
 	 * </summary>
 	 */
-	public const string Prefix = "/api/v1/user/";
+	public const string Prefix = "/api/v1/user";
 	private readonly static string[] Tags = { "User" };
 
 	/**
