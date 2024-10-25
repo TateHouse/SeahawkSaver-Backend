@@ -1,18 +1,13 @@
-﻿namespace SeahawkSaverBackend.API.Endpoints.User.Commands.Password.RequestReset;
+﻿namespace SeahawkSaverBackend.API.Endpoints.User.Commands.Password.PerformReset;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.RequestReset.DTOs;
+using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.PerformReset.DTOs;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Exceptions;
-using SeahawkSaverBackend.Application.Features.User.Commands.Password.RequestReset;
+using SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset;
 
-/**
- * <summary>
- * An endpoint for a user to request to reset his password.
- * </summary>
- */
-public static class PasswordUserRequestResetEndpoint
+public static class PasswordUserPerformResetEndpoint
 {
 	/**
 	 * <summary>
@@ -23,11 +18,11 @@ public static class PasswordUserRequestResetEndpoint
 	 */
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
-		groupBuilder.MapPost("/request-reset-password", PasswordUserRequestResetEndpoint.HandleAsync)
-					.WithName("User-Password-RequestReset")
+		groupBuilder.MapPost("/perform-reset-password", PasswordUserPerformResetEndpoint.HandleAsync)
+					.WithName("User-Password-PerformReset")
 					.WithTags(tags)
-					.WithSummary("An endpoint for a user to request to reset his password.")
-					.WithDescription("For a user to request to reset his password, he must be logged in and provide his email")
+					.WithSummary("An endpoint for a user to perform resetting his password.")
+					.WithDescription("For a user to perform resetting his password, he must provide the authentication token provided by the password request reset endpoint and his updated password.")
 					.Produces(StatusCodes.Status200OK)
 					.ProducesProblem(StatusCodes.Status404NotFound)
 					.ProducesProblem(StatusCodes.Status401Unauthorized);
@@ -38,25 +33,20 @@ public static class PasswordUserRequestResetEndpoint
 	 * Asynchronously handles the endpoint.
 	 * </summary>
 	 * <param name="mediator">The mediator to use.</param>
-	 * <param name="httpContext">The HTTP request with the token in the authorization header.</param>
-	 * <param name="tokenExtractor">A token extractor.</param>
 	 * <param name="tokenValidator">A token validator.</param>
 	 * <param name="request">The data contained within the request body.</param>
 	 * <returns>A task that represents the asynchronous operation, and it contains the endpoint's
 	 * <see cref="IResult"/>.</returns>
 	 */
 	private async static Task<IResult> HandleAsync(IMediator mediator,
-												   HttpContext httpContext,
-												   ITokenExtractor tokenExtractor,
 												   ITokenValidator tokenValidator,
-												   [FromBody] PasswordUserRequestResetEndpointRequest request)
+												   [FromBody] PasswordUserPerformResetEndpointRequest request)
 	{
 		try
 		{
-			var token = tokenExtractor.ExtractToken(httpContext);
-			await tokenValidator.ValidateTokenAsync(token, CancellationToken.None);
-			var commandSettings = new CommandSettings(false, false);
-			var command = PasswordUserRequestResetCommandFactory.Create(commandSettings, request.Email);
+			await tokenValidator.ValidateTokenAsync(request.Token, CancellationToken.None);
+			var commandSettings = new CommandSettings(true, true);
+			var command = PasswordUserPerformResetCommandFactory.Create(commandSettings, request.Token, request.Password);
 			await mediator.Send(command);
 
 			return Results.Ok();
