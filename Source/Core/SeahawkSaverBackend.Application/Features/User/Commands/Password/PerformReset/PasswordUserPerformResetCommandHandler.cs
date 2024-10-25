@@ -20,6 +20,8 @@ public sealed class PasswordUserPerformResetCommandHandler : CommandHandler<Pass
 	 * Instantiates a new <see cref="PasswordUserPerformResetCommandHandler"/> instance.
 	 * </summary>
 	 * <param name="transaction">The "unit of work" used during the command execution.</param>
+	 * <param name="validator">An optional validator for the command. If provided, it will be used to validate the
+	 * command before execution. Otherwise, no validation will occur.</param>
 	 * <param name="tokenValidator">A token validator.</param>
 	 * <param name="passwordHasher">A password hasher.</param>
 	 */

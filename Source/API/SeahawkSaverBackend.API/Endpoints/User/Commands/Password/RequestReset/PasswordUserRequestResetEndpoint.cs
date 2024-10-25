@@ -3,7 +3,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.RequestReset.DTOs;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
-using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Exceptions;
 using SeahawkSaverBackend.Application.Features.User.Commands.Password.RequestReset;
 
@@ -38,23 +37,15 @@ public static class PasswordUserRequestResetEndpoint
 	 * Asynchronously handles the endpoint.
 	 * </summary>
 	 * <param name="mediator">The mediator to use.</param>
-	 * <param name="httpContext">The HTTP request with the token in the authorization header.</param>
-	 * <param name="tokenExtractor">A token extractor.</param>
-	 * <param name="tokenValidator">A token validator.</param>
 	 * <param name="request">The data contained within the request body.</param>
 	 * <returns>A task that represents the asynchronous operation, and it contains the endpoint's
 	 * <see cref="IResult"/>.</returns>
 	 */
 	private async static Task<IResult> HandleAsync(IMediator mediator,
-												   HttpContext httpContext,
-												   ITokenExtractor tokenExtractor,
-												   ITokenValidator tokenValidator,
 												   [FromBody] PasswordUserRequestResetEndpointRequest request)
 	{
 		try
 		{
-			var token = tokenExtractor.ExtractToken(httpContext);
-			await tokenValidator.ValidateTokenAsync(token, false, CancellationToken.None);
 			var commandSettings = new CommandSettings(false, false);
 			var command = PasswordUserRequestResetCommandFactory.Create(commandSettings, request.Email);
 			await mediator.Send(command);
