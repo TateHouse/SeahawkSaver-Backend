@@ -15,6 +15,7 @@ public static class LoginUserCommandFactory
 	 * <param name="commandSettings">The command settings.</param>
 	 * <param name="email">The user's email.</param>
 	 * <param name="password">The user's password.</param>
+	 * <returns>A new <see cref="LoginUserCommand"/> instance.</returns>
 	 */
 	public static LoginUserCommand Create(CommandSettings commandSettings, string email, string password)
 	{

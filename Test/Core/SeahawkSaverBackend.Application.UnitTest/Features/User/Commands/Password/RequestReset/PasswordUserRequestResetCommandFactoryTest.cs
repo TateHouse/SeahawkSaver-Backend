@@ -1,0 +1,22 @@
+﻿namespace SeahawkSaverBackend.Application.UnitTest.Features.User.Commands.Password.RequestReset;
+using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
+using SeahawkSaverBackend.Application.Features.User.Commands.Password.RequestReset;
+
+[TestFixture]
+public sealed class PasswordUserRequestResetCommandFactoryTest
+{
+	[Test]
+	public void GivenPasswordUserRequestResetCommandProperties_WhenCreate_ThenReturnsPasswordUserRequestResetCommand()
+	{
+		var commandSettings = new CommandSettings(true, true);
+		const string email = "test.user@example.com";
+
+		var passwordUserRequestResetCommand = PasswordUserRequestResetCommandFactory.Create(commandSettings, email);
+
+		Assert.Multiple(() =>
+		{
+			Assert.That(passwordUserRequestResetCommand.CommandSettings, Is.EqualTo(commandSettings));
+			Assert.That(passwordUserRequestResetCommand.Email, Is.EqualTo(email));
+		});
+	}
+}
