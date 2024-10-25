@@ -1,6 +1,7 @@
 ﻿namespace SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset;
 using MediatR;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
+using SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset.DTOs;
 
 /**
  * <summary>
@@ -9,6 +10,5 @@ using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
  */
 public sealed class PasswordUserPerformResetCommand : Command<Unit>
 {
-	public required string Token { get; init; }
-	public required string Password { get; init; }
+	public required PasswordUserPerformResetCommandRequest Data { get; init; }
 }

@@ -1,4 +1,5 @@
 ﻿namespace SeahawkSaverBackend.Application;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 /**
@@ -16,6 +17,7 @@ public static class ServiceRegistration
 	public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
 	{
 		services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+		services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
 		services.AddMediatR(configuration =>
 		{
 			configuration.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());

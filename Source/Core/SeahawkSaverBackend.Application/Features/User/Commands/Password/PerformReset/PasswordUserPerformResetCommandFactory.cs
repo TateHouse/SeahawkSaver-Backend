@@ -1,5 +1,6 @@
 ﻿namespace SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
+using SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset.DTOs;
 
 /**
  * <summary>
@@ -22,8 +23,11 @@ public static class PasswordUserPerformResetCommandFactory
 		return new PasswordUserPerformResetCommand()
 		{
 			CommandSettings = commandSettings,
-			Token = token,
-			Password = password
+			Data = new PasswordUserPerformResetCommandRequest
+			{
+				Token = token,
+				Password = password
+			}
 		};
 	}
 }

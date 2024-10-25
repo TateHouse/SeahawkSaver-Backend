@@ -4,13 +4,13 @@ using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
 using SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset;
+using SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset.Validation;
 using SeahawkSaverBackend.Domain.Entities;
 using SeahawkSaverBackend.Domain.Factories;
 
 [TestFixture]
 public sealed class PasswordUserPerformResetCommandHandlerTest
 {
-	private CommandSettings commandSettings;
 	private Mock<ICommandTransaction> mockTransaction;
 	private Mock<ITokenValidator> mockTokenValidator;
 	private Mock<IPasswordHasher> mockPasswordHasher;
@@ -19,11 +19,12 @@ public sealed class PasswordUserPerformResetCommandHandlerTest
 	[SetUp]
 	public void SetUp()
 	{
-		commandSettings = new CommandSettings(true, true);
+		var validator = new PasswordUserPerformResetCommandValidator();
 		mockTransaction = new Mock<ICommandTransaction>();
 		mockTokenValidator = new Mock<ITokenValidator>();
 		mockPasswordHasher = new Mock<IPasswordHasher>();
 		passwordUserPerformResetCommandHandler = new PasswordUserPerformResetCommandHandler(mockTransaction.Object,
+																							validator,
 																							mockTokenValidator.Object,
 																							mockPasswordHasher.Object);
 	}
@@ -42,6 +43,7 @@ public sealed class PasswordUserPerformResetCommandHandlerTest
 
 		mockTransaction.Setup(mock => mock.UserRepository.UpdateAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()));
 
+		var commandSettings = new CommandSettings(true, true);
 		var request = PasswordUserPerformResetCommandFactory.Create(commandSettings, "Token", user.Password);
 		await passwordUserPerformResetCommandHandler.Handle(request, CancellationToken.None);
 

@@ -17,8 +17,8 @@ public sealed class PasswordUserPerformResetCommandFactoryTest
 		Assert.Multiple(() =>
 		{
 			Assert.That(result.CommandSettings, Is.EqualTo(commandSettings));
-			Assert.That(result.Token, Is.EqualTo(token));
-			Assert.That(result.Password, Is.EqualTo(password));
+			Assert.That(result.Data.Token, Is.EqualTo(token));
+			Assert.That(result.Data.Password, Is.EqualTo(password));
 		});
 	}
 }

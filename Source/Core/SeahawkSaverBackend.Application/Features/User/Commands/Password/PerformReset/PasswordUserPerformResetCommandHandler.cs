@@ -1,4 +1,5 @@
 ﻿namespace SeahawkSaverBackend.Application.Features.User.Commands.Password.PerformReset;
+using FluentValidation;
 using MediatR;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Abstractions.Authentication;
@@ -23,9 +24,10 @@ public sealed class PasswordUserPerformResetCommandHandler : CommandHandler<Pass
 	 * <param name="passwordHasher">A password hasher.</param>
 	 */
 	public PasswordUserPerformResetCommandHandler(ICommandTransaction transaction,
+												  IValidator<PasswordUserPerformResetCommand> validator,
 												  ITokenValidator tokenValidator,
 												  IPasswordHasher passwordHasher)
-		: base(transaction, null)
+		: base(transaction, validator)
 	{
 		this.tokenValidator = tokenValidator;
 		this.passwordHasher = passwordHasher;
@@ -33,8 +35,8 @@ public sealed class PasswordUserPerformResetCommandHandler : CommandHandler<Pass
 
 	protected override async Task<Unit> HandleAsync(PasswordUserPerformResetCommand request, CancellationToken cancellationToken)
 	{
-		var user = await tokenValidator.ValidateTokenAsync(request.Token, true, cancellationToken)!;
-		var passwordHash = passwordHasher.Hash(request.Password);
+		var user = await tokenValidator.ValidateTokenAsync(request.Data.Token, true, cancellationToken)!;
+		var passwordHash = passwordHasher.Hash(request.Data.Password);
 		user.Password = passwordHash;
 
 		await Transaction.UserRepository.UpdateAsync(user, cancellationToken);

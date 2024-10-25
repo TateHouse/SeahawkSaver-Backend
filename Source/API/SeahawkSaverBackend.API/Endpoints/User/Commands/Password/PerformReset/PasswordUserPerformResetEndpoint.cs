@@ -25,7 +25,8 @@ public static class PasswordUserPerformResetEndpoint
 					.WithDescription("For a user to perform resetting his password, he must provide the authentication token provided by the password request reset endpoint and his updated password.")
 					.Produces(StatusCodes.Status200OK)
 					.ProducesProblem(StatusCodes.Status404NotFound)
-					.ProducesProblem(StatusCodes.Status401Unauthorized);
+					.ProducesProblem(StatusCodes.Status401Unauthorized)
+					.ProducesValidationProblem(StatusCodes.Status400BadRequest);
 	}
 
 	/**
@@ -50,6 +51,10 @@ public static class PasswordUserPerformResetEndpoint
 			await mediator.Send(command);
 
 			return Results.Ok();
+		}
+		catch (ValidationException)
+		{
+			return Results.BadRequest();
 		}
 		catch (NotFoundException)
 		{
