@@ -11,12 +11,12 @@ public sealed class PasswordUserRequestResetCommandFactoryTest
 		var commandSettings = new CommandSettings(true, true);
 		const string email = "test.user@example.com";
 
-		var passwordUserRequestResetCommand = PasswordUserRequestResetCommandFactory.Create(commandSettings, email);
+		var result = PasswordUserRequestResetCommandFactory.Create(commandSettings, email);
 
 		Assert.Multiple(() =>
 		{
-			Assert.That(passwordUserRequestResetCommand.CommandSettings, Is.EqualTo(commandSettings));
-			Assert.That(passwordUserRequestResetCommand.Email, Is.EqualTo(email));
+			Assert.That(result.CommandSettings, Is.EqualTo(commandSettings));
+			Assert.That(result.Email, Is.EqualTo(email));
 		});
 	}
 }

@@ -4,7 +4,7 @@ using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 
 /**
  * <summary>
- * A command for a user to reset his password.
+ * A command for a user to request to reset his password.
  * </summary>
  */
 public sealed class PasswordUserRequestResetCommand : Command<Unit>
