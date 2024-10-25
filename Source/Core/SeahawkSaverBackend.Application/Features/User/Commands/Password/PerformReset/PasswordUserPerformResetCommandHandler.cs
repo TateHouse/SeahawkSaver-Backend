@@ -33,7 +33,7 @@ public sealed class PasswordUserPerformResetCommandHandler : CommandHandler<Pass
 
 	protected override async Task<Unit> HandleAsync(PasswordUserPerformResetCommand request, CancellationToken cancellationToken)
 	{
-		var user = await tokenValidator.ValidateTokenAsync(request.Token, cancellationToken)!;
+		var user = await tokenValidator.ValidateTokenAsync(request.Token, true, cancellationToken)!;
 		var passwordHash = passwordHasher.Hash(request.Password);
 		user.Password = passwordHash;
 

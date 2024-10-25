@@ -57,7 +57,7 @@ public sealed class LoginUserCommandHandler : CommandHandler<LoginUserCommand, L
 		}
 
 		var tokenExpirationDateTime = DateTime.UtcNow.AddHours(1);
-		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime, false);
 
 		return new LoginUserCommandResponse
 		{

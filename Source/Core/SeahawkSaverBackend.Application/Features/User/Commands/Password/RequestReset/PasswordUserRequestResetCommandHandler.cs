@@ -46,7 +46,7 @@ public sealed class PasswordUserRequestResetCommandHandler : CommandHandler<Pass
 		}
 
 		var tokenExpirationDateTime = DateTime.UtcNow.AddMinutes(15);
-		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime, true);
 		await passwordResetEmailService.SendResetPasswordEmailAsync(user.Email, token, cancellationToken);
 
 		return Unit.Value;

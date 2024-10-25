@@ -53,33 +53,45 @@ public sealed class JwtTokenValidatorTest
 	[Test]
 	public async Task GivenInvalidToken_WhenValidateTokenAsync_ThenThrowsUnauthorizedException()
 	{
-		Assert.ThrowsAsync<UnauthorizedException>(() => jwtTokenValidator.ValidateTokenAsync("InvalidToken", CancellationToken.None));
+		Assert.ThrowsAsync<UnauthorizedException>(() => jwtTokenValidator.ValidateTokenAsync("InvalidToken", false, CancellationToken.None));
 	}
 
 	[Test]
 	public async Task GivenValidToken_WhenValidateTokenAsyncAndUserDoesNotExist_ThenThrowsNotFoundException()
 	{
 		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName");
-		var token = jwtTokenGenerator.GenerateToken(user, DateTime.UtcNow.AddMinutes(10));
+		var token = jwtTokenGenerator.GenerateToken(user, DateTime.UtcNow.AddMinutes(10), false);
 
 		mockUserRepository.Setup(mock => mock.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 						  .ReturnsAsync(() => null);
 
-		Assert.ThrowsAsync<NotFoundException>(() => jwtTokenValidator.ValidateTokenAsync(token, CancellationToken.None));
+		Assert.ThrowsAsync<NotFoundException>(() => jwtTokenValidator.ValidateTokenAsync(token, false, CancellationToken.None));
 
 		mockUserRepository.Verify(mock => mock.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()), Times.Once);
 	}
 
 	[Test]
-	public async Task GivenValidToken_WhenValidateTokenAsyncAndUserExists_ThenReturnsUser()
+	[TestCase(false)]
+	[TestCase(true)]
+	public async Task GivenValidToken_WhenValidateTokenAsyncAndUserExists_ThenReturnsUser(bool isForPasswordReset)
 	{
 		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName");
-		var token = jwtTokenGenerator.GenerateToken(user, DateTime.UtcNow.AddMinutes(10));
+		var token = string.Empty;
+
+		if (isForPasswordReset)
+		{
+			token = jwtTokenGenerator.GenerateToken(user, DateTime.UtcNow.AddMinutes(10), true);
+		}
+		else
+		{
+
+			token = jwtTokenGenerator.GenerateToken(user, DateTime.UtcNow.AddMinutes(10), false);
+		}
 
 		mockUserRepository.Setup(mock => mock.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 						  .ReturnsAsync(() => user);
 
-		var result = await jwtTokenValidator.ValidateTokenAsync(token, CancellationToken.None);
+		var result = await jwtTokenValidator.ValidateTokenAsync(token, false, CancellationToken.None);
 
 		Assert.Multiple(() =>
 		{

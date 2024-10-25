@@ -32,7 +32,7 @@ public sealed class JwtTokenValidator : ITokenValidator
 		this.userRepository = userRepository;
 	}
 
-	public async Task<User> ValidateTokenAsync(string token, CancellationToken cancellationToken)
+	public async Task<User> ValidateTokenAsync(string token, bool isForPerformPasswordReset, CancellationToken cancellationToken)
 	{
 		var tokenHandler = new JwtSecurityTokenHandler();
 
@@ -50,6 +50,16 @@ public sealed class JwtTokenValidator : ITokenValidator
 			if (userIdClaim == null)
 			{
 				throw new UnauthorizedException("The user's name identifier was not found.");
+			}
+
+			if (isForPerformPasswordReset)
+			{
+				var purposeClaim = claimsPrinciple.FindFirst("purpose");
+
+				if (purposeClaim == null)
+				{
+					throw new UnauthorizedException("This token cannot be used to reset a password.");
+				}
 			}
 
 			var userId = Guid.Parse(userIdClaim.Value);

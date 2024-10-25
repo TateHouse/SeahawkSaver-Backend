@@ -43,15 +43,17 @@ public sealed class JwtTokenGeneratorTest
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenReturnsToken()
 	{
-		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime, false);
 
 		Assert.That(token, Is.Not.Empty);
 	}
 
 	[Test]
-	public void GivenUser_WhenGenerateToken_ThenTokenPropertiesAreSet()
+	[TestCase(false)]
+	[TestCase(true)]
+	public void GivenUser_WhenGenerateToken_ThenTokenPropertiesAreSet(bool isForPasswordReset)
 	{
-		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime, isForPasswordReset);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 
@@ -62,12 +64,17 @@ public sealed class JwtTokenGeneratorTest
 			Assert.That(securityToken.Issuer, Is.EqualTo(authenticationSettings.Issuer));
 			Assert.That(securityToken.Audiences.First(), Is.EqualTo(authenticationSettings.Audience));
 		});
+
+		if (isForPasswordReset)
+		{
+			Assert.That(securityToken.Claims.First(claim => claim.Type == "purpose").Value, Is.EqualTo("password-reset"));
+		}
 	}
 
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenExpiresAfterOneHour()
 	{
-		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime, false);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 

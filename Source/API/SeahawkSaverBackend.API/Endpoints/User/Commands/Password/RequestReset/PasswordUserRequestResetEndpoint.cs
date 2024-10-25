@@ -54,7 +54,7 @@ public static class PasswordUserRequestResetEndpoint
 		try
 		{
 			var token = tokenExtractor.ExtractToken(httpContext);
-			await tokenValidator.ValidateTokenAsync(token, CancellationToken.None);
+			await tokenValidator.ValidateTokenAsync(token, false, CancellationToken.None);
 			var commandSettings = new CommandSettings(false, false);
 			var command = PasswordUserRequestResetCommandFactory.Create(commandSettings, request.Email);
 			await mediator.Send(command);

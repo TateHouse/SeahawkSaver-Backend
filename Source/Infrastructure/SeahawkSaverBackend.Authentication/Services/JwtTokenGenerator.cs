@@ -28,7 +28,7 @@ public sealed class JwtTokenGenerator : ITokenGenerator
 		now = DateTime.UtcNow;
 	}
 
-	public string GenerateToken(User user, DateTime expirationDateTime)
+	public string GenerateToken(User user, DateTime expirationDateTime, bool isForPerformPasswordReset)
 	{
 		var key = Encoding.UTF8.GetBytes(authenticationSettings.SecretKey);
 		var tokenDescriptor = new SecurityTokenDescriptor
@@ -49,9 +49,16 @@ public sealed class JwtTokenGenerator : ITokenGenerator
 			SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
 		};
 
+		if (isForPerformPasswordReset)
+		{
+			var claim = new KeyValuePair<string, object>("purpose", "password-reset");
+			tokenDescriptor.Claims.Add(claim);
+		}
+
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var token = tokenHandler.CreateToken(tokenDescriptor);
 
 		return tokenHandler.WriteToken(token);
 	}
+
 }

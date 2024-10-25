@@ -34,7 +34,7 @@ public sealed class PasswordUserPerformResetCommandHandlerTest
 		var user = UserFactory.Create(Guid.NewGuid(), "test.user@example.com", "#Password4Testing", "TestFirstName", "TestLastName");
 		const string updatedPassword = "#UpdatedPassword4TestingHash";
 
-		mockTokenValidator.Setup(mock => mock.ValidateTokenAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
+		mockTokenValidator.Setup(mock => mock.ValidateTokenAsync(It.IsAny<string>(), true, It.IsAny<CancellationToken>()))
 						  .ReturnsAsync(user);
 
 		mockPasswordHasher.Setup(mock => mock.Hash(It.IsAny<string>()))
@@ -45,7 +45,7 @@ public sealed class PasswordUserPerformResetCommandHandlerTest
 		var request = PasswordUserPerformResetCommandFactory.Create(commandSettings, "Token", user.Password);
 		await passwordUserPerformResetCommandHandler.Handle(request, CancellationToken.None);
 
-		mockTokenValidator.Verify(mock => mock.ValidateTokenAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
+		mockTokenValidator.Verify(mock => mock.ValidateTokenAsync(It.IsAny<string>(), true, It.IsAny<CancellationToken>()), Times.Once);
 		mockPasswordHasher.Verify(mock => mock.Hash(It.IsAny<string>()), Times.Once);
 		mockTransaction.Verify(mock => mock.UserRepository.UpdateAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()), Times.Once);
 	}

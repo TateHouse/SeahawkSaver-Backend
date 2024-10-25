@@ -52,7 +52,7 @@ public sealed class PasswordUserRequestResetCommandHandlerTest
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(() => user);
 
-		mockTokenGenerator.Setup(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>()))
+		mockTokenGenerator.Setup(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>(), true))
 						  .Returns("TestToken");
 
 		mockPasswordResetEmailService.Setup(mock => mock.SendResetPasswordEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()));
@@ -61,7 +61,7 @@ public sealed class PasswordUserRequestResetCommandHandlerTest
 		await passwordUserRequestResetCommandHandler.Handle(request, CancellationToken.None);
 
 		mockTransaction.Verify(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()), Times.Once);
-		mockTokenGenerator.Verify(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>()), Times.Once);
+		mockTokenGenerator.Verify(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>(), true), Times.Once);
 		mockPasswordResetEmailService.Verify(mock => mock.SendResetPasswordEmailAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
 	}
 }

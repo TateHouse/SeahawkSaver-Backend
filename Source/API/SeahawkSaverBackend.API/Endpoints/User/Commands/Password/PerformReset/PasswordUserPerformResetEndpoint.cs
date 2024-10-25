@@ -44,7 +44,7 @@ public static class PasswordUserPerformResetEndpoint
 	{
 		try
 		{
-			await tokenValidator.ValidateTokenAsync(request.Token, CancellationToken.None);
+			await tokenValidator.ValidateTokenAsync(request.Token, true, CancellationToken.None);
 			var commandSettings = new CommandSettings(true, true);
 			var command = PasswordUserPerformResetCommandFactory.Create(commandSettings, request.Token, request.Password);
 			await mediator.Send(command);

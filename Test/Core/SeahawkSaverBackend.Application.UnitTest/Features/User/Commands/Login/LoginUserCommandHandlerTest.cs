@@ -93,7 +93,7 @@ public sealed class LoginUserCommandHandlerTest
 		mockPasswordHasher.Setup(mock => mock.Verify(It.IsAny<string>(), It.IsAny<string>()))
 						  .Returns(true);
 
-		mockTokenGenerator.Setup(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>()))
+		mockTokenGenerator.Setup(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>(), false))
 						  .Returns(token);
 
 		var request = LoginUserCommandFactory.Create(commandSettings, user.Email, user.Password);
@@ -110,6 +110,6 @@ public sealed class LoginUserCommandHandlerTest
 
 		mockTransaction.Verify(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()), Times.Once);
 		mockPasswordHasher.Verify(mock => mock.Verify(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
-		mockTokenGenerator.Verify(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>()), Times.Once);
+		mockTokenGenerator.Verify(mock => mock.GenerateToken(It.IsAny<User>(), It.IsAny<DateTime>(), false), Times.Once);
 	}
 }
