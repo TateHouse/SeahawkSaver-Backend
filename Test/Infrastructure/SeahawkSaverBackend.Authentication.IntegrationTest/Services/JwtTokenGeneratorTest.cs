@@ -5,11 +5,11 @@ using SeahawkSaverBackend.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 
 [TestFixture]
-public sealed class TokenGeneratorTest
+public sealed class JwtTokenGeneratorTest
 {
 	private User user;
 	private DateTime tokenExpirationDateTime;
-	private TokenGenerator tokenGenerator;
+	private JwtTokenGenerator jwtTokenGenerator;
 	private AuthenticationSettings authenticationSettings;
 
 	[SetUp]
@@ -33,17 +33,17 @@ public sealed class TokenGeneratorTest
 
 		var configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.AddInMemoryCollection(settings);
-		configurationBuilder.AddUserSecrets<TokenGeneratorTest>();
+		configurationBuilder.AddUserSecrets<JwtTokenGeneratorTest>();
 
 		var configuration = configurationBuilder.Build();
 		authenticationSettings = new AuthenticationSettings(configuration);
-		tokenGenerator = new TokenGenerator(authenticationSettings);
+		jwtTokenGenerator = new JwtTokenGenerator(authenticationSettings);
 	}
 
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenReturnsToken()
 	{
-		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime);
 
 		Assert.That(token, Is.Not.Empty);
 	}
@@ -51,7 +51,7 @@ public sealed class TokenGeneratorTest
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenTokenPropertiesAreSet()
 	{
-		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 
@@ -67,7 +67,7 @@ public sealed class TokenGeneratorTest
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenExpiresAfterOneHour()
 	{
-		var token = tokenGenerator.GenerateToken(user, tokenExpirationDateTime);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 

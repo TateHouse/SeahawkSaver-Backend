@@ -25,7 +25,7 @@ public static class ServiceRegistration
 		var authenticationSettings = new AuthenticationSettings(configuration);
 		services.AddSingleton<AuthenticationSettings>();
 		services.AddScoped<IPasswordHasher, PasswordHasher>();
-		services.AddScoped<ITokenGenerator, TokenGenerator>();
+		services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
 
 		services.AddAuthentication(configureOptions =>
 		{

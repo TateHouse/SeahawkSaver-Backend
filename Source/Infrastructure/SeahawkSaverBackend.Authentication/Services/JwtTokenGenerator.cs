@@ -11,18 +11,18 @@ using System.Text;
  * A token generator that uses Json Web Tokens (JWT).
  * </summary>
  */
-public sealed class TokenGenerator : ITokenGenerator
+public sealed class JwtTokenGenerator : ITokenGenerator
 {
 	private readonly AuthenticationSettings authenticationSettings;
 	private readonly DateTime now;
 
 	/**
 	 * <summary>
-	 * Instantiates a new <see cref="TokenGenerator"/> instance.
+	 * Instantiates a new <see cref="JwtTokenGenerator"/> instance.
 	 * </summary>
 	 * <param name="authenticationSettings">The authentication settings.</param>
 	 */
-	public TokenGenerator(AuthenticationSettings authenticationSettings)
+	public JwtTokenGenerator(AuthenticationSettings authenticationSettings)
 	{
 		this.authenticationSettings = authenticationSettings;
 		now = DateTime.UtcNow;
