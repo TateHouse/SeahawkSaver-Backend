@@ -13,7 +13,9 @@ public interface ITokenGenerator
 	 * Generates a token for a user.
 	 * </summary>
 	 * <param name="user">The user to generate the token for.</param>
+	 * <param name="expirationDateTime">When the token will expire.</param>
+	 * <param name="isForPerformPasswordReset">Specifies whether the token is to be used for resetting a password.</param>
 	 * <returns>A string representation of the generated token.</returns>
 	 */
-	public string GenerateToken(User user);
+	public string GenerateToken(User user, DateTime expirationDateTime, bool isForPerformPasswordReset);
 }

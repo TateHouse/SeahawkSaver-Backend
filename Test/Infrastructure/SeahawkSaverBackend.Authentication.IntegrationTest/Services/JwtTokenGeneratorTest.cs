@@ -5,10 +5,11 @@ using SeahawkSaverBackend.Domain.Entities;
 using System.IdentityModel.Tokens.Jwt;
 
 [TestFixture]
-public sealed class TokenGeneratorTest
+public sealed class JwtTokenGeneratorTest
 {
 	private User user;
-	private TokenGenerator tokenGenerator;
+	private DateTime tokenExpirationDateTime;
+	private JwtTokenGenerator jwtTokenGenerator;
 	private AuthenticationSettings authenticationSettings;
 
 	[SetUp]
@@ -23,6 +24,7 @@ public sealed class TokenGeneratorTest
 			LastName = "TestLastName"
 		};
 
+		tokenExpirationDateTime = DateTime.UtcNow.AddMinutes(5);
 		var settings = new Dictionary<string, string?>
 		{
 			{ "JwtSettings:Issuer", "TestIssuer" },
@@ -31,25 +33,27 @@ public sealed class TokenGeneratorTest
 
 		var configurationBuilder = new ConfigurationBuilder();
 		configurationBuilder.AddInMemoryCollection(settings);
-		configurationBuilder.AddUserSecrets<TokenGeneratorTest>();
+		configurationBuilder.AddUserSecrets<JwtTokenGeneratorTest>();
 
 		var configuration = configurationBuilder.Build();
 		authenticationSettings = new AuthenticationSettings(configuration);
-		tokenGenerator = new TokenGenerator(authenticationSettings);
+		jwtTokenGenerator = new JwtTokenGenerator(authenticationSettings);
 	}
 
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenReturnsToken()
 	{
-		var token = tokenGenerator.GenerateToken(user);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime, false);
 
 		Assert.That(token, Is.Not.Empty);
 	}
 
 	[Test]
-	public void GivenUser_WhenGenerateToken_ThenTokenPropertiesAreSet()
+	[TestCase(false)]
+	[TestCase(true)]
+	public void GivenUser_WhenGenerateToken_ThenTokenPropertiesAreSet(bool isForPasswordReset)
 	{
-		var token = tokenGenerator.GenerateToken(user);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime, isForPasswordReset);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 
@@ -60,12 +64,17 @@ public sealed class TokenGeneratorTest
 			Assert.That(securityToken.Issuer, Is.EqualTo(authenticationSettings.Issuer));
 			Assert.That(securityToken.Audiences.First(), Is.EqualTo(authenticationSettings.Audience));
 		});
+
+		if (isForPasswordReset)
+		{
+			Assert.That(securityToken.Claims.First(claim => claim.Type == "purpose").Value, Is.EqualTo("password-reset"));
+		}
 	}
 
 	[Test]
 	public void GivenUser_WhenGenerateToken_ThenExpiresAfterOneHour()
 	{
-		var token = tokenGenerator.GenerateToken(user);
+		var token = jwtTokenGenerator.GenerateToken(user, tokenExpirationDateTime, false);
 		var tokenHandler = new JwtSecurityTokenHandler();
 		var securityToken = tokenHandler.ReadJwtToken(token);
 

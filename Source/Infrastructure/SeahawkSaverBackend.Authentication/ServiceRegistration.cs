@@ -23,28 +23,33 @@ public static class ServiceRegistration
 																	IConfiguration configuration)
 	{
 		var authenticationSettings = new AuthenticationSettings(configuration);
+		var tokenValidationParameters = new TokenValidationParameters
+		{
+			ValidateIssuer = true,
+			ValidateAudience = true,
+			ValidateLifetime = true,
+			ValidateIssuerSigningKey = true,
+			ValidIssuer = authenticationSettings.Issuer,
+			ValidAudience = authenticationSettings.Audience,
+			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.SecretKey))
+		};
+
 		services.AddSingleton<AuthenticationSettings>();
+		services.AddSingleton(tokenValidationParameters);
 		services.AddScoped<IPasswordHasher, PasswordHasher>();
-		services.AddScoped<ITokenGenerator, TokenGenerator>();
+		services.AddScoped<ITokenGenerator, JwtTokenGenerator>();
+		services.AddScoped<ITokenExtractor, JwtTokenExtractor>();
+		services.AddScoped<ITokenValidator, JwtTokenValidator>();
 
 		services.AddAuthentication(configureOptions =>
-		{
-			configureOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-			configureOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-		})
-		.AddJwtBearer(configureOptions =>
-		{
-			configureOptions.TokenValidationParameters = new TokenValidationParameters
-			{
-				ValidateIssuer = true,
-				ValidateAudience = true,
-				ValidateLifetime = true,
-				ValidateIssuerSigningKey = true,
-				ValidIssuer = authenticationSettings.Issuer,
-				ValidAudience = authenticationSettings.Audience,
-				IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authenticationSettings.SecretKey))
-			};
-		});
+				{
+					configureOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+					configureOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+				})
+				.AddJwtBearer(configureOptions =>
+				{
+					configureOptions.TokenValidationParameters = tokenValidationParameters;
+				});
 
 		services.AddAuthorization();
 

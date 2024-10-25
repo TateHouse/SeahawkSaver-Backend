@@ -1,5 +1,7 @@
 ﻿namespace SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Login;
+using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.PerformReset;
+using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.RequestReset;
 
 /**
  * <summary>
@@ -25,5 +27,7 @@ public static class UserEndpointsMapper
 	{
 		var groupBuilder = application.MapGroup(UserEndpointsMapper.Prefix);
 		LoginUserEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
+		PasswordUserRequestResetEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
+		PasswordUserPerformResetEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
 	}
 }

@@ -36,6 +36,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeahawkSaverBackend.Authent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeahawkSaverBackend.Authentication.IntegrationTest", "Test\Infrastructure\SeahawkSaverBackend.Authentication.IntegrationTest\SeahawkSaverBackend.Authentication.IntegrationTest.csproj", "{DDB2190E-A932-4534-9847-DE3FAB36D819}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeahawkSaverBackend.Communication", "Source\Infrastructure\SeahawkSaverBackend.Communication\SeahawkSaverBackend.Communication.csproj", "{F8AAC543-88B4-4359-B735-D3A966FA46E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeahawkSaverBackend.Communication.IntegrationTest", "Test\Infrastructure\SeahawkSaverBackend.Communication.IntegrationTest\SeahawkSaverBackend.Communication.IntegrationTest.csproj", "{FD73C395-1FC6-4A5B-B8F6-D2C542919E83}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +86,14 @@ Global
 		{DDB2190E-A932-4534-9847-DE3FAB36D819}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDB2190E-A932-4534-9847-DE3FAB36D819}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDB2190E-A932-4534-9847-DE3FAB36D819}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8AAC543-88B4-4359-B735-D3A966FA46E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8AAC543-88B4-4359-B735-D3A966FA46E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8AAC543-88B4-4359-B735-D3A966FA46E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8AAC543-88B4-4359-B735-D3A966FA46E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD73C395-1FC6-4A5B-B8F6-D2C542919E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD73C395-1FC6-4A5B-B8F6-D2C542919E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD73C395-1FC6-4A5B-B8F6-D2C542919E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD73C395-1FC6-4A5B-B8F6-D2C542919E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3F391D73-6355-4926-9E48-10FFCE28696A} = {9AC06526-C96E-49F0-AA5B-ACD35450805A}
@@ -100,5 +112,7 @@ Global
 		{4BB3AE31-483A-4594-831F-DA7D14BEF123} = {03982C14-E687-438E-ACDD-193A815CA987}
 		{6422F561-F7E2-4572-B01D-079B3327C218} = {625446F6-1218-44D3-8834-65BC0FE2268D}
 		{DDB2190E-A932-4534-9847-DE3FAB36D819} = {03982C14-E687-438E-ACDD-193A815CA987}
+		{F8AAC543-88B4-4359-B735-D3A966FA46E2} = {625446F6-1218-44D3-8834-65BC0FE2268D}
+		{FD73C395-1FC6-4A5B-B8F6-D2C542919E83} = {03982C14-E687-438E-ACDD-193A815CA987}
 	EndGlobalSection
 EndGlobal
