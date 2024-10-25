@@ -24,7 +24,7 @@ public sealed class JwtTokenExtractorTest
 	[Test]
 	public void GivenInvalidAuthorizationHeader_WhenExtractToken_ThenThrowsInvalidOperationException()
 	{
-		httpContext.Request.Headers.Authorization = "InvalidHeaderFormat";
+		httpContext.Request.Headers["Bearer"] = "";
 
 		Assert.Throws<InvalidOperationException>(() => jwtTokenExtractor.ExtractToken(httpContext));
 	}
@@ -33,7 +33,7 @@ public sealed class JwtTokenExtractorTest
 	public void GivenValidAuthorizationHeader_WhenExtractToken_ThenReturnsToken()
 	{
 		const string token = "TestToken";
-		httpContext.Request.Headers.Authorization = $"Bearer {token}";
+		httpContext.Request.Headers["Bearer"] = $"{token}";
 		var result = jwtTokenExtractor.ExtractToken(httpContext);
 
 		Assert.That(result, Is.EqualTo(token));

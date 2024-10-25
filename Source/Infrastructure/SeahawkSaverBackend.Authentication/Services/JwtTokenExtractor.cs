@@ -11,14 +11,13 @@ public sealed class JwtTokenExtractor : ITokenExtractor
 {
 	public string ExtractToken(HttpContext httpContext)
 	{
-		var authorizationHeader = httpContext.Request.Headers["Authorization"].ToString();
+		var authorizationHeader = httpContext.Request.Headers["Bearer"].ToString();
 
-		if (string.IsNullOrWhiteSpace(authorizationHeader) ||
-			authorizationHeader.StartsWith("Bearer ") == false)
+		if (string.IsNullOrWhiteSpace(authorizationHeader))
 		{
-			throw new InvalidOperationException("The authorization header was not provided or was not properly formatted.");
+			throw new InvalidOperationException("The authorization header was not provided.");
 		}
 
-		return authorizationHeader["Bearer ".Length..].Trim();
+		return authorizationHeader;
 	}
 }

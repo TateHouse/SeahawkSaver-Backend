@@ -61,7 +61,7 @@ public static class StartupExtensions
 											  new OpenApiSecurityScheme
 											  {
 												  In = ParameterLocation.Header,
-												  Name = "Authorization",
+												  Name = "Bearer",
 												  Type = SecuritySchemeType.ApiKey,
 												  Scheme = "Bearer"
 											  });
