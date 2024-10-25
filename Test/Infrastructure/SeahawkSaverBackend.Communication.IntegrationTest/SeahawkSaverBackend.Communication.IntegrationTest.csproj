@@ -26,4 +26,10 @@
       <ProjectReference Include="..\..\..\Source\Infrastructure\SeahawkSaverBackend.Communication\SeahawkSaverBackend.Communication.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Configuration">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.5\Microsoft.Extensions.Configuration.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>

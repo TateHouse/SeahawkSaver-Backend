@@ -4,6 +4,7 @@ using SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.Application;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
 using SeahawkSaverBackend.Authentication;
+using SeahawkSaverBackend.Communication;
 using SeahawkSaverBackend.Persistence;
 
 /**
@@ -40,6 +41,7 @@ public static class StartupExtensions
 		builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		builder.Services.RegisterApplicationServices();
 		builder.Services.RegisterAuthenticationServices(builder.Configuration);
+		builder.Services.RegisterCommunicationServices(builder.Configuration);
 		builder.Services.RegisterPersistenceServices(builder.Configuration);
 
 		builder.Services.AddEndpointsApiExplorer();
