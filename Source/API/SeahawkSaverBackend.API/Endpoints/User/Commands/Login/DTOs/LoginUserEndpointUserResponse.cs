@@ -5,7 +5,7 @@
  * response for the <see cref="LoginUserEndpoint"/>.
  * </summary>
  */
-public class LoginUserEndpointUserResponse
+public sealed record LoginUserEndpointUserResponse
 {
 	public required Guid UserId { get; init; }
 	public required string Email { get; init; }

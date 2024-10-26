@@ -11,4 +11,6 @@ public class User
 	public required string Password { get; set; }
 	public required string FirstName { get; set; }
 	public required string LastName { get; set; }
+
+	public virtual ICollection<UserIncomeBridge>? UserIncomeBridges { get; set; }
 }

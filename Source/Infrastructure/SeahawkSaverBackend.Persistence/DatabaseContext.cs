@@ -15,6 +15,8 @@ public sealed class DatabaseContext : DbContext
 	 * </summary>
 	 */
 	public DbSet<User> Users { get; set; }
+	public DbSet<Income> Incomes { get; set; }
+	public DbSet<UserIncomeBridge> UserIncomeBridges { get; set; }
 
 	/**
 	 * <summary>
@@ -25,7 +27,6 @@ public sealed class DatabaseContext : DbContext
 	public DatabaseContext(DbContextOptions databaseContextOptions)
 		: base(databaseContextOptions)
 	{
-
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
