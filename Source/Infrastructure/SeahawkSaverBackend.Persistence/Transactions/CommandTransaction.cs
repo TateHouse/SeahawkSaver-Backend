@@ -17,6 +17,8 @@ public sealed class CommandTransaction : ICommandTransaction
 	private IDbContextTransaction? transaction;
 
 	public IRepository<User> UserRepository { get; }
+	public IRepository<Income> IncomeRepository { get; }
+	public IRepository<UserIncomeBridge> UserIncomeBridgeRepository { get; }
 	public bool HasTransactionStarted { get; private set; }
 
 	/**

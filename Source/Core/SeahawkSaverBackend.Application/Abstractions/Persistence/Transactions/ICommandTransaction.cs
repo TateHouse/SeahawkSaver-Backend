@@ -11,6 +11,9 @@ public interface ICommandTransaction
 	 */
 	public IRepository<User> UserRepository { get; }
 
+	public IRepository<Income> IncomeRepository { get; }
+	public IRepository<UserIncomeBridge> UserIncomeBridgeRepository { get; }
+
 	/**
 	 * <summary>
 	 * A value indicating whether the database transaction has started.
