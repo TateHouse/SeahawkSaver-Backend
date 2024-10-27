@@ -1,9 +1,11 @@
-﻿namespace SeahawkSaverBackend.API.Endpoints.Filters;
+﻿namespace SeahawkSaverBackend.API.Utilities.Filters;
 using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Exceptions;
 
 /**
- * An endpoint filter for token validation.
+ * <summary>
+ * An endpoint filter used to authenticate a bearer token within a request.
+ * </summary>
  */
 public sealed class TokenValidationFilter : IEndpointFilter
 {
@@ -16,7 +18,13 @@ public sealed class TokenValidationFilter : IEndpointFilter
 		try
 		{
 			var token = tokenExtractor.ExtractToken(httpContext);
-			await tokenValidator.ValidateTokenAsync(token, false, httpContext.RequestAborted);
+			var user = await tokenValidator.ValidateTokenAsync(token, false, httpContext.RequestAborted);
+			var routeUserId = httpContext.Request.RouteValues["userId"]?.ToString();
+
+			if (routeUserId == null || !Guid.TryParse(routeUserId, out var userId) || user.UserId != userId)
+			{
+				throw new UnauthorizedException("The provided user id does not match the authenticated user's id.");
+			}
 
 			return await next(context);
 		}

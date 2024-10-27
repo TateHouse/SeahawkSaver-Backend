@@ -7,7 +7,16 @@ using SeahawkSaverBackend.Domain.Entities;
 public interface IDatabaseDataset
 {
 	/**
+	 * <summary>
 	 * The <see cref="User"/> entities to seed the database with.
+	 * </summary>
 	 */
 	public IReadOnlyList<User> Users { get; }
+
+	/**
+	 * <summary>
+	 * The <see cref="Income"/> entities to seed the database with.
+	 * </summary>
+	 */
+	public IReadOnlyList<Income> Incomes { get; }
 }

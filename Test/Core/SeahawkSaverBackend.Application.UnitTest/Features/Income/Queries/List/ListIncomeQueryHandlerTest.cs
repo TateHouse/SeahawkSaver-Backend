@@ -29,7 +29,11 @@ public sealed class ListIncomeQueryHandlerTest
 		mockTransaction.Setup(mock => mock.IncomeRepository.ListAsync(It.IsAny<ISpecification<Income>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(incomes);
 
-		var request = new ListIncomeQuery();
+		var request = new ListIncomeQuery
+		{
+			UserId = Guid.NewGuid()
+		};
+
 		var response = await queryHandler.Handle(request, CancellationToken.None);
 
 		Assert.That(response.Incomes, Is.Empty);
@@ -38,7 +42,7 @@ public sealed class ListIncomeQueryHandlerTest
 	}
 
 	[Test]
-	public async Task WhenHandleAndDatabaseIsNotEmpty_ThenReturnsIncomes()
+	public async Task WhenHandleAndDatabaseIsNotEmpty_ThenReturnsIncomesForUser()
 	{
 		var userId = Guid.NewGuid();
 		var incomes = new List<Income>
@@ -50,7 +54,11 @@ public sealed class ListIncomeQueryHandlerTest
 		mockTransaction.Setup(mock => mock.IncomeRepository.ListAsync(It.IsAny<ISpecification<Income>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(incomes);
 
-		var request = new ListIncomeQuery();
+		var request = new ListIncomeQuery
+		{
+			UserId = Guid.NewGuid()
+		};
+
 		var response = await queryHandler.Handle(request, CancellationToken.None);
 
 		Assert.That(response.Incomes, Has.Count.EqualTo(2));

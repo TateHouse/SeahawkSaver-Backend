@@ -27,7 +27,7 @@ public sealed class ListIncomeQueryHandler : QueryHandler<ListIncomeQuery, ListI
 
 	protected override async Task<ListIncomeQueryResponse> HandleAsync(ListIncomeQuery request, CancellationToken cancellationToken)
 	{
-		var specification = new ListIncomeSpecification();
+		var specification = new ListIncomeForUserIdSpecification(request.UserId);
 		var incomes = await Transaction.IncomeRepository.ListAsync(specification, cancellationToken);
 
 		return Mapper.Map<ListIncomeQueryResponse>(incomes);

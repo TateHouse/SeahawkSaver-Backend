@@ -96,6 +96,13 @@ public static class StartupExtensions
 	 */
 	public async static Task<WebApplication> ConfigureMiddleware(this WebApplication application)
 	{
+		application.Use(next => httpContext =>
+		{
+			httpContext.Request.EnableBuffering();
+
+			return next(httpContext);
+		});
+
 		application.UseRouting();
 		application.UseAuthentication();
 		application.UseAuthorization();
