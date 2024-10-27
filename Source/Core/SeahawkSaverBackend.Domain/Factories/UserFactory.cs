@@ -17,6 +17,7 @@ public static class UserFactory
 	 * <param name="password">The hash of the user's password.</param>
 	 * <param name="firstName">The user's first name.</param>
 	 * <param name="lastName">The user's last name.</param>
+	 * <returns>A new <see cref="User"/> instance.</returns>
 	 */
 	public static User Create(Guid userId,
 							  string email,

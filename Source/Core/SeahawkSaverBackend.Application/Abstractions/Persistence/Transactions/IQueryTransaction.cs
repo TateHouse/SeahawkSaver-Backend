@@ -15,4 +15,11 @@ public interface IQueryTransaction
 	 * </summary>
 	 */
 	public IReadOnlyRepository<User> UserRepository { get; }
+
+	/**
+	 * <summary>
+	 * A read-only repository for <see cref="Income"/> entities.
+	 * </summary>
+	 */
+	public IReadOnlyRepository<Income> IncomeRepository { get; }
 }
