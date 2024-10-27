@@ -43,19 +43,21 @@ public static class CreateIncomeEndpoint
 	 * </summary>
 	 * <param name="mediator">The mediator to use.</param>
 	 * <param name="mapper">The mapper to use.</param>
+	 * <param name="userId">The id of the associated user.</param>
 	 * <param name="request">The data contained within the request body.</param>
 	 * <returns>A task that represents the asynchronous operation, and it contains the endpoint's
 	 * <see cref="IResult"/>.</returns>
 	 */
 	private async static Task<IResult> HandleAsync(IMediator mediator,
 												   IMapper mapper,
+												   [FromRoute] Guid userId,
 												   [FromBody] CreateIncomeEndpointRequest request)
 	{
 		try
 		{
 			var commandSettings = new CommandSettings(true, true);
 			var command = CreateIncomeCommandFactory.Create(commandSettings,
-															request.UserId,
+															userId,
 															request.Income.Amount,
 															request.Income.DateTime);
 

@@ -15,9 +15,9 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 	[Test]
 	public async Task GivenNoBearerToken_WhenAuthenticate_ThenReturnsUnauthorizedStatus()
 	{
+		var userId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B");
 		var request = new CreateIncomeEndpointRequest
 		{
-			UserId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B"),
 			Income = new CreateIncomeEndpointIncomeRequest
 			{
 				Amount = 100,
@@ -25,7 +25,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 			}
 		};
 
-		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(request.UserId), null, request);
+		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(userId), null, request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 	}
@@ -38,7 +38,6 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 		var token = await GetAuthenticationTokenAsync("peter.keller@gmail.com", "#Password4Peter");
 		var request = new CreateIncomeEndpointRequest
 		{
-			UserId = Guid.NewGuid(),
 			Income = new CreateIncomeEndpointIncomeRequest
 			{
 				Amount = 100,
@@ -46,7 +45,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 			}
 		};
 
-		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(request.UserId), token, request);
+		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(Guid.NewGuid()), token, request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 	}
@@ -57,9 +56,9 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 		await SeedDatabaseAsync();
 
 		var token = await GetAuthenticationTokenAsync("peter.keller@gmail.com", "#Password4Peter");
+		var userId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B");
 		var request = new CreateIncomeEndpointRequest
 		{
-			UserId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B"),
 			Income = new CreateIncomeEndpointIncomeRequest
 			{
 				Amount = -100,
@@ -67,7 +66,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 			}
 		};
 
-		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(request.UserId), token, request);
+		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(userId), token, request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
 
@@ -79,9 +78,9 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 		await SeedDatabaseAsync();
 
 		var token = await GetAuthenticationTokenAsync("peter.keller@gmail.com", "#Password4Peter");
+		var userId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B");
 		var request = new CreateIncomeEndpointRequest
 		{
-			UserId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B"),
 			Income = new CreateIncomeEndpointIncomeRequest
 			{
 				Amount = 100,
@@ -89,7 +88,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 			}
 		};
 
-		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(request.UserId), token, request);
+		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(userId), token, request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Created));
 	}
@@ -100,9 +99,9 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 		await SeedDatabaseAsync();
 
 		var token = await GetAuthenticationTokenAsync("peter.keller@gmail.com", "#Password4Peter");
+		var userId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B");
 		var request = new CreateIncomeEndpointRequest
 		{
-			UserId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B"),
 			Income = new CreateIncomeEndpointIncomeRequest
 			{
 				Amount = 500,
@@ -110,7 +109,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 			}
 		};
 
-		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(request.UserId), token, request);
+		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(userId), token, request);
 		var content = await response.Content.ReadFromJsonAsync<CreateIncomeEndpointResponse>();
 
 		Assert.That(content, Is.Not.Null);
@@ -123,9 +122,9 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 		await SeedDatabaseAsync();
 
 		var token = await GetAuthenticationTokenAsync("peter.keller@gmail.com", "#Password4Peter");
+		var userId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B");
 		var request = new CreateIncomeEndpointRequest
 		{
-			UserId = Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B"),
 			Income = new CreateIncomeEndpointIncomeRequest
 			{
 				Amount = 250,
@@ -133,7 +132,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 			}
 		};
 
-		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(request.UserId), token, request);
+		var response = await PostAsync(CreateIncomeEndpointTest.BuildUrl(userId), token, request);
 		var content = await response.Content.ReadFromJsonAsync<CreateIncomeEndpointResponse>();
 
 		Assert.That(content, Is.Not.Null);
@@ -148,7 +147,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 		{
 			Assert.That(income.Amount, Is.EqualTo(request.Income.Amount));
 			Assert.That(income.DateTime, Is.EqualTo(request.Income.DateTime));
-			Assert.That(income.UserId, Is.EqualTo(request.UserId));
+			Assert.That(income.UserId, Is.EqualTo(userId));
 		});
 	}
 
