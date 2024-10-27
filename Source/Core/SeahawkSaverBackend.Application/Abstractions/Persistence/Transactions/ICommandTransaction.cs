@@ -11,8 +11,12 @@ public interface ICommandTransaction
 	 */
 	public IRepository<User> UserRepository { get; }
 
+	/**
+	 * <summary>
+	 * A read-write repository to <see cref="Income"/> entities.
+	 * </summary>
+	 */
 	public IRepository<Income> IncomeRepository { get; }
-	public IRepository<UserIncomeBridge> UserIncomeBridgeRepository { get; }
 
 	/**
 	 * <summary>

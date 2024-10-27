@@ -11,7 +11,8 @@ using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.RequestReset;
 public static class UserEndpointsMapper
 {
 	/**
-	 * <summary>The shared prefix for all <see cref="SeahawkSaverBackend.Domain.Entities.User"/> related endpoints.
+	 * <summary>
+	 * The shared prefix for all <see cref="SeahawkSaverBackend.Domain.Entities.User"/> related endpoints.
 	 * </summary>
 	 */
 	public const string Prefix = "/api/v1/user";
@@ -20,7 +21,7 @@ public static class UserEndpointsMapper
 	/**
 	 * <summary>
 	 * An extension method for <see cref="WebApplication"/> to map the
-	 * <see cref="SeahawkSaverBackend.Domain.Entities.User"/> releated enpoints.
+	 * <see cref="SeahawkSaverBackend.Domain.Entities.User"/> releated endpoints.
 	 * </summary>
 	 */
 	public static void MapUserEndpoints(this WebApplication application)

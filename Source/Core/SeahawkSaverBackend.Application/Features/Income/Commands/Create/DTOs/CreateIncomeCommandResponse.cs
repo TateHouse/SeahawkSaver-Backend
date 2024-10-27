@@ -6,5 +6,5 @@
  */
 public sealed record CreateIncomeCommandResponse
 {
-	public required Guid IncomeId { get; set; }
+	public required Guid IncomeId { get; init; }
 }

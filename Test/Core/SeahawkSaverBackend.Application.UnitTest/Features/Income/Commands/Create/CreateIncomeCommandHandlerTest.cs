@@ -50,7 +50,6 @@ public sealed class CreateIncomeCommandHandlerTest
 					   .ReturnsAsync(user);
 
 		mocKTransaction.Setup(mock => mock.IncomeRepository.AddAsync(It.IsAny<Income>(), It.IsAny<CancellationToken>()));
-		mocKTransaction.Setup(mock => mock.UserIncomeBridgeRepository.AddAsync(It.IsAny<UserIncomeBridge>(), It.IsAny<CancellationToken>()));
 
 		var request = CreateIncomeCommandFactory.Create(commandSettings, user.UserId, 100, DateTime.Now.AddDays(-1));
 		var response = await commandHandler.Handle(request, CancellationToken.None);
@@ -59,6 +58,5 @@ public sealed class CreateIncomeCommandHandlerTest
 
 		mocKTransaction.Verify(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()), Times.Once);
 		mocKTransaction.Verify(mock => mock.IncomeRepository.AddAsync(It.IsAny<Income>(), It.IsAny<CancellationToken>()), Times.Once);
-		mocKTransaction.Verify(mock => mock.UserIncomeBridgeRepository.AddAsync(It.IsAny<UserIncomeBridge>(), It.IsAny<CancellationToken>()), Times.Once);
 	}
 }

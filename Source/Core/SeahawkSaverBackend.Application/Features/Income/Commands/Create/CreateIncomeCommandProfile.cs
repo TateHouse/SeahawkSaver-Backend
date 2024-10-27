@@ -17,7 +17,7 @@ public sealed class CreateIncomeCommandProfile : Profile
 	 */
 	public CreateIncomeCommandProfile()
 	{
-		CreateMap<CreateIncomeCommandRequest, Income>();
+		CreateMap<CreateIncomeCommandIncomeRequest, Income>();
 		CreateMap<Guid, CreateIncomeCommandResponse>()
 			.ForMember(destinationMember => destinationMember.IncomeId,
 					   memberOptions => memberOptions.MapFrom(sourceMember => sourceMember));

@@ -1,5 +1,6 @@
 ﻿namespace SeahawkSaverBackend.API;
 using Microsoft.OpenApi.Models;
+using SeahawkSaverBackend.API.Endpoints.Income;
 using SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.Application;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
@@ -95,6 +96,7 @@ public static class StartupExtensions
 	 */
 	public async static Task<WebApplication> ConfigureMiddleware(this WebApplication application)
 	{
+		application.UseRouting();
 		application.UseAuthentication();
 		application.UseAuthorization();
 
@@ -109,6 +111,7 @@ public static class StartupExtensions
 		}
 
 		application.MapUserEndpoints();
+		application.MapIncomeEndpoints();
 
 		await StartupExtensions.SeedDatabaseASync(application);
 

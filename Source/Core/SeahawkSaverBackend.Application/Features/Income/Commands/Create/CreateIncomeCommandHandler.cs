@@ -46,16 +46,9 @@ public sealed class CreateIncomeCommandHandler : CommandHandler<CreateIncomeComm
 
 		var income = mapper.Map<Income>(request.Income);
 		income.IncomeId = Guid.NewGuid();
+		income.UserId = user.UserId;
 
 		await Transaction.IncomeRepository.AddAsync(income, cancellationToken);
-
-		var bridge = new UserIncomeBridge
-		{
-			UserId = request.UserId,
-			IncomeId = income.IncomeId
-		};
-
-		await Transaction.UserIncomeBridgeRepository.AddAsync(bridge, cancellationToken);
 
 		return mapper.Map<CreateIncomeCommandResponse>(income.IncomeId);
 	}

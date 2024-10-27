@@ -10,5 +10,6 @@ public class Income
 	public required decimal Amount { get; set; }
 	public required DateTime DateTime { get; set; }
 
-	public virtual ICollection<UserIncomeBridge>? UserIncomeBridges { get; set; }
+	public Guid UserId { get; set; }
+	public virtual User User { get; set; } = null!;
 }

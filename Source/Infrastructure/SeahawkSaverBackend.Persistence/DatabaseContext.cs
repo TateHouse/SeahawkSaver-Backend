@@ -15,8 +15,13 @@ public sealed class DatabaseContext : DbContext
 	 * </summary>
 	 */
 	public DbSet<User> Users { get; set; }
+
+	/**
+	 * <summary>
+	 * The <see cref="Income"/> entities in the database.
+	 * </summary>
+	 */
 	public DbSet<Income> Incomes { get; set; }
-	public DbSet<UserIncomeBridge> UserIncomeBridges { get; set; }
 
 	/**
 	 * <summary>

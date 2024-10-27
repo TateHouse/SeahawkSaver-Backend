@@ -27,7 +27,7 @@ public static class CreateIncomeCommandFactory
 		{
 			CommandSettings = commandSettings,
 			UserId = userId,
-			Income = new CreateIncomeCommandRequest
+			Income = new CreateIncomeCommandIncomeRequest
 			{
 				Amount = amount,
 				DateTime = dateTime

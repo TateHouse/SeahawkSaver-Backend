@@ -30,8 +30,9 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 			   .HasColumnName("LastName")
 			   .IsRequired();
 
-		builder.HasMany(user => user.UserIncomeBridges)
-			   .WithOne(bridge => bridge.User)
-			   .HasForeignKey(bridge => bridge.UserId);
+		builder.HasMany(user => user.Incomes)
+			   .WithOne(income => income.User)
+			   .HasForeignKey(income => income.UserId)
+			   .IsRequired();
 	}
 }

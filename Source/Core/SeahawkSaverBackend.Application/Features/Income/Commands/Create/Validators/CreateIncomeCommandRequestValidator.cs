@@ -7,7 +7,7 @@ using SeahawkSaverBackend.Application.Features.Income.Commands.Create.DTOs;
  * A validator for the <see cref="CreateIncomeCommandRequestValidator"/>.
  * </summary>
  */
-public sealed class CreateIncomeCommandRequestValidator : AbstractValidator<CreateIncomeCommandRequest>
+public sealed class CreateIncomeCommandRequestValidator : AbstractValidator<CreateIncomeCommandIncomeRequest>
 {
 	/**
 	 * <summary>

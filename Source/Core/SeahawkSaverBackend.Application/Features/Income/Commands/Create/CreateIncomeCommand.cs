@@ -10,5 +10,5 @@ using SeahawkSaverBackend.Application.Features.Income.Commands.Create.DTOs;
 public sealed class CreateIncomeCommand : Command<CreateIncomeCommandResponse>
 {
 	public required Guid UserId { get; init; }
-	public required CreateIncomeCommandRequest Income { get; init; }
+	public required CreateIncomeCommandIncomeRequest Income { get; init; }
 }
