@@ -13,6 +13,13 @@ public interface ICommandTransaction
 
 	/**
 	 * <summary>
+	 * A read-write repository to <see cref="Income"/> entities.
+	 * </summary>
+	 */
+	public IRepository<Income> IncomeRepository { get; }
+
+	/**
+	 * <summary>
 	 * A value indicating whether the database transaction has started.
 	 * </summary>
 	 */

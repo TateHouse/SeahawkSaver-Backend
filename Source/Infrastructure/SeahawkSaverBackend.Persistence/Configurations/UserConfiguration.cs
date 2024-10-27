@@ -21,5 +21,18 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 		builder.Property(user => user.Password)
 			   .HasColumnName("Password")
 			   .IsRequired();
+
+		builder.Property(user => user.FirstName)
+			   .HasColumnName("FirstName")
+			   .IsRequired();
+
+		builder.Property(user => user.LastName)
+			   .HasColumnName("LastName")
+			   .IsRequired();
+
+		builder.HasMany(user => user.Incomes)
+			   .WithOne(income => income.User)
+			   .HasForeignKey(income => income.UserId)
+			   .IsRequired();
 	}
 }

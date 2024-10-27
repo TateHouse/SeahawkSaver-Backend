@@ -1,4 +1,4 @@
-﻿namespace SeahawkSaverBackend.API.IntegrationTest.Endpoints.Commands.User.Login;
+﻿namespace SeahawkSaverBackend.API.IntegrationTest.Endpoints.User.Commands.Login;
 using SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Login.DTOs;
 using SeahawkSaverBackend.API.IntegrationTest.Utilities;
@@ -17,7 +17,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = ""
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", null, request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.NotFound));
 	}
@@ -33,7 +33,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = "#Password4Testing"
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", null, request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
 	}
@@ -49,7 +49,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = "#Password4Peter"
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", null, request);
 
 		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
 	}
@@ -65,7 +65,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Password = "#Password4Peter"
 		};
 
-		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", request);
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", null, request);
 		var content = await response.Content.ReadFromJsonAsync<LoginUserEndpointResponse>();
 
 		Assert.That(content, Is.Not.Null);
