@@ -88,4 +88,35 @@ public abstract class EndpointTest
 
 		return await client.PostAsync(url, content);
 	}
+
+	/**
+	 * <summary>
+	 * Asynchronously sends a DELETE request to the specified <paramref name="url"/>.
+	 * </summary>
+	 * <param name="url">The url to send the request to.</param>
+	 * <param name="token">An optional string containing the authentication token.</param>
+	 * <param name="queryParameters">The query parameters to include with the url.</param>
+	 * <returns>A task that represents the asynchronous operation, and it contains the <see cref="HttpResponseMessage"/>
+	 * returned by the endpoint.</returns>
+	 */
+	protected async Task<HttpResponseMessage> DeleteAsync(string url,
+														  string? token,
+														  IReadOnlyDictionary<string, string>? queryParameters)
+	{
+
+		using var client = WebApplicationFactory.CreateClient();
+
+		if (string.IsNullOrWhiteSpace(token) == false)
+		{
+			client.DefaultRequestHeaders.Add("Bearer", token);
+		}
+
+		if (queryParameters != null && queryParameters.Count > 0)
+		{
+			var query = string.Join("&", queryParameters.Select(parameter => $"{Uri.EscapeDataString(parameter.Key)}={Uri.EscapeDataString(parameter.Value)}"));
+			url = $"{url}?{query}";
+		}
+
+		return await client.DeleteAsync(url);
+	}
 }
