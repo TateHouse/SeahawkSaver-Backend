@@ -31,7 +31,7 @@ public sealed class CreateIncomeEndpointTest : EndpointTest
 	}
 
 	[Test]
-	public async Task GivenUserIdInRequestThatDoesNotMatchAuthenticatedUser_WhenAuthenticate_ThenReturnsUnauthorizedStatus()
+	public async Task GivenUserIdInRouteThatDoesNotMatchAuthenticatedUser_WhenAuthenticate_ThenReturnsUnauthorizedStatus()
 	{
 		await SeedDatabaseAsync();
 
