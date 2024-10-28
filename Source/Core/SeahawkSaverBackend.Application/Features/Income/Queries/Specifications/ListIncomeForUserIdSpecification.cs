@@ -10,6 +10,12 @@ using SeahawkSaverBackend.Domain.Entities;
  */
 public sealed class ListIncomeForUserIdSpecification : Specification<Income>
 {
+	/**
+	 * <summary>
+	 * Instantiates a new <see cref="ListIncomeForUserIdSpecification"/> instance.
+	 * </summary>
+	 * <param name="userId">The user's id.</param>
+	 */
 	public ListIncomeForUserIdSpecification(Guid userId)
 	{
 		Query.Where(income => income.UserId == userId);

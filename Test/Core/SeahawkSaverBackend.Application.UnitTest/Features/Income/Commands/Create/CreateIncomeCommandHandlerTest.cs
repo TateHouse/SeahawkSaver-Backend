@@ -5,7 +5,6 @@ using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Transactions;
 using SeahawkSaverBackend.Application.Exceptions;
 using SeahawkSaverBackend.Application.Features.Income.Commands.Create;
-using SeahawkSaverBackend.Application.Features.Income.Commands.Create.DTOs;
 using SeahawkSaverBackend.Application.Features.Income.Commands.Create.Validators;
 using SeahawkSaverBackend.Application.UnitTest.Utilities;
 using SeahawkSaverBackend.Domain.Entities;

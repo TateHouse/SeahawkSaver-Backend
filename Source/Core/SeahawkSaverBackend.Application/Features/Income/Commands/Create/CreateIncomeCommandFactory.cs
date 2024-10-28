@@ -11,12 +11,13 @@ public static class CreateIncomeCommandFactory
 {
 	/**
 	 * <summary>
-	 * Instantiates a new <see cref="CreateIncomeCommandFactory"/> instance.
+	 * Instantiates a new <see cref="CreateIncomeCommand"/> instance.
 	 * </summary>
 	 * <param name="commandSettings">The command settings.</param>
 	 * <param name="userId">The id of the associated user.</param>
 	 * <param name="amount">The amount of income.</param>
 	 * <param name="dateTime">The date and time the income was received.</param>
+	 * <returns>A new <see cref="CreateIncomeCommand"/> instance.</returns>
 	 */
 	public static CreateIncomeCommand Create(CommandSettings commandSettings,
 											 Guid userId,
