@@ -32,6 +32,7 @@ public sealed class DatabaseContext : DbContext
 	public DatabaseContext(DbContextOptions databaseContextOptions)
 		: base(databaseContextOptions)
 	{
+
 	}
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -11,7 +11,7 @@ public static class UpdateIncomeCommandFactory
 {
 	/**
 	 * <summary>
-	 * Instantiates a new <see cref="UpdateIncomeCommand"/> instance.
+	 * Instantiates a new <see cref="UpdateIncomeCommandFactory"/> instance.
 	 * </summary>
 	 * <param name="commandSettings">The command settings.</param>
 	 * <param name="userId">The id of the associated user.</param>
