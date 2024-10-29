@@ -4,17 +4,17 @@ using SeahawkSaverBackend.Application.Features.Income.Commands.Create.DTOs;
 
 /**
  * <summary>
- * A validator for the <see cref="CreateIncomeCommandRequestValidator"/>.
+ * A validator for the <see cref="CreateIncomeCommandIncomeRequest"/>.
  * </summary>
  */
-public sealed class CreateIncomeCommandRequestValidator : AbstractValidator<CreateIncomeCommandIncomeRequest>
+public sealed class CreateIncomeCommandIncomeRequestValidator : AbstractValidator<CreateIncomeCommandIncomeRequest>
 {
 	/**
 	 * <summary>
-	 * Instantiates a new <see cref="CreateIncomeCommandRequestValidator"/> instance.
+	 * Instantiates a new <see cref="CreateIncomeCommandIncomeRequestValidator"/> instance.
 	 * </summary>
 	 */
-	public CreateIncomeCommandRequestValidator()
+	public CreateIncomeCommandIncomeRequestValidator()
 	{
 		RuleFor(request => (decimal?)request.Amount)
 			.ValidateAmount();

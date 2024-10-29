@@ -16,6 +16,6 @@ public sealed class CreateIncomeCommandValidator : AbstractValidator<CreateIncom
 	public CreateIncomeCommandValidator()
 	{
 		RuleFor(command => command.Income)
-			.SetValidator(new CreateIncomeCommandRequestValidator());
+			.SetValidator(new CreateIncomeCommandIncomeRequestValidator());
 	}
 }
