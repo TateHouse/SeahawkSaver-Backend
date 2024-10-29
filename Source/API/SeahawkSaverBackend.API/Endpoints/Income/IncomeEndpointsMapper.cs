@@ -1,6 +1,7 @@
 ﻿namespace SeahawkSaverBackend.API.Endpoints.Income;
 using SeahawkSaverBackend.API.Endpoints.Income.Commands.Create;
 using SeahawkSaverBackend.API.Endpoints.Income.Commands.Delete;
+using SeahawkSaverBackend.API.Endpoints.Income.Commands.Update;
 using SeahawkSaverBackend.API.Endpoints.Income.Queries.List;
 
 /**
@@ -28,6 +29,7 @@ public static class IncomeEndpointsMapper
 	{
 		var groupBuilder = application.MapGroup(IncomeEndpointsMapper.Prefix);
 		CreateIncomeEndpoint.MapEndpoint(groupBuilder, IncomeEndpointsMapper.Tags);
+		UpdateIncomeEndpoint.MapEndpoint(groupBuilder, IncomeEndpointsMapper.Tags);
 		DeleteIncomeEndpoint.MapEndpoint(groupBuilder, IncomeEndpointsMapper.Tags);
 		ListIncomeEndpoint.MapEndpoint(groupBuilder, IncomeEndpointsMapper.Tags);
 	}

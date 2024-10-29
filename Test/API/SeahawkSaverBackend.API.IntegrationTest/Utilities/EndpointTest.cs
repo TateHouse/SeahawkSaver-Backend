@@ -91,6 +91,29 @@ public abstract class EndpointTest
 
 	/**
 	 * <summary>
+	 * Asynchronously sends a PUT request to the specified <paramref name="url"/>.
+	 * </summary>
+	 * <param name="url">The url to send the request to.</param>
+	 * <param name="token">An optional string containing the authentication token.</param>
+	 * <param name="request">The request to send to the endpoint.</param>
+	 * <returns>A task that represents the asynchronous operation, and it contains the <see cref="HttpResponseMessage"/>
+	 * returned by the endpoint.</returns>
+	 */
+	protected async Task<HttpResponseMessage> PutAsync<TRequest>(string url, string? token, TRequest request)
+	{
+		using var client = WebApplicationFactory.CreateClient();
+		var content = JsonContent.Create(request);
+
+		if (string.IsNullOrWhiteSpace(token) == false)
+		{
+			client.DefaultRequestHeaders.Add("Bearer", token);
+		}
+
+		return await client.PutAsync(url, content);
+	}
+
+	/**
+	 * <summary>
 	 * Asynchronously sends a DELETE request to the specified <paramref name="url"/>.
 	 * </summary>
 	 * <param name="url">The url to send the request to.</param>
