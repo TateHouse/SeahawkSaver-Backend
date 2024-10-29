@@ -4,7 +4,7 @@ using SeahawkSaverBackend.Application.Features.User.Commands;
 using SeahawkSaverBackend.Application.UnitTest.Utilities;
 
 [TestFixture]
-public sealed class ValidatePasswordExtensionTest : ExtensionMethodValidationTest<FakeUserCommandRequest>
+public sealed class ValidateEmailExtensionMethodTest : ExtensionMethodValidationTest<FakeUserCommandRequest>
 {
 	protected override InlineValidator<FakeUserCommandRequest> CreateValidator()
 	{
@@ -15,8 +15,8 @@ public sealed class ValidatePasswordExtensionTest : ExtensionMethodValidationTes
 	public override void SetUp()
 	{
 		base.SetUp();
-		Validator.RuleFor(user => user.Password)
-				 .ValidatePassword();
+		Validator.RuleFor(user => user.Email)
+				 .ValidateEmail();
 	}
 
 	[Test]
@@ -41,54 +41,18 @@ public sealed class ValidatePasswordExtensionTest : ExtensionMethodValidationTes
 			{
 				DTO = new FakeUserCommandRequest
 				{
-					Password = ""
+					Email = string.Empty
 				},
-				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Password)
+				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Email)
 			};
 
 			yield return new ExtensionMethodValidationTestCase<FakeUserCommandRequest>
 			{
 				DTO = new FakeUserCommandRequest
 				{
-					Password = "password"
+					Email = "test.email"
 				},
-				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Password)
-			};
-
-			yield return new ExtensionMethodValidationTestCase<FakeUserCommandRequest>
-			{
-				DTO = new FakeUserCommandRequest
-				{
-					Password = "Password"
-				},
-				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Password)
-			};
-
-			yield return new ExtensionMethodValidationTestCase<FakeUserCommandRequest>
-			{
-				DTO = new FakeUserCommandRequest
-				{
-					Password = "PasswordTesting"
-				},
-				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Password)
-			};
-
-			yield return new ExtensionMethodValidationTestCase<FakeUserCommandRequest>
-			{
-				DTO = new FakeUserCommandRequest
-				{
-					Password = "Password4Testing"
-				},
-				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Password)
-			};
-
-			yield return new ExtensionMethodValidationTestCase<FakeUserCommandRequest>
-			{
-				DTO = new FakeUserCommandRequest
-				{
-					Password = "#PasswordTesting"
-				},
-				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Password)
+				ExpectedErrorPropertyName = nameof(FakeUserCommandRequest.Email)
 			};
 		}
 	}
@@ -101,15 +65,7 @@ public sealed class ValidatePasswordExtensionTest : ExtensionMethodValidationTes
 			{
 				DTO = new FakeUserCommandRequest
 				{
-					Password = "#Password4Testing"
-				}
-			};
-
-			yield return new ExtensionMethodValidationTestCase<FakeUserCommandRequest>
-			{
-				DTO = new FakeUserCommandRequest
-				{
-					Password = "!Password4Testing"
+					Email = "test.user@example.com"
 				}
 			};
 		}
