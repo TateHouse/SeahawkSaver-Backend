@@ -15,9 +15,11 @@ public sealed class IncomeConfiguration : IEntityTypeConfiguration<Income>
 		builder.HasKey(income => income.IncomeId);
 
 		builder.Property(income => income.Amount)
+			   .HasColumnName("Amount")
 			   .IsRequired();
 
 		builder.Property(income => income.DateTime)
+			   .HasColumnName("DateTime")
 			   .IsRequired();
 
 		builder.HasOne(income => income.User)
