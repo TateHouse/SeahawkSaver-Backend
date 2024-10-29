@@ -9,13 +9,38 @@ public static class IncomeCommandRequestValidationExtensions
 {
 	/**
 	 * <summary>
+	 * Validates that the user id is provided.
+	 * </summary>
+	 */
+	public static IRuleBuilderOptions<TDTO, Guid?> ValidateUserId<TDTO>(this IRuleBuilder<TDTO, Guid?> ruleBuilder)
+		where TDTO : IncomeCommandRequest
+	{
+		return ruleBuilder.Must(userId => userId != Guid.Empty)
+						  .WithMessage("The user id must be provided.");
+	}
+
+	/**
+	 * <summary>
+	 * Validates that the income id is provided.
+	 * </summary>
+	 */
+	public static IRuleBuilderOptions<TDTO, Guid?> ValidateIncomeId<TDTO>(this IRuleBuilder<TDTO, Guid?> ruleBuilder)
+		where TDTO : IncomeCommandRequest
+	{
+		return ruleBuilder.Must(incomeId => incomeId != Guid.Empty)
+						  .WithMessage("The income id must be provided.");
+	}
+
+	/**
+	 * <summary>
 	 * Validates that the amount is greater than zero.
 	 * </summary>
 	 */
 	public static IRuleBuilderOptions<TDTO, decimal?> ValidateAmount<TDTO>(this IRuleBuilder<TDTO, decimal?> ruleBuilder)
 		where TDTO : IncomeCommandRequest
 	{
-		return ruleBuilder.GreaterThan(0);
+		return ruleBuilder.GreaterThan(0)
+						  .WithMessage("The amount must be greater than zero.");
 	}
 
 	/**
@@ -30,6 +55,8 @@ public static class IncomeCommandRequestValidationExtensions
 		var minimumDateTime = currentDateTime.AddDays(-30);
 
 		return ruleBuilder.LessThan(currentDateTime)
-						  .GreaterThan(minimumDateTime);
+						  .WithMessage("The date and date cannot be in the future.")
+						  .GreaterThan(minimumDateTime)
+						  .WithMessage($"The date and time cannot be before {minimumDateTime}.");
 	}
 }
