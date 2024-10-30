@@ -2,6 +2,7 @@
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Login;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.PerformReset;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.RequestReset;
+using SeahawkSaverBackend.API.Endpoints.User.Commands.Update;
 
 /**
  * <summary>
@@ -30,5 +31,6 @@ public static class UserEndpointsMapper
 		LoginUserEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
 		PasswordUserRequestResetEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
 		PasswordUserPerformResetEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
+		UpdateUserEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
 	}
 }
