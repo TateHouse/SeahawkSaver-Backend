@@ -55,6 +55,10 @@ public sealed class InMemoryDatabaseDataset : IDatabaseDataset
 			IncomeFactory.Create(Guid.Parse("AF43BAF0-0217-4901-96CA-BD86C6092BF7"), 500, DateTime.Now.AddDays(-8), users[2].UserId),
 			IncomeFactory.Create(Guid.Parse("E1803737-7CF8-4E3E-99C6-6C352E04AC35"), 750, DateTime.Now.AddDays(-9), users[2].UserId),
 			IncomeFactory.Create(Guid.Parse("C5A244F1-5BFB-41B7-802B-302C4E7C4F5A"), 250, DateTime.Now.AddDays(-10), users[2].UserId),
+			IncomeFactory.Create(Guid.Parse("38B2C309-42E9-4919-A639-A9FDA66C327E"), 150, DateTime.Now.AddDays(-1), users[2].UserId),
+			IncomeFactory.Create(Guid.Parse("F991B7DA-7BE4-437A-B905-722C95A06819"), 8299, DateTime.Now.AddDays(-28), users[2].UserId),
+			IncomeFactory.Create(Guid.Parse("CB4B8EB8-40F8-46A3-9687-4E59F3B81FF8"), 431, DateTime.Now.AddDays(-19), users[2].UserId),
+			IncomeFactory.Create(Guid.Parse("53D15DD3-61E8-4519-AEF5-60A0546A1E23"), 293, DateTime.Now.AddDays(-10), users[2].UserId),
 		};
 
 		Users = users;
