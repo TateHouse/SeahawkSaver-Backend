@@ -39,6 +39,17 @@ public static class StartupExtensions
 			configureOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
 		});
 
+		builder.Services.AddCors(setupAction =>
+		{
+			setupAction.AddPolicy("AllowBlazorWASM",
+								  policy =>
+								  {
+									  policy.WithOrigins("http://localhost:5290")
+											.AllowAnyHeader()
+											.AllowAnyMethod();
+								  });
+		});
+
 		builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 		builder.Services.RegisterApplicationServices();
 		builder.Services.RegisterAuthenticationServices(builder.Configuration);
@@ -103,6 +114,7 @@ public static class StartupExtensions
 			return next(httpContext);
 		});
 
+		application.UseCors("AllowBlazorWASM");
 		application.UseRouting();
 		application.UseAuthentication();
 		application.UseAuthorization();
