@@ -60,7 +60,8 @@ public sealed class LoginUserCommandHandlerTest
 									  LoginUserCommandHandlerTest.Email,
 									  LoginUserCommandHandlerTest.Password,
 									  LoginUserCommandHandlerTest.FirstName,
-									  LoginUserCommandHandlerTest.LastName);
+									  LoginUserCommandHandlerTest.LastName,
+									  false);
 
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(user);
@@ -83,7 +84,8 @@ public sealed class LoginUserCommandHandlerTest
 									  LoginUserCommandHandlerTest.Email,
 									  LoginUserCommandHandlerTest.Password,
 									  LoginUserCommandHandlerTest.FirstName,
-									  LoginUserCommandHandlerTest.LastName);
+									  LoginUserCommandHandlerTest.LastName,
+									  false);
 
 		const string token = "TestToken";
 
@@ -99,8 +101,7 @@ public sealed class LoginUserCommandHandlerTest
 		var request = LoginUserCommandFactory.Create(commandSettings, user.Email, user.Password);
 		var response = await commandHandler.Handle(request, CancellationToken.None);
 
-		Assert.Multiple(() =>
-		{
+		Assert.Multiple(() => {
 			Assert.That(response.Token, Is.EqualTo(token));
 			Assert.That(response.User.UserId, Is.EqualTo(user.UserId));
 			Assert.That(response.User.Email, Is.EqualTo(user.Email));
