@@ -1,4 +1,5 @@
 ﻿namespace SeahawkSaverBackend.API.IntegrationTest.Utilities;
+using Microsoft.VisualStudio.TestPlatform.Common.Interfaces;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
 using SeahawkSaverBackend.Domain.Entities;
 using SeahawkSaverBackend.Domain.Factories;
@@ -49,6 +50,13 @@ public sealed class InMemoryIntegrationTestDatabaseDataset : IDatabaseDataset
 							   "Bert",
 							   "Simmons",
 							   false),
+
+			UserFactory.Create(Guid.Parse("531A2281-9058-41EB-B815-20D09ACE32FF"),
+							   "russ.hendrix@gmail.com",
+							   "$2a$12$UlRtKEGXKlz1YEPBGw70F.XcgsEa2zAvJS0QVmSYviWARIv3aCuci",
+							   "Russ",
+							   "Hendrix",
+							   true)
 		};
 
 		var incomes = new List<Income>

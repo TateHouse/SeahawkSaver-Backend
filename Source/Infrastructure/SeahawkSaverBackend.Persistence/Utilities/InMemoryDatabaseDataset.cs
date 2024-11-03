@@ -48,7 +48,14 @@ public sealed class InMemoryDatabaseDataset : IDatabaseDataset
 							   "$2a$12$M0s5IzE9EuPWeNj7pT4wU.VeKnkKH9depAC7JCxylZJ.IegRTTBEC",
 							   "Herbert",
 							   "Elder",
-							   false)
+							   false),
+
+			UserFactory.Create(Guid.Parse("2E04419B-A15F-4DC2-9FDF-078E0BFC660A"),
+							   "amy.peterson@gmail.com",
+							   "$2a$12$Uy9DtGrt0STo50mBEisT1OUgesJ3vFSU4ZfnJZYQFiy43Aj9DKRCG",
+							   "Amy",
+							   "Peterson",
+							   true)
 		};
 
 		var incomes = new List<Income>

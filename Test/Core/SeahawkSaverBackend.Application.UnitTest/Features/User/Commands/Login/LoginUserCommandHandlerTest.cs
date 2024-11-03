@@ -101,12 +101,14 @@ public sealed class LoginUserCommandHandlerTest
 		var request = LoginUserCommandFactory.Create(commandSettings, user.Email, user.Password);
 		var response = await commandHandler.Handle(request, CancellationToken.None);
 
-		Assert.Multiple(() => {
+		Assert.Multiple(() =>
+		{
 			Assert.That(response.Token, Is.EqualTo(token));
 			Assert.That(response.User.UserId, Is.EqualTo(user.UserId));
 			Assert.That(response.User.Email, Is.EqualTo(user.Email));
 			Assert.That(response.User.FirstName, Is.EqualTo(user.FirstName));
 			Assert.That(response.User.LastName, Is.EqualTo(user.LastName));
+			Assert.That(response.User.IsAdmin, Is.EqualTo(user.IsAdmin));
 		});
 
 		mockTransaction.Verify(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()), Times.Once);
