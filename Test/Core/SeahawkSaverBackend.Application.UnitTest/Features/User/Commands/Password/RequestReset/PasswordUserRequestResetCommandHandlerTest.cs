@@ -48,7 +48,7 @@ public sealed class PasswordUserRequestResetCommandHandlerTest
 	[Test]
 	public async Task GivenEmailThatExists_WhenHandle_ThenSendsPasswordResetEmail()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), PasswordUserRequestResetCommandHandlerTest.Email, "#Password4Testing", "TestFirstName", "TestLastName");
+		var user = UserFactory.Create(Guid.NewGuid(), PasswordUserRequestResetCommandHandlerTest.Email, "#Password4Testing", "TestFirstName", "TestLastName", false);
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(() => user);
 

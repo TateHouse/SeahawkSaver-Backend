@@ -17,13 +17,15 @@ public static class UserFactory
 	 * <param name="password">The hash of the user's password.</param>
 	 * <param name="firstName">The user's first name.</param>
 	 * <param name="lastName">The user's last name.</param>
+	 * <param name="isAdmin">Specifies whether this user is an admin.</param>
 	 * <returns>A new <see cref="User"/> instance.</returns>
 	 */
 	public static User Create(Guid userId,
 							  string email,
 							  string password,
 							  string firstName,
-							  string lastName)
+							  string lastName,
+							  bool isAdmin)
 	{
 		return new User
 		{
@@ -31,7 +33,8 @@ public static class UserFactory
 			Email = email,
 			Password = password,
 			FirstName = firstName,
-			LastName = lastName
+			LastName = lastName,
+			IsAdmin = isAdmin
 		};
 	}
 }

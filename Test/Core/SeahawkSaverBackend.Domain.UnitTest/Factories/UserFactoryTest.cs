@@ -12,16 +12,17 @@ public sealed class UserFactoryTest
 		const string password = "TestPassword";
 		const string firstName = "TestFirstName";
 		const string lastName = "TestLastName";
+		const bool isAdmin = false;
 
-		var user = UserFactory.Create(userId, email, password, firstName, lastName);
+		var user = UserFactory.Create(userId, email, password, firstName, lastName, isAdmin);
 
-		Assert.Multiple(() =>
-		{
+		Assert.Multiple(() => {
 			Assert.That(user.UserId, Is.EqualTo(userId));
 			Assert.That(user.Email, Is.EqualTo(email));
 			Assert.That(user.Password, Is.EqualTo(password));
 			Assert.That(user.FirstName, Is.EqualTo(firstName));
 			Assert.That(user.LastName, Is.EqualTo(lastName));
+			Assert.That(user.IsAdmin, Is.EqualTo(isAdmin));
 		});
 	}
 }

@@ -43,7 +43,7 @@ public sealed class CreateIncomeCommandHandlerTest
 	[Test]
 	public async Task GivenUserIdThatExists_WhenHandle_ThenReturnsIncomeId()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName");
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false);
 
 		mocKTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(user);
