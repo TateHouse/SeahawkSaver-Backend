@@ -26,6 +26,7 @@ public sealed class InMemoryDatabaseSeeder : IDatabaseSeeder
 	{
 		await databaseContext.AddRangeAsync(databaseDataset.Users);
 		await databaseContext.AddRangeAsync(databaseDataset.Incomes);
+		await databaseContext.AddRangeAsync(databaseDataset.Savings);
 		await databaseContext.SaveChangesAsync();
 	}
 }

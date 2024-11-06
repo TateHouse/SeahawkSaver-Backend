@@ -19,4 +19,11 @@ public interface IDatabaseDataset
 	 * </summary>
 	 */
 	public IReadOnlyList<Income> Incomes { get; }
+
+	/**
+	 * <summary>
+	 * The <see cref="Saving"/> entities to seed the database with.
+	 * </summary>
+	 */
+	public IReadOnlyList<Saving> Savings { get; }
 }

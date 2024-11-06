@@ -12,6 +12,7 @@ public sealed class InMemoryDatabaseDataset : IDatabaseDataset
 {
 	public IReadOnlyList<User> Users { get; }
 	public IReadOnlyList<Income> Incomes { get; }
+	public IReadOnlyList<Saving> Savings { get; }
 
 	/**
 	 * <summary>
@@ -72,7 +73,16 @@ public sealed class InMemoryDatabaseDataset : IDatabaseDataset
 			IncomeFactory.Create(Guid.Parse("53D15DD3-61E8-4519-AEF5-60A0546A1E23"), 293, DateTime.Now.AddDays(-10), users[2].UserId),
 		};
 
+		var savings = new List<Saving>
+		{
+			SavingFactory.Create(Guid.Parse("77DAB607-2797-440E-9C6E-5BDEC8D6C9D0"), 1000, DateTime.Now.AddDays(-1), users[1].UserId),
+			SavingFactory.Create(Guid.Parse("5939B0EA-8D18-4AD1-825C-0019013DB55B"), 500, DateTime.Now.AddDays(-1), users[2].UserId),
+			SavingFactory.Create(Guid.Parse("7D126146-146B-4D56-9210-36C7B9F348E7"), 850, DateTime.Now.AddDays(-1), users[2].UserId),
+			SavingFactory.Create(Guid.Parse("F459605A-D4E2-4853-B9E6-C5A9B15BCA87"), 1250, DateTime.Now.AddDays(-1), users[2].UserId),
+		};
+
 		Users = users;
 		Incomes = incomes;
+		Savings = savings;
 	}
 }
