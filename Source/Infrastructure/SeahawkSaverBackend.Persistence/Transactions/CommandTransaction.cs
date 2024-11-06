@@ -18,6 +18,7 @@ public sealed class CommandTransaction : ICommandTransaction
 
 	public IRepository<User> UserRepository { get; }
 	public IRepository<Income> IncomeRepository { get; }
+	public IRepository<Saving> SavingRepository { get; }
 	public bool HasTransactionStarted { get; private set; }
 
 	/**
@@ -27,15 +28,18 @@ public sealed class CommandTransaction : ICommandTransaction
 	 * <param name="databaseContext">The application's <see cref="Microsoft.EntityFrameworkCore.DbContext"/>.</param>
 	 * <param name="userRepository">A read-write repository for <see cref="User"/> entities.</param>
 	 * <param name="incomeRepository">A read-write repository for <see cref="Income"/> entities.</param>
+	 * <param name="savingRepository">A read-write repository for <see cref="Saving"/> entities.</param>
 	 */
 	public CommandTransaction(DatabaseContext databaseContext,
 							  IRepository<User> userRepository,
-							  IRepository<Income> incomeRepository)
+							  IRepository<Income> incomeRepository,
+							  IRepository<Saving> savingRepository)
 	{
 		this.databaseContext = databaseContext;
 		isInMemoryDatabase = databaseContext.Database.IsInMemory();
 		UserRepository = userRepository;
 		IncomeRepository = incomeRepository;
+		SavingRepository = savingRepository;
 		HasTransactionStarted = false;
 	}
 

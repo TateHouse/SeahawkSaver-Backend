@@ -13,10 +13,17 @@ public interface ICommandTransaction
 
 	/**
 	 * <summary>
-	 * A read-write repository to <see cref="Income"/> entities.
+	 * A read-write repository for <see cref="Income"/> entities.
 	 * </summary>
 	 */
 	public IRepository<Income> IncomeRepository { get; }
+
+	/**
+	 * <summary>
+	 * A read-write repository for <see cref="Saving"/> entities.
+	 * </summary>
+	 */
+	public IRepository<Saving> SavingRepository { get; }
 
 	/**
 	 * <summary>

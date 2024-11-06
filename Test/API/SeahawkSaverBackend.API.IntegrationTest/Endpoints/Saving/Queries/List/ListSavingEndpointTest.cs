@@ -22,6 +22,7 @@ public sealed class ListSavingEndpointTest : EndpointTest
 	public async Task GivenUserIdInRouteThatDoesNotMatchAuthenticatedUser_WhenAuthenticate_ThenReturnsUnauthorizedStatus()
 	{
 		await SeedDatabaseAsync();
+
 		var token = await GetAuthenticationTokenAsync("vicky.decker@yahoo.com", "#Password4Vicky");
 		var response = await GetAsync(ListSavingEndpointTest.BuildUrl(Guid.Parse("E1E0B144-1DFF-4326-A4E1-6282A58D269B")), token);
 
@@ -32,6 +33,7 @@ public sealed class ListSavingEndpointTest : EndpointTest
 	public async Task GivenAuthenticatedUserId_WhenListSaving_ThenReturnsOkStatus()
 	{
 		await SeedDatabaseAsync();
+
 		var token = await GetAuthenticationTokenAsync("vicky.decker@yahoo.com", "#Password4Vicky");
 		var response = await GetAsync(ListSavingEndpointTest.BuildUrl(Guid.Parse("1567C912-FB83-4FF4-91B4-2232807837DB")), token);
 
@@ -42,6 +44,7 @@ public sealed class ListSavingEndpointTest : EndpointTest
 	public async Task GivenAuthenticatedUserId_WhenListSaving_ThenReturnsSavingsForUser()
 	{
 		await SeedDatabaseAsync();
+
 		var token = await GetAuthenticationTokenAsync("vicky.decker@yahoo.com", "#Password4Vicky");
 		var response = await GetAsync(ListSavingEndpointTest.BuildUrl(Guid.Parse("1567C912-FB83-4FF4-91B4-2232807837DB")), token);
 		var content = await response.Content.ReadFromJsonAsync<ListSavingEndpointResponse>();
