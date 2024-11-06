@@ -1,5 +1,4 @@
 ﻿namespace SeahawkSaverBackend.API.IntegrationTest.Utilities;
-using Microsoft.VisualStudio.TestPlatform.Common.Interfaces;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
 using SeahawkSaverBackend.Domain.Entities;
 using SeahawkSaverBackend.Domain.Factories;
@@ -13,6 +12,7 @@ public sealed class InMemoryIntegrationTestDatabaseDataset : IDatabaseDataset
 {
 	public IReadOnlyList<User> Users { get; }
 	public IReadOnlyList<Income> Incomes { get; }
+	public IReadOnlyList<Saving> Savings { get; }
 
 	/**
 	 * <summary>
@@ -69,7 +69,18 @@ public sealed class InMemoryIntegrationTestDatabaseDataset : IDatabaseDataset
 			IncomeFactory.Create(Guid.Parse("4B1B0C98-761C-4E67-AB7B-2FA67EF3A33E"), 100, DateTime.Now.AddDays(-10), users[2].UserId),
 		};
 
+		var savings = new List<Saving>
+		{
+			SavingFactory.Create(Guid.Parse("AF476108-6951-4246-BC4E-35EE0DB864E2"), 150, DateTime.Now.AddDays(-1), users[1].UserId),
+			SavingFactory.Create(Guid.Parse("A8D2DC89-636B-4939-84C1-AA998F8BEDCA"), 50, DateTime.Now.AddDays(-2), users[1].UserId),
+			SavingFactory.Create(Guid.Parse("11340AC3-CAAC-4967-B4B6-65A1D6E9402A"), 50, DateTime.Now.AddDays(-7), users[1].UserId),
+			SavingFactory.Create(Guid.Parse("14B7AC98-EDB2-4063-8FD9-5D025D9A1680"), 75, DateTime.Now.AddDays(-8), users[1].UserId),
+			SavingFactory.Create(Guid.Parse("F3D24C01-134D-4907-838B-7534A542990F"), 25, DateTime.Now.AddDays(-9), users[2].UserId),
+			SavingFactory.Create(Guid.Parse("77A08D43-F746-47FB-973F-81F5849C17D5"), 100, DateTime.Now.AddDays(-10), users[2].UserId),
+		};
+
 		Users = users;
 		Incomes = incomes;
+		Savings = savings;
 	}
 }

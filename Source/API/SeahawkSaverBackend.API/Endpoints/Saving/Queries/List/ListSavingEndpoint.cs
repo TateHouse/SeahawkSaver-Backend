@@ -1,18 +1,18 @@
-﻿namespace SeahawkSaverBackend.API.Endpoints.Income.Queries.List;
+﻿namespace SeahawkSaverBackend.API.Endpoints.Saving.Queries.List;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SeahawkSaverBackend.API.Endpoints.Income.Queries.List.DTOs;
+using SeahawkSaverBackend.API.Endpoints.Saving.Queries.List.DTOs;
 using SeahawkSaverBackend.API.Utilities.Filters;
-using SeahawkSaverBackend.Application.Features.Income.Queries.List;
+using SeahawkSaverBackend.Application.Features.Saving.Queries.List;
 
 /**
  * <summary>
- * An endpoint for retrieving all <see cref="SeahawkSaverBackend.Domain.Entities.Income"/> entities from the database
+ * An endpoint for retrieving all <see cref="SeahawkSaverBackend.Domain.Entities.Saving"/> entities from the database
  * for a specific <see cref="SeahawkSaverBackend.Domain.Entities.User"/>.
  * </summary>
  */
-public static class ListIncomeEndpoint
+public static class ListSavingEndpoint
 {
 	/**
 	 * <summary>
@@ -23,13 +23,13 @@ public static class ListIncomeEndpoint
 	 */
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
-		groupBuilder.MapGet("/list/{userId}", ListIncomeEndpoint.HandleAsync)
+		groupBuilder.MapGet("/list/{userId}", ListSavingEndpoint.HandleAsync)
 					.AddEndpointFilter<TokenValidationFilter>()
-					.WithName("Income-List")
+					.WithName("Saving-List")
 					.WithTags(tags)
-					.WithSummary("An endpoint for retrieving all incomes for the user.")
-					.WithDescription("All of the user's associated incomes are returned.")
-					.Produces<ListIncomeEndpointResponse>(StatusCodes.Status200OK)
+					.WithSummary("An endpoint for retrieving all savings for the user.")
+					.WithDescription("All of the user's associated savings are returned.")
+					.Produces<ListSavingEndpointResponse>(StatusCodes.Status200OK)
 					.ProducesProblem(StatusCodes.Status401Unauthorized);
 	}
 
@@ -47,8 +47,8 @@ public static class ListIncomeEndpoint
 												   IMapper mapper,
 												   [FromRoute] Guid userId)
 	{
-		var query = mapper.Map<ListIncomeQuery>(userId);
-		var response = mapper.Map<ListIncomeEndpointResponse>(await mediator.Send(query));
+		var query = mapper.Map<ListSavingQuery>(userId);
+		var response = mapper.Map<ListSavingEndpointResponse>(await mediator.Send(query));
 
 		return Results.Ok(response);
 	}

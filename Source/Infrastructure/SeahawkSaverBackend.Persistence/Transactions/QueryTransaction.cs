@@ -12,16 +12,22 @@ public sealed class QueryTransaction : IQueryTransaction
 {
 	public IReadOnlyRepository<User> UserRepository { get; }
 	public IReadOnlyRepository<Income> IncomeRepository { get; }
+	public IReadOnlyRepository<Saving> SavingRepository { get; }
 
 	/**
 	 * <summary>
 	 * Instantiates a new <see cref="QueryTransaction"/> instance.
 	 * </summary>
 	 * <param name="userRepository">A read-only repository for <see cref="User"/> entities.</param>
+	 * <param name="incomeRepository">A read-only repository for <see cref="Income"/> entities.</param>
+	 * <param name="savingRepository">A read-only repository for <see cref="Saving"/> entities.</param>
 	 */
-	public QueryTransaction(IReadOnlyRepository<User> userRepository, IReadOnlyRepository<Income> incomeRepository)
+	public QueryTransaction(IReadOnlyRepository<User> userRepository,
+							IReadOnlyRepository<Income> incomeRepository,
+							IReadOnlyRepository<Saving> savingRepository)
 	{
 		UserRepository = userRepository;
 		IncomeRepository = incomeRepository;
+		SavingRepository = savingRepository;
 	}
 }
