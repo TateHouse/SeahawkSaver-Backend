@@ -1,5 +1,7 @@
 ﻿namespace SeahawkSaverBackend.API.Endpoints.Saving;
+using SeahawkSaverBackend.API.Endpoints.Saving.Commands.Delete;
 using SeahawkSaverBackend.API.Endpoints.Saving.Queries.List;
+using SeahawkSaverBackend.Application.Features.Saving.Commands.Delete;
 
 /**
  * <summary>
@@ -25,6 +27,7 @@ public static class SavingEndpointsMapper
 	public static void MapSavingEndpoints(this WebApplication application)
 	{
 		var groupBuilder = application.MapGroup(SavingEndpointsMapper.Prefix);
+		DeleteSavingEndpoint.MapEndpoint(groupBuilder, SavingEndpointsMapper.Tags);
 		ListSavingEndpoint.MapEndpoint(groupBuilder, SavingEndpointsMapper.Tags);
 	}
 }
