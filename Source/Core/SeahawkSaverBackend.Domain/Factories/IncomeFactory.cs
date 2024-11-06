@@ -10,7 +10,7 @@ public static class IncomeFactory
 {
 	/**
 	 * <summary>
-	 * Instantaites a new <see cref="Income"/> instance.
+	 * Instantiates a new <see cref="Income"/> instance.
 	 * </summary>
 	 * <param name="incomeId">The income's id.</param>
 	 * <param name="amount">The income's amount.</param>

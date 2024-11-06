@@ -25,6 +25,13 @@ public sealed class DatabaseContext : DbContext
 
 	/**
 	 * <summary>
+	 * The <see cref="Savings"/> entities in the database.
+	 * </summary>
+	 */
+	public DbSet<Saving> Savings { get; set; }
+
+	/**
+	 * <summary>
 	 * Instantiates a new <see cref="DatabaseContext"/> instance.
 	 * </summary>
 	 * <param name="databaseContextOptions">The options to be used by the <see cref="DatabaseContext"/>.</param>
