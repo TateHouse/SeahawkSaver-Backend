@@ -19,6 +19,7 @@ public sealed class CommandTransaction : ICommandTransaction
 	public IRepository<User> UserRepository { get; }
 	public IRepository<Income> IncomeRepository { get; }
 	public IRepository<Saving> SavingRepository { get; }
+	public IRepository<Subscription> SubscriptionRepository { get; }
 	public bool HasTransactionStarted { get; private set; }
 
 	/**
@@ -29,17 +30,20 @@ public sealed class CommandTransaction : ICommandTransaction
 	 * <param name="userRepository">A read-write repository for <see cref="User"/> entities.</param>
 	 * <param name="incomeRepository">A read-write repository for <see cref="Income"/> entities.</param>
 	 * <param name="savingRepository">A read-write repository for <see cref="Saving"/> entities.</param>
+	 * <param name="subscriptionRepository">A read-write repository for <see cref="Saving"/> entities.</param>
 	 */
 	public CommandTransaction(DatabaseContext databaseContext,
 							  IRepository<User> userRepository,
 							  IRepository<Income> incomeRepository,
-							  IRepository<Saving> savingRepository)
+							  IRepository<Saving> savingRepository,
+							  IRepository<Subscription> subscriptionRepository)
 	{
 		this.databaseContext = databaseContext;
 		isInMemoryDatabase = databaseContext.Database.IsInMemory();
 		UserRepository = userRepository;
 		IncomeRepository = incomeRepository;
 		SavingRepository = savingRepository;
+		SubscriptionRepository = subscriptionRepository;
 		HasTransactionStarted = false;
 	}
 

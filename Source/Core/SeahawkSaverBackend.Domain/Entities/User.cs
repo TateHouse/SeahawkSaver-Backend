@@ -15,4 +15,5 @@ public class User
 
 	public virtual ICollection<Income> Incomes { get; } = null!;
 	public virtual ICollection<Saving> Savings { get; } = null!;
+	public virtual ICollection<Subscription> Subscriptions { get; } = null!;
 }
