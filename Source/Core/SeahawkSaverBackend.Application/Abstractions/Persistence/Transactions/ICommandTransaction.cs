@@ -27,6 +27,13 @@ public interface ICommandTransaction
 
 	/**
 	 * <summary>
+	 * A read-write repository for <see cref="Subscription"/> entities.
+	 * </summary>
+	 */
+	public IRepository<Subscription> SubscriptionRepository { get; }
+
+	/**
+	 * <summary>
 	 * A value indicating whether the database transaction has started.
 	 * </summary>
 	 */
