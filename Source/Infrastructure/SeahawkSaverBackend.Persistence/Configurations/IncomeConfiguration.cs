@@ -10,6 +10,7 @@ using SeahawkSaverBackend.Domain.Entities;
  */
 public sealed class IncomeConfiguration : IEntityTypeConfiguration<Income>
 {
+
 	public void Configure(EntityTypeBuilder<Income> builder)
 	{
 		builder.HasKey(income => income.IncomeId);

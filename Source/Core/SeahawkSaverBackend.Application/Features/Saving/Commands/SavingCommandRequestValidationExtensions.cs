@@ -1,11 +1,13 @@
-﻿namespace SeahawkSaverBackend.Application.Features.Income.Commands;
+﻿namespace SeahawkSaverBackend.Application.Features.Saving.Commands;
 using FluentValidation;
 
 /**
+ * <summary>
  * A collection of FluentValidation validation extensions related to the
- * <see cref="SeahawkSaverBackend.Domain.Entities.Income"/> entity.
+ * <see cref="SeahawkSaverBackend.Domain.Entities.Saving"/> entity.
+ * </summary>
  */
-public static class IncomeCommandRequestValidationExtensions
+public static class SavingCommandRequestValidationExtensions
 {
 	/**
 	 * <summary>
@@ -13,7 +15,7 @@ public static class IncomeCommandRequestValidationExtensions
 	 * </summary>
 	 */
 	public static IRuleBuilderOptions<TDTO, Guid?> ValidateUserId<TDTO>(this IRuleBuilder<TDTO, Guid?> ruleBuilder)
-		where TDTO : IncomeCommandRequest
+		where TDTO : SavingCommandRequest
 	{
 		return ruleBuilder.Must(userId => userId != Guid.Empty)
 						  .WithMessage("The user id must be provided.");
@@ -21,14 +23,14 @@ public static class IncomeCommandRequestValidationExtensions
 
 	/**
 	 * <summary>
-	 * Validates that the income id is provided.
+	 * Validates that the savings id is provided.
 	 * </summary>
 	 */
-	public static IRuleBuilderOptions<TDTO, Guid?> ValidateIncomeId<TDTO>(this IRuleBuilder<TDTO, Guid?> ruleBuilder)
-		where TDTO : IncomeCommandRequest
+	public static IRuleBuilderOptions<TDTO, Guid?> ValidateSavingId<TDTO>(this IRuleBuilder<TDTO, Guid?> ruleBuilder)
+		where TDTO : SavingCommandRequest
 	{
-		return ruleBuilder.Must(incomeId => incomeId != Guid.Empty)
-						  .WithMessage("The income id must be provided.");
+		return ruleBuilder.Must(savingId => savingId != Guid.Empty)
+						  .WithMessage("The saving id must be provided.");
 	}
 
 	/**
@@ -37,7 +39,7 @@ public static class IncomeCommandRequestValidationExtensions
 	 * </summary>
 	 */
 	public static IRuleBuilderOptions<TDTO, decimal?> ValidateAmount<TDTO>(this IRuleBuilder<TDTO, decimal?> ruleBuilder)
-		where TDTO : IncomeCommandRequest
+		where TDTO : SavingCommandRequest
 	{
 		return ruleBuilder.GreaterThan(0)
 						  .WithMessage("The amount must be greater than zero.");
@@ -49,7 +51,7 @@ public static class IncomeCommandRequestValidationExtensions
 	 * </summary>
 	 */
 	public static IRuleBuilderOptions<TDTO, DateTime?> ValidateDateTime<TDTO>(this IRuleBuilder<TDTO, DateTime?> ruleBuilder)
-		where TDTO : IncomeCommandRequest
+		where TDTO : SavingCommandRequest
 	{
 		var currentDateTime = DateTime.Now;
 		var minimumDateTime = currentDateTime.AddDays(-30);
