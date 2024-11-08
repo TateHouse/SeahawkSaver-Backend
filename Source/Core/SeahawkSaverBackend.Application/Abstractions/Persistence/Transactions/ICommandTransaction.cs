@@ -20,6 +20,13 @@ public interface ICommandTransaction
 
 	/**
 	 * <summary>
+	 * A read-write repository to <see cref="Debt"/> entities.
+	 * </summary>
+	 */
+	public IRepository<Debt> DebtRepository { get; }
+
+	/**
+	 * <summary>
 	 * A value indicating whether the database transaction has started.
 	 * </summary>
 	 */

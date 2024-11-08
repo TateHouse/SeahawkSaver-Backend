@@ -12,6 +12,7 @@ public sealed class QueryTransaction : IQueryTransaction
 {
 	public IReadOnlyRepository<User> UserRepository { get; }
 	public IReadOnlyRepository<Income> IncomeRepository { get; }
+	public IReadOnlyRepository<Debt> DebtRepository { get; }
 
 	/**
 	 * <summary>
@@ -19,9 +20,11 @@ public sealed class QueryTransaction : IQueryTransaction
 	 * </summary>
 	 * <param name="userRepository">A read-only repository for <see cref="User"/> entities.</param>
 	 */
-	public QueryTransaction(IReadOnlyRepository<User> userRepository, IReadOnlyRepository<Income> incomeRepository)
+	public QueryTransaction(IReadOnlyRepository<User> userRepository, IReadOnlyRepository<Income> incomeRepository, IReadOnlyRepository<Debt> debtRepository)
 	{
 		UserRepository = userRepository;
 		IncomeRepository = incomeRepository;
+		DebtRepository = debtRepository;
+
 	}
 }

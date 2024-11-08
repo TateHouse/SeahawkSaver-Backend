@@ -18,6 +18,7 @@ public sealed class CommandTransaction : ICommandTransaction
 
 	public IRepository<User> UserRepository { get; }
 	public IRepository<Income> IncomeRepository { get; }
+	public IRepository<Debt> DebtRepository { get; }
 	public bool HasTransactionStarted { get; private set; }
 
 	/**
@@ -30,12 +31,14 @@ public sealed class CommandTransaction : ICommandTransaction
 	 */
 	public CommandTransaction(DatabaseContext databaseContext,
 							  IRepository<User> userRepository,
-							  IRepository<Income> incomeRepository)
+							  IRepository<Income> incomeRepository,
+							  IRepository<Debt> debtRepository)
 	{
 		this.databaseContext = databaseContext;
 		isInMemoryDatabase = databaseContext.Database.IsInMemory();
 		UserRepository = userRepository;
 		IncomeRepository = incomeRepository;
+		DebtRepository = debtRepository;
 		HasTransactionStarted = false;
 	}
 

@@ -22,4 +22,11 @@ public interface IQueryTransaction
 	 * </summary>
 	 */
 	public IReadOnlyRepository<Income> IncomeRepository { get; }
+
+	/**
+	 * <summary>
+	 * A read-only repository for <see cref="Debt"/> entities.
+	 * </summary>
+	 */
+	public IReadOnlyRepository<Debt> DebtRepository { get; }
 }
