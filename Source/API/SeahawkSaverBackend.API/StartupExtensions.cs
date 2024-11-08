@@ -1,5 +1,6 @@
 ﻿namespace SeahawkSaverBackend.API;
 using Microsoft.OpenApi.Models;
+using SeahawkSaverBackend.API.Endpoints.Debt;
 using SeahawkSaverBackend.API.Endpoints.Income;
 using SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.Application;
@@ -130,6 +131,7 @@ public static class StartupExtensions
 		}
 
 		application.MapUserEndpoints();
+		application.MapDebtEndpoints();
 		application.MapIncomeEndpoints();
 
 		await StartupExtensions.SeedDatabaseASync(application);
