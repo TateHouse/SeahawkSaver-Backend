@@ -25,6 +25,13 @@ public interface IQueryTransaction
 
 	/**
 	 * <summary>
+	 * A read-only repository for <see cref="Debt"/> entities.
+	 * </summary>
+	 */
+	public IReadOnlyRepository<Debt> DebtRepository { get; }
+
+  /*
+   * <summary>
 	 * A read-only repository for <see cref="Saving"/> entities.
 	 * </summary>
 	 */

@@ -18,8 +18,10 @@ public sealed class CommandTransaction : ICommandTransaction
 
 	public IRepository<User> UserRepository { get; }
 	public IRepository<Income> IncomeRepository { get; }
+	public IRepository<Debt> DebtRepository { get; }
 	public IRepository<Saving> SavingRepository { get; }
 	public IRepository<Subscription> SubscriptionRepository { get; }
+  
 	public bool HasTransactionStarted { get; private set; }
 
 	/**
@@ -29,12 +31,14 @@ public sealed class CommandTransaction : ICommandTransaction
 	 * <param name="databaseContext">The application's <see cref="Microsoft.EntityFrameworkCore.DbContext"/>.</param>
 	 * <param name="userRepository">A read-write repository for <see cref="User"/> entities.</param>
 	 * <param name="incomeRepository">A read-write repository for <see cref="Income"/> entities.</param>
+   * <param name="debtRepository">A read-write repository for <see cref="Debt"/> entities.</param>
 	 * <param name="savingRepository">A read-write repository for <see cref="Saving"/> entities.</param>
 	 * <param name="subscriptionRepository">A read-write repository for <see cref="Saving"/> entities.</param>
 	 */
 	public CommandTransaction(DatabaseContext databaseContext,
 							  IRepository<User> userRepository,
 							  IRepository<Income> incomeRepository,
+							  IRepository<Debt> debtRepository,
 							  IRepository<Saving> savingRepository,
 							  IRepository<Subscription> subscriptionRepository)
 	{
@@ -42,6 +46,7 @@ public sealed class CommandTransaction : ICommandTransaction
 		isInMemoryDatabase = databaseContext.Database.IsInMemory();
 		UserRepository = userRepository;
 		IncomeRepository = incomeRepository;
+		DebtRepository = debtRepository;
 		SavingRepository = savingRepository;
 		SubscriptionRepository = subscriptionRepository;
 		HasTransactionStarted = false;

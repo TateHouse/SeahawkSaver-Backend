@@ -20,6 +20,13 @@ public interface ICommandTransaction
 
 	/**
 	 * <summary>
+	 * A read-write repository to <see cref="Debt"/> entities.
+	 * </summary>
+	 */
+	public IRepository<Debt> DebtRepository { get; }
+
+  /**
+   * <summary>
 	 * A read-write repository for <see cref="Saving"/> entities.
 	 * </summary>
 	 */
@@ -31,6 +38,7 @@ public interface ICommandTransaction
 	 * </summary>
 	 */
 	public IRepository<Subscription> SubscriptionRepository { get; }
+
 
 	/**
 	 * <summary>
