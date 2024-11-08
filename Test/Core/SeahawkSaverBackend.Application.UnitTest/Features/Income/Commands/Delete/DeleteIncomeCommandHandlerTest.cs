@@ -47,7 +47,7 @@ public sealed class DeleteIncomeCommandHandlerTest
 
 		mockTransaction.Setup(mock => mock.IncomeRepository.DeleteAsync(It.IsAny<Income>(), It.IsAny<CancellationToken>()));
 
-		var request = DeleteIncomeCommandFactory.Create(commandSettings, Guid.NewGuid(), Guid.NewGuid());
+		var request = DeleteIncomeCommandFactory.Create(commandSettings, income.IncomeId, income.UserId);
 		var response = await commandHandler.Handle(request, CancellationToken.None);
 
 		Assert.That(response, Is.TypeOf<Unit>());

@@ -14,7 +14,7 @@ public sealed class ListIncomeQueryHandler : QueryHandler<ListIncomeQuery, ListI
 {
 	/**
 	 * <summary>
-	 * instantiates a new <see cref="ListIncomeQueryHandler"/> instance.
+	 * Instantiates a new <see cref="ListIncomeQueryHandler"/> instance.
 	 * </summary>
 	 * <param name="transaction">the "unit of work" used during query execution.</param>
 	 * <param name="mapper">the automapper to use.</param>

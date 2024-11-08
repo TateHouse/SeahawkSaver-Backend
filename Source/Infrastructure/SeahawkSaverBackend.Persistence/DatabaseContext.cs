@@ -29,7 +29,21 @@ public sealed class DatabaseContext : DbContext
 	 * </summary>
 	 */
 	public DbSet<Debt> Debts { get; set; }
+  
+	/**
+	 * <summary>
+	 * The <see cref="Savings"/> entities in the database.
+	 * </summary>
+	 */
+	public DbSet<Saving> Savings { get; set; }
 
+	/**
+	 * <summary>
+	 * The <see cref="Subscription"/> entities in the database.
+	 * </summary>
+	 */
+	public DbSet<Subscription> Subscriptions { get; set; }
+  
 	/**
 	 * <summary>
 	 * Instantiates a new <see cref="DatabaseContext"/> instance.

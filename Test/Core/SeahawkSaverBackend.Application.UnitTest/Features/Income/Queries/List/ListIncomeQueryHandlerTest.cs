@@ -22,7 +22,7 @@ public sealed class ListIncomeQueryHandlerTest
 	}
 
 	[Test]
-	public async Task WHenHandleAndDatabaseIsEmpty_ThenReturnsNoIncome()
+	public async Task WhenHandleAndDatabaseIsEmpty_ThenReturnsNoIncomes()
 	{
 		var incomes = new List<Income>();
 

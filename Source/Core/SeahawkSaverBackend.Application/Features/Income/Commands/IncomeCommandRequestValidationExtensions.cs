@@ -55,7 +55,7 @@ public static class IncomeCommandRequestValidationExtensions
 		var minimumDateTime = currentDateTime.AddDays(-30);
 
 		return ruleBuilder.LessThan(currentDateTime)
-						  .WithMessage("The date and date cannot be in the future.")
+						  .WithMessage("The date and time cannot be in the future.")
 						  .GreaterThan(minimumDateTime)
 						  .WithMessage($"The date and time cannot be before {minimumDateTime}.");
 	}

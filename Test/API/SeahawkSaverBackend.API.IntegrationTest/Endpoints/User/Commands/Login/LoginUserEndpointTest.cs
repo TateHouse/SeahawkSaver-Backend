@@ -76,6 +76,7 @@ public sealed class LoginUserEndpointTest : EndpointTest
 			Assert.That(content.User.Email, Is.EqualTo("peter.keller@gmail.com"));
 			Assert.That(content.User.FirstName, Is.EqualTo("Peter"));
 			Assert.That(content.User.LastName, Is.EqualTo("Keller"));
+			Assert.That(content.User.IsAdmin, Is.False);
 		});
 	}
 }

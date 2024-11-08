@@ -33,6 +33,7 @@ public sealed class ListIncomeEndpointTest : EndpointTest
 	public async Task GivenAuthenticatedUserId_WhenListIncome_ThenReturnsOkStatus()
 	{
 		await SeedDatabaseAsync();
+
 		var token = await GetAuthenticationTokenAsync("vicky.decker@yahoo.com", "#Password4Vicky");
 		var response = await GetAsync(ListIncomeEndpointTest.BuildUrl(Guid.Parse("1567C912-FB83-4FF4-91B4-2232807837DB")), token);
 
@@ -40,9 +41,10 @@ public sealed class ListIncomeEndpointTest : EndpointTest
 	}
 
 	[Test]
-	public async Task GivenAuthenticatedUser_WhenListIncome_ThenReturnsIncomeForUser()
+	public async Task GivenAuthenticatedUser_WhenListIncome_ThenReturnsIncomesForUser()
 	{
 		await SeedDatabaseAsync();
+
 		var token = await GetAuthenticationTokenAsync("vicky.decker@yahoo.com", "#Password4Vicky");
 		var response = await GetAsync(ListIncomeEndpointTest.BuildUrl(Guid.Parse("1567C912-FB83-4FF4-91B4-2232807837DB")), token);
 		var content = await response.Content.ReadFromJsonAsync<ListIncomeEndpointResponse>();

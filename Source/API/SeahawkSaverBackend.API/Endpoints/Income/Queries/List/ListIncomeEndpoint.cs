@@ -27,8 +27,8 @@ public static class ListIncomeEndpoint
 					.AddEndpointFilter<TokenValidationFilter>()
 					.WithName("Income-List")
 					.WithTags(tags)
-					.WithSummary("An endpoint for retrieving all income for the user.")
-					.WithDescription("All of the user's associated income is returned.")
+					.WithSummary("An endpoint for retrieving all incomes for the user.")
+					.WithDescription("All of the user's associated incomes are returned.")
 					.Produces<ListIncomeEndpointResponse>(StatusCodes.Status200OK)
 					.ProducesProblem(StatusCodes.Status401Unauthorized);
 	}

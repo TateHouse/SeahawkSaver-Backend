@@ -2,6 +2,8 @@
 using Microsoft.OpenApi.Models;
 using SeahawkSaverBackend.API.Endpoints.Debt;
 using SeahawkSaverBackend.API.Endpoints.Income;
+using SeahawkSaverBackend.API.Endpoints.Saving;
+using SeahawkSaverBackend.API.Endpoints.Subscription;
 using SeahawkSaverBackend.API.Endpoints.User;
 using SeahawkSaverBackend.Application;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
@@ -133,6 +135,8 @@ public static class StartupExtensions
 		application.MapUserEndpoints();
 		application.MapDebtEndpoints();
 		application.MapIncomeEndpoints();
+		application.MapSavingEndpoints();
+		application.MapSubscriptionEndpoints();
 
 		await StartupExtensions.SeedDatabaseASync(application);
 

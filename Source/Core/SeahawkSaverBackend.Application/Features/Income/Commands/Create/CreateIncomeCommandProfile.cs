@@ -12,7 +12,7 @@ public sealed class CreateIncomeCommandProfile : Profile
 {
 	/**
 	 * <summary>
-	 * Instantiates a new <see cref="CreateIncomeCommand"/> instance.
+	 * Instantiates a new <see cref="CreateIncomeCommandProfile"/> instance.
 	 * </summary>
 	 */
 	public CreateIncomeCommandProfile()

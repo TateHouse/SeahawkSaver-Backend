@@ -59,7 +59,7 @@ public sealed class JwtTokenValidatorTest
 	[Test]
 	public async Task GivenValidToken_WhenValidateTokenAsyncAndUserDoesNotExist_ThenThrowsNotFoundException()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName");
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false);
 		var token = jwtTokenGenerator.GenerateToken(user, DateTime.UtcNow.AddMinutes(10), false);
 
 		mockUserRepository.Setup(mock => mock.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
@@ -75,7 +75,7 @@ public sealed class JwtTokenValidatorTest
 	[TestCase(true)]
 	public async Task GivenValidToken_WhenValidateTokenAsyncAndUserExists_ThenReturnsUser(bool isForPasswordReset)
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName");
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false);
 		var token = string.Empty;
 
 		if (isForPasswordReset)
@@ -93,8 +93,7 @@ public sealed class JwtTokenValidatorTest
 
 		var result = await jwtTokenValidator.ValidateTokenAsync(token, false, CancellationToken.None);
 
-		Assert.Multiple(() =>
-		{
+		Assert.Multiple(() => {
 			Assert.That(result.UserId, Is.EqualTo(user.UserId));
 			Assert.That(result.Email, Is.EqualTo(user.Email));
 			Assert.That(result.Password, Is.EqualTo(user.Password));
