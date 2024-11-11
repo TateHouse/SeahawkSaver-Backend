@@ -1,6 +1,7 @@
 namespace SeahawkSaverBackend.API.Endpoints.Subscription;
 using SeahawkSaverBackend.API.Endpoints.Subscription.Commands.Create;
 using SeahawkSaverBackend.API.Endpoints.Subscription.Commands.Delete;
+using SeahawkSaverBackend.API.Endpoints.Subscription.Queries.List;
 
 /**
  * <summary>
@@ -28,5 +29,6 @@ public static class SubscriptionEndpointsMapper
 		var groupBuilder = application.MapGroup(SubscriptionEndpointsMapper.Prefix);
         CreateSubscriptionEndpoint.MapEndpoint(groupBuilder, SubscriptionEndpointsMapper.Tags);
 		DeleteSubscriptionEndpoint.MapEndpoint(groupBuilder, SubscriptionEndpointsMapper.Tags);
+		ListSubscriptionEndpoint.MapEndpoint(groupBuilder, SubscriptionEndpointsMapper.Tags);
 	}
 }

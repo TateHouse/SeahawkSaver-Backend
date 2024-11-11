@@ -6,5 +6,5 @@
  */
 public sealed record ListSubscriptionQueryResponse
 {
-	public required IReadOnlyList<ListSubscriptionQueryResponse> Subscriptions { get; init; }
+	public required IReadOnlyList<ListSubscriptionQuerySubscriptionResponse> Subscriptions { get; init; }
 }

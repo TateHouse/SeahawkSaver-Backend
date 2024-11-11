@@ -25,7 +25,7 @@ public static class DeleteSubscriptionEndpoint
 	{
 		groupBuilder.MapDelete("/{userId}", DeleteSubscriptionEndpoint.HandleAsync)
 					.AddEndpointFilter<TokenValidationFilter>()
-					.WithName("Subscription-Delete")
+					.WithName("Delete-Subscription")
 					.WithTags(tags)
 					.WithSummary("An endpoint for deleting an existing subscription endpoint from the database.")
 					.WithDescription("For a user to delete an existing subscription from the database, he must provide his user id and the subscription id.")
