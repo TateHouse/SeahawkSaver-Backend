@@ -30,10 +30,17 @@ public interface IQueryTransaction
 	 */
 	public IReadOnlyRepository<Debt> DebtRepository { get; }
 
-  /*
-   * <summary>
+	/**
+	 * <summary>
 	 * A read-only repository for <see cref="Saving"/> entities.
 	 * </summary>
 	 */
 	public IReadOnlyRepository<Saving> SavingRepository { get; }
+
+	/**
+	 * <summary>
+	 * A read-only repository for <see cref="Saving"/> entities.
+	 * </summary>
+	 */
+	public IReadOnlyRepository<Subscription> SubscriptionRepository { get; }
 }

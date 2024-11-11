@@ -1,20 +1,19 @@
-﻿namespace SeahawkSaverBackend.API.Endpoints.Saving.Commands.Update;
+﻿namespace SeahawkSaverBackend.API.Endpoints.Subscription.Commands.Update;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SeahawkSaverBackend.API.Endpoints.Saving.Commands.Update.DTOs;
+using SeahawkSaverBackend.API.Endpoints.Subscription.Commands.Update.DTOs;
 using SeahawkSaverBackend.API.Utilities.Filters;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Exceptions;
-using SeahawkSaverBackend.Application.Features.Saving.Commands.Update;
+using SeahawkSaverBackend.Application.Features.Subscription.Commands.Update;
 
 /**
  * <summary>
- * An endpoint for updating an existing <see cref="SeahawkSaverBackend.Domain.Entities.Saving"/> entity.
+ * An endpoint for updating an existing <see cref="SeahawkSaverBackend.Domain.Entities.Subscription"/> entity.
  * </summary>
  */
-public static class UpdateSavingEndpoint
+public static class UpdateSubscriptionEndpoint
 {
-
 	/**
 	 * <summary>
 	 * Asynchronously handles the endpoint.
@@ -24,12 +23,11 @@ public static class UpdateSavingEndpoint
 	 */
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
-		groupBuilder.MapPut("/{userId}", UpdateSavingEndpoint.HandleAsync)
+		groupBuilder.MapPut("/{userId}", UpdateSubscriptionEndpoint.HandleAsync)
 					.AddEndpointFilter<TokenValidationFilter>()
-					.WithName("Saving-Update")
-					.WithTags(tags)
-					.WithSummary("Updates all saving properties.")
-					.WithDescription("Since this is a PUT operation, all saving properties must be provided for the update even if they are not modified.")
+					.WithName("Subscription-Update")
+					.WithSummary("Updates all subscription properties.")
+					.WithDescription("Since this is a PUT operation, all subscription properties must be provided for the update even if they are not modified.")
 					.Produces(StatusCodes.Status204NoContent)
 					.ProducesProblem(StatusCodes.Status404NotFound)
 					.ProducesValidationProblem(StatusCodes.Status400BadRequest);
@@ -47,16 +45,16 @@ public static class UpdateSavingEndpoint
 	 */
 	private async static Task<IResult> HandleAsync(IMediator mediator,
 												   [FromRoute] Guid userId,
-												   [FromBody] UpdateSavingEndpointRequest request)
+												   [FromBody] UpdateSubscriptionEndpointRequest request)
 	{
 		try
 		{
 			var commandSettings = new CommandSettings(true, true);
-			var command = UpdateSavingCommandFactory.Create(commandSettings,
-															userId,
-															request.Saving.SavingId,
-															request.Saving.Amount,
-															request.Saving.DateTime);
+			var command = UpdateSubscriptionCommandFactory.Create(commandSettings,
+																  userId,
+																  request.Subscription.SubscriptionId,
+																  request.Subscription.Amount,
+																  request.Subscription.DateTime);
 
 			await mediator.Send(command);
 
