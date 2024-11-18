@@ -34,7 +34,7 @@ public sealed class UpdateIncomeCommandHandlerTest
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(() => null);
 
-		var request = UpdateUserCommandFactory.Create(commandSettings, Guid.NewGuid(), "test.user@example.com", "TestFirstName", "TestLastName");
+		var request = UpdateUserCommandFactory.Create(commandSettings, Guid.NewGuid(), "test.user@example.com", "TestFirstName", "TestLastName", true);
 
 		Assert.ThrowsAsync<NotFoundException>(() => commandHandler.Handle(request, CancellationToken.None));
 
@@ -44,14 +44,14 @@ public sealed class UpdateIncomeCommandHandlerTest
 	[Test]
 	public async Task GivenUserIdThatExists_WhenHandle_ThenReturnsUnit()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@example.com", "#Password4User", "TestFirstName", "TestLastName", false);
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@example.com", "#Password4User", "TestFirstName", "TestLastName", false, true);
 
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(user);
 
 		mockTransaction.Setup(mock => mock.UserRepository.UpdateAsync(It.IsAny<User>(), It.IsAny<CancellationToken>()));
 
-		var request = UpdateUserCommandFactory.Create(commandSettings, user.UserId, user.Email, user.FirstName, user.LastName);
+		var request = UpdateUserCommandFactory.Create(commandSettings, user.UserId, user.Email, user.FirstName, user.LastName, true);
 		var response = await commandHandler.Handle(request, CancellationToken.None);
 
 		Assert.That(response, Is.TypeOf<Unit>());

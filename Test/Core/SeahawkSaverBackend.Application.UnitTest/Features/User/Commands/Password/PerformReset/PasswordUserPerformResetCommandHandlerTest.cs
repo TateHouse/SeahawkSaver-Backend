@@ -32,7 +32,7 @@ public sealed class PasswordUserPerformResetCommandHandlerTest
 	[Test]
 	public async Task GivenValidToken_WhenHandle_ThenUserPasswordIsUpdated()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@example.com", "#Password4Testing", "TestFirstName", "TestLastName", false);
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@example.com", "#Password4Testing", "TestFirstName", "TestLastName", false, true);
 		const string updatedPassword = "#UpdatedPassword4TestingHash";
 
 		mockTokenValidator.Setup(mock => mock.ValidateTokenAsync(It.IsAny<string>(), true, It.IsAny<CancellationToken>()))

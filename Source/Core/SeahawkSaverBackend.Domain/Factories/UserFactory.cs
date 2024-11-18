@@ -18,6 +18,7 @@ public static class UserFactory
 	 * <param name="firstName">The user's first name.</param>
 	 * <param name="lastName">The user's last name.</param>
 	 * <param name="isAdmin">Specifies whether this user is an admin.</param>
+	 * <param name="isActive">Specifies whether this user is active and can utilize his account.</param>
 	 * <returns>A new <see cref="User"/> instance.</returns>
 	 */
 	public static User Create(Guid userId,
@@ -25,7 +26,8 @@ public static class UserFactory
 							  string password,
 							  string firstName,
 							  string lastName,
-							  bool isAdmin)
+							  bool isAdmin,
+							  bool isActive)
 	{
 		return new User
 		{
@@ -34,7 +36,8 @@ public static class UserFactory
 			Password = password,
 			FirstName = firstName,
 			LastName = lastName,
-			IsAdmin = isAdmin
+			IsAdmin = isAdmin,
+			IsActive = isActive
 		};
 	}
 }

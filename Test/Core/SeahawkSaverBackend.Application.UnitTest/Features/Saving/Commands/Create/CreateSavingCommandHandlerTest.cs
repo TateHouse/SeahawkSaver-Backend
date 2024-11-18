@@ -43,7 +43,7 @@ public sealed class CreateSavingCommandHandlerTest
 	[Test]
 	public async Task GivenUserIdThatExists_WhenHandle_ThenReturnsSavingId()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false);
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false, true);
 
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(user);

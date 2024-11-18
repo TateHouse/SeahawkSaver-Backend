@@ -39,6 +39,22 @@ public sealed class LoginUserEndpointTest : EndpointTest
 	}
 
 	[Test]
+	public async Task GivenEmailThatExistsAndPasswordThatExists_WhenLoginUserAndUserIsNotActive_ThenReturnsResponseWithUnauthorizedStatus()
+	{
+		await SeedDatabaseAsync();
+
+		var request = new LoginUserEndpointRequest
+		{
+			Email = "daisy.silva@gmail.com",
+			Password = "#Password4Daisy"
+		};
+
+		var response = await PostAsync($"{UserEndpointsMapper.Prefix}/login", null, request);
+
+		Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Unauthorized));
+	}
+
+	[Test]
 	public async Task GivenEmailThatExistsAndValidPassword_WhenLoginUser_ThenReturnsResponseWithOkStatus()
 	{
 		await SeedDatabaseAsync();

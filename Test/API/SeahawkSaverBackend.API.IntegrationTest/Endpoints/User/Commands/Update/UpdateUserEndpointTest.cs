@@ -24,7 +24,8 @@ public sealed class UpdateUserEndpointTest : EndpointTest
 			{
 				Email = "harold.shepard@gmail.com",
 				FirstName = "",
-				LastName = ""
+				LastName = "",
+				IsActive = true
 			}
 		};
 
@@ -46,7 +47,8 @@ public sealed class UpdateUserEndpointTest : EndpointTest
 			{
 				Email = "harold.shepard@gmail.com",
 				FirstName = "Harold Jr.",
-				LastName = "Smith"
+				LastName = "Smith",
+				IsActive = true
 			}
 		};
 
@@ -68,7 +70,8 @@ public sealed class UpdateUserEndpointTest : EndpointTest
 			{
 				Email = "harold.shepard@gmail.com",
 				FirstName = "Harold Jr.",
-				LastName = "Smith"
+				LastName = "Smith",
+				IsActive = true
 			}
 		};
 
