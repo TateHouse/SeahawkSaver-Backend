@@ -22,7 +22,8 @@ public sealed class JwtTokenGeneratorTest
 			Password = "$2a$04$cuKSyWCrNH35niKtV5miyO.CiQtZXZ2BtV1D/Rhb.dtU1.WufrAXS",
 			FirstName = "TestFirstName",
 			LastName = "TestLastName",
-			IsAdmin = false
+			IsAdmin = false,
+			IsActive = true
 		};
 
 		tokenExpirationDateTime = DateTime.UtcNow.AddMinutes(5);

@@ -59,7 +59,7 @@ public sealed class JwtTokenValidatorTest
 	[Test]
 	public async Task GivenValidToken_WhenValidateTokenAsyncAndUserDoesNotExist_ThenThrowsNotFoundException()
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false);
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false, true);
 		var token = jwtTokenGenerator.GenerateToken(user, DateTime.UtcNow.AddMinutes(10), false);
 
 		mockUserRepository.Setup(mock => mock.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
@@ -75,7 +75,7 @@ public sealed class JwtTokenValidatorTest
 	[TestCase(true)]
 	public async Task GivenValidToken_WhenValidateTokenAsyncAndUserExists_ThenReturnsUser(bool isForPasswordReset)
 	{
-		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false);
+		var user = UserFactory.Create(Guid.NewGuid(), "test.user@gmail.com", "#Password4Testing", "TestFirstName", "TestLastName", false, true);
 		var token = string.Empty;
 
 		if (isForPasswordReset)

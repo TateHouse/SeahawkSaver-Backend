@@ -12,6 +12,7 @@ public class User
 	public required string FirstName { get; set; }
 	public required string LastName { get; set; }
 	public required bool IsAdmin { get; set; }
+	public required bool IsActive { get; set; }
 
 	public virtual ICollection<Income> Incomes { get; } = null!;
 	public virtual ICollection<Saving> Savings { get; } = null!;

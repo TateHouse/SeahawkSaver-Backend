@@ -61,7 +61,8 @@ public sealed class LoginUserCommandHandlerTest
 									  LoginUserCommandHandlerTest.Password,
 									  LoginUserCommandHandlerTest.FirstName,
 									  LoginUserCommandHandlerTest.LastName,
-									  false);
+									  false,
+									  true);
 
 		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
 					   .ReturnsAsync(user);
@@ -85,7 +86,8 @@ public sealed class LoginUserCommandHandlerTest
 									  LoginUserCommandHandlerTest.Password,
 									  LoginUserCommandHandlerTest.FirstName,
 									  LoginUserCommandHandlerTest.LastName,
-									  false);
+									  false,
+									  true);
 
 		const string token = "TestToken";
 

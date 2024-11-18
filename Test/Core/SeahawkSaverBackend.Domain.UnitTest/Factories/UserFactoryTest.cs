@@ -13,8 +13,9 @@ public sealed class UserFactoryTest
 		const string firstName = "TestFirstName";
 		const string lastName = "TestLastName";
 		const bool isAdmin = false;
+		const bool isActive = true;
 
-		var user = UserFactory.Create(userId, email, password, firstName, lastName, isAdmin);
+		var user = UserFactory.Create(userId, email, password, firstName, lastName, isAdmin, isActive);
 
 		Assert.Multiple(() => {
 			Assert.That(user.UserId, Is.EqualTo(userId));
@@ -23,6 +24,7 @@ public sealed class UserFactoryTest
 			Assert.That(user.FirstName, Is.EqualTo(firstName));
 			Assert.That(user.LastName, Is.EqualTo(lastName));
 			Assert.That(user.IsAdmin, Is.EqualTo(isAdmin));
+			Assert.That(user.IsActive, Is.EqualTo(isActive));
 		});
 	}
 }
