@@ -79,6 +79,31 @@ public sealed class LoginUserCommandHandlerTest
 	}
 
 	[Test]
+	public async Task GivenEmailThatExistsAndPasswordThatExists_WhenHandleAndUserIsNotActive_ThenThrowsUnauthorizedException()
+	{
+		var user = UserFactory.Create(Guid.NewGuid(),
+									  LoginUserCommandHandlerTest.Email,
+									  LoginUserCommandHandlerTest.Password,
+									  LoginUserCommandHandlerTest.FirstName,
+									  LoginUserCommandHandlerTest.LastName,
+									  false,
+									  false);
+
+		mockTransaction.Setup(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()))
+					   .ReturnsAsync(user);
+
+		mockPasswordHasher.Setup(mock => mock.Verify(It.IsAny<string>(), It.IsAny<string>()))
+						  .Returns(true);
+
+		var request = LoginUserCommandFactory.Create(commandSettings, user.Email, user.Password);
+
+		Assert.ThrowsAsync<UnauthorizedException>(() => commandHandler.Handle(request, CancellationToken.None));
+
+		mockTransaction.Verify(mock => mock.UserRepository.SingleOrDefaultAsync(It.IsAny<ISingleResultSpecification<User>>(), It.IsAny<CancellationToken>()), Times.Once);
+		mockPasswordHasher.Verify(mock => mock.Verify(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+	}
+
+	[Test]
 	public async Task GivenEmailThatExistsAndValidPassword_WhenHandle_ThenReturnsTokenAndUserIdAndEmail()
 	{
 		var user = UserFactory.Create(Guid.NewGuid(),

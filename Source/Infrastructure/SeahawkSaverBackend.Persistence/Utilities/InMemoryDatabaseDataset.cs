@@ -55,6 +55,14 @@ public sealed class InMemoryDatabaseDataset : IDatabaseDataset
 							   false,
 							   true),
 
+			UserFactory.Create(Guid.Parse("B90E7D1A-48A8-4417-9CA0-F404B3A6F983"),
+							   "drew.dawson@gmail.com",
+							   "$2a$12$xv0.y5u/hTBahDoEwA9FtunOrGUoWlG0dRDUpIi/97Gz1Qi2xFgwa",
+							   "Drew",
+							   "Dawson",
+							   false,
+							   false),
+
 			UserFactory.Create(Guid.Parse("2E04419B-A15F-4DC2-9FDF-078E0BFC660A"),
 							   "amy.peterson@gmail.com",
 							   "$2a$12$Uy9DtGrt0STo50mBEisT1OUgesJ3vFSU4ZfnJZYQFiy43Aj9DKRCG",
