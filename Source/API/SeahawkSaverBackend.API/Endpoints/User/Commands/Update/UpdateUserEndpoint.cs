@@ -55,7 +55,8 @@ public static class UpdateUserEndpoint
 														  userId,
 														  request.User.Email,
 														  request.User.FirstName,
-														  request.User.LastName);
+														  request.User.LastName,
+														  request.User.IsActive);
 
 			await mediator.Send(command);
 

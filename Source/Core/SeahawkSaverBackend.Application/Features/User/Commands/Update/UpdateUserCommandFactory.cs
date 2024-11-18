@@ -18,7 +18,8 @@ public static class UpdateUserCommandFactory
 										   Guid userId,
 										   string email,
 										   string firstName,
-										   string lastName)
+										   string lastName,
+										   bool isActive)
 	{
 		return new UpdateUserCommand
 		{
@@ -28,7 +29,8 @@ public static class UpdateUserCommandFactory
 				UserId = userId,
 				Email = email,
 				FirstName = firstName,
-				LastName = lastName
+				LastName = lastName,
+				IsActive = isActive
 			}
 		};
 	}
