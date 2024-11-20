@@ -1,43 +1,19 @@
 ﻿namespace SeahawkSaverBackend.API.Utilities.Filters;
-using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Exceptions;
+using SeahawkSaverBackend.Domain.Entities;
 
 /**
  * <summary>
  * An endpoint filter used to authenticate a bearer token within a request for admins.
  * </summary>
  */
-public sealed class AdminTokenValidationFilter : IEndpointFilter
+public sealed class AdminTokenValidationFilter : TokenValidationFilter
 {
-	public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
+	protected override void ValidateUser(User user)
 	{
-		var httpContext = context.HttpContext;
-		var tokenExtractor = httpContext.RequestServices.GetRequiredService<ITokenExtractor>();
-		var tokenValidator = httpContext.RequestServices.GetRequiredService<ITokenValidator>();
-
-		try
+		if (user.IsAdmin == false)
 		{
-			var token = tokenExtractor.ExtractToken(httpContext);
-			var user = await tokenValidator.ValidateTokenAsync(token, false, httpContext.RequestAborted);
-
-			if (user.IsAdmin)
-			{
-				return await next(context);
-			}
-
 			throw new UnauthorizedException("The provided user is not an admin.");
-		}
-		catch (InvalidOperationException)
-		{
-			return Results.Unauthorized();
-		}
-		catch (NotFoundException)
-		{
-			return Results.Unauthorized();
-		}
-		catch (UnauthorizedException)
-		{
-			return Results.Unauthorized();
 		}
 	}
 }
