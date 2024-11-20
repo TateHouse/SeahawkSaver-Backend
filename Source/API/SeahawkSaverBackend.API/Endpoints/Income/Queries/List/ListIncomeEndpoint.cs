@@ -24,7 +24,7 @@ public static class ListIncomeEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapGet("/list/{userId}", ListIncomeEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Income-List")
 					.WithTags(tags)
 					.WithSummary("An endpoint for retrieving all incomes for the user.")

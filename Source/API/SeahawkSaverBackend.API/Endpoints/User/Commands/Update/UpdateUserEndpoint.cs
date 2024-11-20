@@ -24,7 +24,7 @@ public static class UpdateUserEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPut("/{userId}", UpdateUserEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("User-Update")
 					.WithTags(tags)
 					.WithSummary("Updates a subset of user properties.")

@@ -24,7 +24,7 @@ public static class UpdateIncomeEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPut("/{userId}", UpdateIncomeEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Income-Update")
 					.WithTags(tags)
 					.WithSummary("Updates all income properties.")

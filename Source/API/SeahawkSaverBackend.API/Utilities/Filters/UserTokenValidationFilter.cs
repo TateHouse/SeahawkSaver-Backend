@@ -7,7 +7,7 @@ using SeahawkSaverBackend.Application.Exceptions;
  * An endpoint filter used to authenticate a bearer token within a request for users.
  * </summary>
  */
-public sealed class TokenValidationFilter : IEndpointFilter
+public sealed class UserTokenValidationFilter : IEndpointFilter
 {
 	public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
 	{

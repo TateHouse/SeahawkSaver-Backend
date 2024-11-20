@@ -25,7 +25,7 @@ public static class CreateDebtEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPost("/{userId}", CreateDebtEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Debt-Create")
 					.WithTags(tags)
 					.WithSummary("An endpoint for adding a new debt to the database.")

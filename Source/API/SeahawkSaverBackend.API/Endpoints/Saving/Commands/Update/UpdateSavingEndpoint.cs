@@ -25,7 +25,7 @@ public static class UpdateSavingEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPut("/{userId}", UpdateSavingEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Saving-Update")
 					.WithTags(tags)
 					.WithSummary("Updates all saving properties.")

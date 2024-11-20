@@ -25,7 +25,7 @@ public static class CreateSavingEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPost("/{userId}", CreateSavingEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Saving-Create")
 					.WithTags(tags)
 					.WithSummary("An endpoint for adding a new saving to the database.")

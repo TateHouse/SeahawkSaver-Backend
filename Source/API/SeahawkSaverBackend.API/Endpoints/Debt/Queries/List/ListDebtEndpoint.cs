@@ -24,7 +24,7 @@ public static class ListDebtEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapGet("/list/{userId}", ListDebtEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Debt-List")
 					.WithTags(tags)
 					.WithSummary("An endpoint for retrieving all debt for the user.")

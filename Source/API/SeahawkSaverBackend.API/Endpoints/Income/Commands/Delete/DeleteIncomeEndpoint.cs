@@ -23,7 +23,7 @@ public static class DeleteIncomeEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapDelete("/{userId}", DeleteIncomeEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Income-Delete")
 					.WithTags(tags)
 					.WithSummary("An endpoint for deleting an existing income from the database.")
