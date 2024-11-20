@@ -4,10 +4,10 @@ using SeahawkSaverBackend.Application.Exceptions;
 
 /**
  * <summary>
- * An endpoint filter used to authenticate a bearer token within a request for users.
+ * An endpoint filter used to authenticate a bearer token within a request for admins.
  * </summary>
  */
-public sealed class TokenValidationFilter : IEndpointFilter
+public sealed class AdminTokenValidationFilter : IEndpointFilter
 {
 	public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
 	{
@@ -19,14 +19,13 @@ public sealed class TokenValidationFilter : IEndpointFilter
 		{
 			var token = tokenExtractor.ExtractToken(httpContext);
 			var user = await tokenValidator.ValidateTokenAsync(token, false, httpContext.RequestAborted);
-			var routeUserId = httpContext.Request.RouteValues["userId"]?.ToString();
 
-			if (routeUserId == null || !Guid.TryParse(routeUserId, out var userId) || user.UserId != userId)
+			if (user.IsAdmin)
 			{
-				throw new UnauthorizedException("The provided user id does not match the authenticated user's id.");
+				return await next(context);
 			}
 
-			return await next(context);
+			throw new UnauthorizedException("The provided user is not an admin.");
 		}
 		catch (InvalidOperationException)
 		{

@@ -3,6 +3,7 @@ using SeahawkSaverBackend.API.Endpoints.User.Commands.Login;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.PerformReset;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Password.RequestReset;
 using SeahawkSaverBackend.API.Endpoints.User.Commands.Update;
+using SeahawkSaverBackend.API.Endpoints.User.Queries.List;
 
 /**
  * <summary>
@@ -28,6 +29,7 @@ public static class UserEndpointsMapper
 	public static void MapUserEndpoints(this WebApplication application)
 	{
 		var groupBuilder = application.MapGroup(UserEndpointsMapper.Prefix);
+		ListUserEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
 		LoginUserEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
 		PasswordUserRequestResetEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);
 		PasswordUserPerformResetEndpoint.MapEndpoint(groupBuilder, UserEndpointsMapper.Tags);

@@ -30,7 +30,7 @@ public static class ListSubscriptionEndpoint
 					.WithSummary("An endpoint for retrieving all subscriptions for the user.")
 					.WithDescription("All of the user's associated subscriptions are returned.")
 					.Produces<ListSubscriptionEndpointResponse>(StatusCodes.Status200OK)
-					.Produces(StatusCodes.Status401Unauthorized);
+					.ProducesProblem(StatusCodes.Status401Unauthorized);
 	}
 
 	/**
