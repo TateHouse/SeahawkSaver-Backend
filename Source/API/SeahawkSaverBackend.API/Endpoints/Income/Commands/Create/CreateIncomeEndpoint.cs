@@ -25,7 +25,7 @@ public static class CreateIncomeEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPost("/{userId}", CreateIncomeEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Income-Create")
 					.WithTags(tags)
 					.WithSummary("An endpoint for adding a new income to the database.")

@@ -25,7 +25,7 @@ public static class CreateSubscriptionEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPost("/{userId}", CreateSubscriptionEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Subscription-Create")
 					.WithTags(tags)
 					.WithSummary("An endpoint for adding a new subscription to the database.")

@@ -23,7 +23,7 @@ public static class DeleteDebtEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapDelete("/{userId}", DeleteDebtEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Debt-Delete")
 					.WithTags(tags)
 					.WithSummary("An endpoint for deleting an existing debt from the database.")

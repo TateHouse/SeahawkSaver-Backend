@@ -24,7 +24,7 @@ public static class UpdateDebtEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapPut("/{userId}", UpdateDebtEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Debt-Update")
 					.WithTags(tags)
 					.WithSummary("Updates all debt properties.")

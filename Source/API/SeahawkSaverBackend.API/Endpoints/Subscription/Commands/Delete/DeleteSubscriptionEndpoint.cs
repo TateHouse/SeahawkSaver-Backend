@@ -24,7 +24,7 @@ public static class DeleteSubscriptionEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapDelete("/{userId}", DeleteSubscriptionEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Delete-Subscription")
 					.WithTags(tags)
 					.WithSummary("An endpoint for deleting an existing subscription endpoint from the database.")

@@ -1,17 +1,22 @@
 ﻿namespace SeahawkSaverBackend.API.Utilities.Filters;
 using SeahawkSaverBackend.Application.Abstractions.Authentication;
 using SeahawkSaverBackend.Application.Exceptions;
+using SeahawkSaverBackend.Domain.Entities;
 
 /**
  * <summary>
- * An endpoint filter used to authenticate a bearer token within a request.
+ * The base class for all token validation filters.
  * </summary>
  */
-public sealed class TokenValidationFilter : IEndpointFilter
+public abstract class TokenValidationFilter : IEndpointFilter
 {
+	protected HttpContext httpContext = null!;
+
+	protected abstract void ValidateUser(User user);
+
 	public async ValueTask<object?> InvokeAsync(EndpointFilterInvocationContext context, EndpointFilterDelegate next)
 	{
-		var httpContext = context.HttpContext;
+		httpContext = context.HttpContext;
 		var tokenExtractor = httpContext.RequestServices.GetRequiredService<ITokenExtractor>();
 		var tokenValidator = httpContext.RequestServices.GetRequiredService<ITokenValidator>();
 
@@ -19,12 +24,7 @@ public sealed class TokenValidationFilter : IEndpointFilter
 		{
 			var token = tokenExtractor.ExtractToken(httpContext);
 			var user = await tokenValidator.ValidateTokenAsync(token, false, httpContext.RequestAborted);
-			var routeUserId = httpContext.Request.RouteValues["userId"]?.ToString();
-
-			if (routeUserId == null || !Guid.TryParse(routeUserId, out var userId) || user.UserId != userId)
-			{
-				throw new UnauthorizedException("The provided user id does not match the authenticated user's id.");
-			}
+			ValidateUser(user);
 
 			return await next(context);
 		}

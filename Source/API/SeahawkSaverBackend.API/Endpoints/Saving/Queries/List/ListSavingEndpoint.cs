@@ -24,7 +24,7 @@ public static class ListSavingEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapGet("/list/{userId}", ListSavingEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Saving-List")
 					.WithTags(tags)
 					.WithSummary("An endpoint for retrieving all savings for the user.")

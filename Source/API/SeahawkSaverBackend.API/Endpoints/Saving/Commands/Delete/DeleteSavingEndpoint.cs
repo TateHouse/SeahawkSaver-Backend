@@ -23,7 +23,7 @@ public static class DeleteSavingEndpoint
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
 		groupBuilder.MapDelete("/{userId}", DeleteSavingEndpoint.HandleAsync)
-					.AddEndpointFilter<TokenValidationFilter>()
+					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Saving-Delete")
 					.WithTags(tags)
 					.WithSummary("An endpoint for deleting an existing saving from the database.")
