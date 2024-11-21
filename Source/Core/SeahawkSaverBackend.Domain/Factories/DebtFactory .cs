@@ -10,7 +10,7 @@ public static class DebtFactory
 {
 	/**
 	 * <summary>
-	 * Instantaites a new <see cref="Debt"/> instance.
+	 * Instantiates a new <see cref="Debt"/> instance.
 	 * </summary>
 	 * <param name="debtId">The debt's id.</param>
 	 * <param name="amount">The debt's amount.</param>
@@ -19,9 +19,9 @@ public static class DebtFactory
 	 * <returns>A new <see cref="Debt"/> instance.</returns>
 	 */
 	public static Debt Create(Guid debtId,
-								decimal amount,
-								DateTime dateTime,
-								Guid userId)
+							  decimal amount,
+							  DateTime dateTime,
+							  Guid userId)
 	{
 		return new Debt
 		{

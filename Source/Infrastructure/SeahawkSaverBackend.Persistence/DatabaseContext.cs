@@ -29,7 +29,7 @@ public sealed class DatabaseContext : DbContext
 	 * </summary>
 	 */
 	public DbSet<Debt> Debts { get; set; }
-  
+
 	/**
 	 * <summary>
 	 * The <see cref="Savings"/> entities in the database.
@@ -43,7 +43,14 @@ public sealed class DatabaseContext : DbContext
 	 * </summary>
 	 */
 	public DbSet<Subscription> Subscriptions { get; set; }
-  
+
+	/**
+	 * <summary>
+	 * The <see cref="Expense"/> entities in the database.
+	 * </summary>
+	 */
+	public DbSet<Expense> Expenses { get; set; }
+
 	/**
 	 * <summary>
 	 * Instantiates a new <see cref="DatabaseContext"/> instance.
