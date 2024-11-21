@@ -26,6 +26,7 @@ public static class UpdateSubscriptionEndpoint
 		groupBuilder.MapPut("/{userId}", UpdateSubscriptionEndpoint.HandleAsync)
 					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Subscription-Update")
+					.WithTags(tags)
 					.WithSummary("Updates all subscription properties.")
 					.WithDescription("Since this is a PUT operation, all subscription properties must be provided for the update even if they are not modified.")
 					.Produces(StatusCodes.Status204NoContent)
