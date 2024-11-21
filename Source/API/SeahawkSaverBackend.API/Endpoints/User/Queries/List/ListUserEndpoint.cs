@@ -21,7 +21,7 @@ public static class ListUserEndpoint
 	 */
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
-		groupBuilder.MapGet("/list/user", HandleAsync)
+		groupBuilder.MapGet("/list", HandleAsync)
 					.AddEndpointFilter<AdminTokenValidationFilter>()
 					.WithName("User-List")
 					.WithTags(tags)
