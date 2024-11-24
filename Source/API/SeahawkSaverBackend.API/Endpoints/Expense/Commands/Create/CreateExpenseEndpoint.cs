@@ -1,19 +1,19 @@
-﻿namespace SeahawkSaverBackend.API.Endpoints.Debt.Commands.Create;
+﻿namespace SeahawkSaverBackend.API.Endpoints.Expense.Commands.Create;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SeahawkSaverBackend.API.Endpoints.Debt.Commands.Create.DTOs;
+using SeahawkSaverBackend.API.Endpoints.Expense.Commands.Create.DTOs;
 using SeahawkSaverBackend.API.Utilities.Filters;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Exceptions;
-using SeahawkSaverBackend.Application.Features.Debt.Commands.Create;
+using SeahawkSaverBackend.Application.Features.Expense.Commands.Create;
 
 /**
  * <summary>
- * An endpoint for creating a new <see cref="SeahawkSaverBackend.Domain.Entities.Debt"/> entity.
+ * An endpoint for creating a new <see cref="SeahawkSaverBackend.Domain.Entities.Expense"/> entity.
  * </summary>
  */
-public static class CreateDebtEndpoint
+public static class CreateExpenseEndpoint
 {
 	/**
 	 * <summary>
@@ -24,13 +24,13 @@ public static class CreateDebtEndpoint
 	 */
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
-		groupBuilder.MapPost("/{userId}", CreateDebtEndpoint.HandleAsync)
+		groupBuilder.MapPost("/{userId}", CreateExpenseEndpoint.HandleAsync)
 					.AddEndpointFilter<UserTokenValidationFilter>()
-					.WithName("Debt-Create")
+					.WithName("Expense-Create")
 					.WithTags(tags)
-					.WithSummary("An endpoint for adding a new debt to the database.")
-					.WithDescription("For a user to add a new debt to the database, his user id, the amount, and the date and time must be provided.")
-					.Produces<CreateDebtEndpointResponse>(StatusCodes.Status201Created)
+					.WithSummary("An endpoint for adding a new expense to the database.")
+					.WithDescription("For a user to add a new expense to the database, his user id, the amount, and the date and time must be provided.")
+					.Produces<CreateExpenseEndpointResponse>(StatusCodes.Status201Created)
 					.ProducesProblem(StatusCodes.Status401Unauthorized)
 					.ProducesProblem(StatusCodes.Status404NotFound)
 					.ProducesValidationProblem(StatusCodes.Status400BadRequest);
@@ -50,18 +50,18 @@ public static class CreateDebtEndpoint
 	private async static Task<IResult> HandleAsync(IMediator mediator,
 												   IMapper mapper,
 												   [FromRoute] Guid userId,
-												   [FromBody] CreateDebtEndpointRequest request)
+												   [FromBody] CreateExpenseEndpointRequest request)
 	{
 		try
 		{
 			var commandSettings = new CommandSettings(true, true);
-			var command = CreateDebtCommandFactory.Create(commandSettings,
-															userId,
-															request.Debt.Amount,
-															request.Debt.DateTime);
+			var command = CreateExpenseCommandFactory.Create(commandSettings,
+															 userId,
+															 request.Expense.Amount,
+															 request.Expense.DateTime);
 
-			var response = mapper.Map<CreateDebtEndpointResponse>(await mediator.Send(command));
-			var uri = $"{DebtEndpointsMapper.Prefix}/{response.DebtId}";
+			var response = mapper.Map<CreateExpenseEndpointResponse>(await mediator.Send(command));
+			var uri = $"{ExpenseEndpointMapper.Prefix}/{response.ExpenseId}";
 
 			return Results.Created(uri, response);
 		}
