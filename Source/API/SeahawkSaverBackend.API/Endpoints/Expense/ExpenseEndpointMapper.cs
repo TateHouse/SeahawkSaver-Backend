@@ -1,6 +1,7 @@
 ﻿namespace SeahawkSaverBackend.API.Endpoints.Expense;
 using SeahawkSaverBackend.API.Endpoints.Expense.Commands.Create;
 using SeahawkSaverBackend.API.Endpoints.Expense.Commands.Delete;
+using SeahawkSaverBackend.API.Endpoints.Expense.Commands.Update;
 using SeahawkSaverBackend.API.Endpoints.Expense.Queries.List;
 
 /**
@@ -28,6 +29,7 @@ public static class ExpenseEndpointMapper
 	{
 		var groupBuilder = application.MapGroup(ExpenseEndpointMapper.Prefix);
 		CreateExpenseEndpoint.MapEndpoint(groupBuilder, ExpenseEndpointMapper.Tags);
+		UpdateExpenseEndpoint.MapEndpoint(groupBuilder, ExpenseEndpointMapper.Tags);
 		DeleteExpenseEndpoint.MapEndpoint(groupBuilder, ExpenseEndpointMapper.Tags);
 		ListExpenseEndpoint.MapEndpoint(groupBuilder, ExpenseEndpointMapper.Tags);
 	}
