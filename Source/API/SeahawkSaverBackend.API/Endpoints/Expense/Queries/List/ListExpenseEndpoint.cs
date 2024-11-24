@@ -23,7 +23,7 @@ public static class ListExpenseEndpoint
 	 */
 	public static void MapEndpoint(RouteGroupBuilder groupBuilder, string[] tags)
 	{
-		groupBuilder.MapGet("/list{userId}", ListExpenseEndpoint.HandleAsync)
+		groupBuilder.MapGet("/list/{userId}", ListExpenseEndpoint.HandleAsync)
 					.AddEndpointFilter<UserTokenValidationFilter>()
 					.WithName("Expense-List")
 					.WithTags(tags)
