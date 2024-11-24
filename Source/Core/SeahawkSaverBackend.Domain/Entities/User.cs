@@ -14,7 +14,9 @@ public class User
 	public required bool IsAdmin { get; set; }
 	public required bool IsActive { get; set; }
 
+	public virtual ICollection<Debt> Debts { get; } = null!;
 	public virtual ICollection<Income> Incomes { get; } = null!;
 	public virtual ICollection<Saving> Savings { get; } = null!;
 	public virtual ICollection<Subscription> Subscriptions { get; } = null!;
+	public virtual ICollection<Expense> Expenses { get; } = null!;
 }

@@ -30,9 +30,29 @@ public sealed class UserConfiguration : IEntityTypeConfiguration<User>
 			   .HasColumnName("LastName")
 			   .IsRequired();
 
+		builder.HasMany(user => user.Debts)
+			   .WithOne(debt => debt.User)
+			   .HasForeignKey(debt => debt.UserId)
+			   .IsRequired();
+
 		builder.HasMany(user => user.Incomes)
 			   .WithOne(income => income.User)
 			   .HasForeignKey(income => income.UserId)
+			   .IsRequired();
+
+		builder.HasMany(user => user.Savings)
+			   .WithOne(saving => saving.User)
+			   .HasForeignKey(saving => saving.UserId)
+			   .IsRequired();
+
+		builder.HasMany(user => user.Subscriptions)
+			   .WithOne(subscription => subscription.User)
+			   .HasForeignKey(subscription => subscription.UserId)
+			   .IsRequired();
+
+		builder.HasMany(user => user.Expenses)
+			   .WithOne(expense => expense.User)
+			   .HasForeignKey(expense => expense.UserId)
 			   .IsRequired();
 	}
 }

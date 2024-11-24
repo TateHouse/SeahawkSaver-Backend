@@ -43,4 +43,11 @@ public interface IQueryTransaction
 	 * </summary>
 	 */
 	public IReadOnlyRepository<Subscription> SubscriptionRepository { get; }
+
+	/**
+	 * <summary>
+	 * A read-only repository for <see cref="Expense"/> entities.
+	 * </summary>
+	 */
+	public IReadOnlyRepository<Expense> ExpenseRepository { get; }
 }

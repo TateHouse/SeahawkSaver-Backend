@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using SeahawkSaverBackend.API.Utilities.Filters;
 using SeahawkSaverBackend.Application.Abstractions.Application.Commands;
 using SeahawkSaverBackend.Application.Exceptions;
-using SeahawkSaverBackend.Application.Features.Income.Commands.Delete;
 using SeahawkSaverBackend.Application.Features.Subscription.Commands.Delete;
 
 /**
