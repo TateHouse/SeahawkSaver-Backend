@@ -11,8 +11,11 @@ using SeahawkSaverBackend.Domain.Factories;
 public sealed class InMemoryIntegrationTestDatabaseDataset : IDatabaseDataset
 {
 	public IReadOnlyList<User> Users { get; }
+	public IReadOnlyList<Debt> Debts { get; }
+	public IReadOnlyList<Expense> Expenses { get; }
 	public IReadOnlyList<Income> Incomes { get; }
 	public IReadOnlyList<Saving> Savings { get; }
+	public IReadOnlyList<Subscription> Subscriptions { get; }
 
 	/**
 	 * <summary>
@@ -72,6 +75,9 @@ public sealed class InMemoryIntegrationTestDatabaseDataset : IDatabaseDataset
 							   true)
 		};
 
+		var debts = new List<Debt>();
+		var expenses = new List<Expense>();
+
 		var incomes = new List<Income>
 		{
 			IncomeFactory.Create(Guid.Parse("CC15E589-CE4D-419C-90F5-73B4181892FF"), 150, DateTime.Now.AddDays(-1), users[1].UserId),
@@ -81,6 +87,7 @@ public sealed class InMemoryIntegrationTestDatabaseDataset : IDatabaseDataset
 			IncomeFactory.Create(Guid.Parse("727923AD-D619-4ED8-A4F7-8DA3631558C2"), 25, DateTime.Now.AddDays(-9), users[2].UserId),
 			IncomeFactory.Create(Guid.Parse("4B1B0C98-761C-4E67-AB7B-2FA67EF3A33E"), 100, DateTime.Now.AddDays(-10), users[2].UserId),
 		};
+
 
 		var savings = new List<Saving>
 		{
@@ -92,8 +99,13 @@ public sealed class InMemoryIntegrationTestDatabaseDataset : IDatabaseDataset
 			SavingFactory.Create(Guid.Parse("77A08D43-F746-47FB-973F-81F5849C17D5"), 100, DateTime.Now.AddDays(-10), users[2].UserId),
 		};
 
+		var subscriptions = new List<Subscription>();
+
 		Users = users;
+		Debts = debts;
+		Expenses = expenses;
 		Incomes = incomes;
 		Savings = savings;
+		Subscriptions = subscriptions;
 	}
 }

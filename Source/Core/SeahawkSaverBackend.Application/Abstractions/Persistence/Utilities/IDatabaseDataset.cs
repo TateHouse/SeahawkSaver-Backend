@@ -15,6 +15,20 @@ public interface IDatabaseDataset
 
 	/**
 	 * <summary>
+	 * The <see cref="Debt"/> entities to seed the database with.
+	 * </summary>
+	 */
+	public IReadOnlyList<Debt> Debts { get; }
+
+	/**
+	 * <summary>
+	 * The <see cref="Expense"/> entities to seed the database with.
+	 * </summary>
+	 */
+	public IReadOnlyList<Expense> Expenses { get; }
+
+	/**
+	 * <summary>
 	 * The <see cref="Income"/> entities to seed the database with.
 	 * </summary>
 	 */
@@ -26,4 +40,11 @@ public interface IDatabaseDataset
 	 * </summary>
 	 */
 	public IReadOnlyList<Saving> Savings { get; }
+
+	/**
+	 * <summary>
+	 * The <see cref="Subscription"/> entities to seed the database with.
+	 * </summary>
+	 */
+	public IReadOnlyList<Subscription> Subscriptions { get; }
 }

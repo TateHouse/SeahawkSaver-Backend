@@ -21,12 +21,14 @@ public sealed class InMemoryDatabaseSeeder : IDatabaseSeeder
 		this.databaseContext = databaseContext;
 	}
 
-
 	public async Task SeedDatabaseAsync(IDatabaseDataset databaseDataset)
 	{
 		await databaseContext.AddRangeAsync(databaseDataset.Users);
+		await databaseContext.AddRangeAsync(databaseDataset.Debts);
+		await databaseContext.AddRangeAsync(databaseDataset.Expenses);
 		await databaseContext.AddRangeAsync(databaseDataset.Incomes);
 		await databaseContext.AddRangeAsync(databaseDataset.Savings);
+		await databaseContext.AddRangeAsync(databaseDataset.Subscriptions);
 		await databaseContext.SaveChangesAsync();
 	}
 }
