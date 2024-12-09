@@ -6,11 +6,11 @@
 
 ## Overview
 
-The backend for my CSC-450: Software Engineering group project called `Seahawk Saver`, an application targeted towards
+The backend for my CSC-450: Software Engineering project called `Seahawk Saver`, an application targeted towards
 students to efficiently and easily manage their finances.
 
-This backend API is built using `ASP.NET Core Minimal Web API` with a clean architecture approach and feature folders. A
-strong emphasis is placed on SOLID principles and design patterns.
+This backend API is built using `ASP.NET Core Minimal Web API` with a clean architecture inspired approach mixed with
+feature folders. A strong emphasis is placed on SOLID principles and design patterns.
 
 ## Configuration
 
@@ -19,37 +19,49 @@ There are a number of configurations that can be changed in this application. Mo
 
 You will need to provide the `JWT_SECRET_KEY` either as an environment variable or using `.NET User Secrets` for the API
 to run and for all the tests to pass. Your JWT secret key should have a length of at least 256 and should be provided as
-a string value for the previously mentioned key name.
+a string value for the previously mentioned key name. There are two projects this needs to be done for.
 
-## Building and Deployment
+* `SeahawkSaverBackend.API`
+* `SeahawkSaverBackend.Authentication.IntegrationTest`
 
-Instructions for building and deployment will be provided in the future. This backend will eventually be containerized
-using `Docker` and the entire application will utilize `Docker Compose` to deploy all the necessary components
-(frontend, backend, database, SMTP server, ...) in one easy-to-use package.
+## Endpoints
+
+Swagger documentation is available at the `/swagger` endpoint.
+
+## Future Plans
+
+Even though I have finished the course this project was created for, there are a few things I would still like to do.
+Some include adding additional information to each financial entity, adding a few new entities, and some general
+cleaning up and refactoring around the codebase.
+
+I would also like to go back through and complete are the automated tests. We decided to skip a lot of them due to time
+constrains.
+
+## Demos
+
+* [User Demo](https://youtu.be/9imzY8K3QiY?si=4UsUuUQkJpYpEMHm)
+* [Admin Demo](https://youtu.be/9hXEDy0F0ao?si=huqD1nMd4j8wtYCk)
 
 ## Dependencies
 
-Dependencies are managed through `NuGet`. The explicitly installed packages in the solution include:
+Dependencies are managed through `NuGet`. Some of the important packages in the solution include:
 
-- Ardalis.Specification `8.0.0`
-- Ardalis.Specification.EntityFrameworkCore `8.0.0`
-- AutoMapper `13.0.1`
-- BCrypt.Net-Next `4.0.3`
-- coverlet.collector `6.0.0`
-- FluentEmail.Core `3.0.2`
-- FluentEmail.Smtp `3.0.2`
-- FluentValidation `11.10.0`
-- FluentValidation.DependencyInjectionExtensions `11.10.0`
-- MeditaR `12.4.1`
-- Microsoft.AspNetCore.Authentication.JwtBearer `8.0.10`
-- Microsoft.AspNetCore.Mvc.Testing `8.0.10`
-- Microsoft.AspNetCore.OpenApi `8.0.5`
-- Microsoft.EntityFrameworkCore `8.0.10`
-- Microsoft.EntityFrameworkCore.InMemory `8.0.10`
-- Microsoft.Extensions.Configuration.Abstractions `8.0.0`
-- Microsoft.Extensions.Configuration.Binder `8.0.2`
-- Moq `4.20.72`
-- NUnit `3.14.0`
-- NUnit.Analyzers `3.9.0`
-- NUnit3TestAdapter `4.5.0`
-- Swashbuckle.AspNetCore `6.9.0`
+* Ardalis.Specification
+* Ardalis.Specification.EntityFrameworkCore
+* AutoMapper
+* BCrypt.Net-Next
+* FluentEmail.Core
+* FluentEmail.Smtp
+* FluentValidation
+* FluentValidation.DependencyInjectionExtensions `
+* MeditaR
+* Microsoft.AspNetCore.Authentication.JwtBearer
+* Microsoft.AspNetCore.Mvc.Testing
+* Microsoft.AspNetCore.OpenApi
+* Microsoft.EntityFrameworkCore
+* Microsoft.EntityFrameworkCore.InMemory
+* Microsoft.Extensions.Configuration.Abstractions
+* Microsoft.Extensions.Configuration.Binder
+* Moq
+* NUnit
+* Swashbuckle.AspNetCore
