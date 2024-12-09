@@ -1,5 +1,6 @@
 ﻿namespace SeahawkSaverBackend.Persistence.Utilities;
 using SeahawkSaverBackend.Application.Abstractions.Persistence.Utilities;
+using SeahawkSaverBackend.Application.Utilities;
 using SeahawkSaverBackend.Domain.Entities;
 using SeahawkSaverBackend.Domain.Factories;
 
@@ -11,8 +12,11 @@ using SeahawkSaverBackend.Domain.Factories;
 public sealed class InMemoryDatabaseDataset : IDatabaseDataset
 {
 	public IReadOnlyList<User> Users { get; }
+	public IReadOnlyList<Debt> Debts { get; }
+	public IReadOnlyList<Expense> Expenses { get; }
 	public IReadOnlyList<Income> Incomes { get; }
 	public IReadOnlyList<Saving> Savings { get; }
+	public IReadOnlyList<Subscription> Subscriptions { get; }
 
 	/**
 	 * <summary>
@@ -72,30 +76,219 @@ public sealed class InMemoryDatabaseDataset : IDatabaseDataset
 							   true)
 		};
 
-		var incomes = new List<Income>
-		{
-			IncomeFactory.Create(Guid.Parse("B279AFC1-D23D-4B37-96F4-73490F9431FC"), 100, DateTime.Now.AddDays(-1), users[1].UserId),
-			IncomeFactory.Create(Guid.Parse("9827FF7C-4B19-4F39-AD28-4FAC43D5F72B"), 400, DateTime.Now.AddDays(-2), users[1].UserId),
-			IncomeFactory.Create(Guid.Parse("1DF23E4F-9ADC-464F-9BB1-7804B6149638"), 250, DateTime.Now.AddDays(-7), users[2].UserId),
-			IncomeFactory.Create(Guid.Parse("AF43BAF0-0217-4901-96CA-BD86C6092BF7"), 500, DateTime.Now.AddDays(-8), users[2].UserId),
-			IncomeFactory.Create(Guid.Parse("E1803737-7CF8-4E3E-99C6-6C352E04AC35"), 750, DateTime.Now.AddDays(-9), users[2].UserId),
-			IncomeFactory.Create(Guid.Parse("C5A244F1-5BFB-41B7-802B-302C4E7C4F5A"), 250, DateTime.Now.AddDays(-10), users[2].UserId),
-			IncomeFactory.Create(Guid.Parse("38B2C309-42E9-4919-A639-A9FDA66C327E"), 150, DateTime.Now.AddDays(-1), users[2].UserId),
-			IncomeFactory.Create(Guid.Parse("F991B7DA-7BE4-437A-B905-722C95A06819"), 8299, DateTime.Now.AddDays(-28), users[2].UserId),
-			IncomeFactory.Create(Guid.Parse("CB4B8EB8-40F8-46A3-9687-4E59F3B81FF8"), 431, DateTime.Now.AddDays(-19), users[2].UserId),
-			IncomeFactory.Create(Guid.Parse("53D15DD3-61E8-4519-AEF5-60A0546A1E23"), 293, DateTime.Now.AddDays(-10), users[2].UserId),
-		};
-
-		var savings = new List<Saving>
-		{
-			SavingFactory.Create(Guid.Parse("77DAB607-2797-440E-9C6E-5BDEC8D6C9D0"), 1000, DateTime.Now.AddDays(-1), users[1].UserId),
-			SavingFactory.Create(Guid.Parse("5939B0EA-8D18-4AD1-825C-0019013DB55B"), 500, DateTime.Now.AddDays(-1), users[2].UserId),
-			SavingFactory.Create(Guid.Parse("7D126146-146B-4D56-9210-36C7B9F348E7"), 850, DateTime.Now.AddDays(-1), users[2].UserId),
-			SavingFactory.Create(Guid.Parse("F459605A-D4E2-4853-B9E6-C5A9B15BCA87"), 1250, DateTime.Now.AddDays(-1), users[2].UserId),
-		};
-
 		Users = users;
-		Incomes = incomes;
-		Savings = savings;
+		Debts = GenerateDebts(users);
+		Expenses = GenerateExpenses(users);
+		Incomes = GenerateIncomes(users);
+		Savings = GenerateSavings(users);
+		Subscriptions = GenerateSubscriptions(users);
+	}
+
+	private static List<Debt> GenerateDebts(IReadOnlyList<User> users)
+	{
+		var debts = new List<Debt>();
+		debts.AddRange(GenerateDebts(users[0].UserId));
+		debts.AddRange(GenerateDebts(users[1].UserId));
+		debts.AddRange(GenerateDebts(users[2].UserId));
+		debts.AddRange(GenerateDebts(users[3].UserId));
+		debts.AddRange(GenerateDebts(users[4].UserId));
+
+		return debts;
+	}
+
+	private static List<Debt> GenerateDebts(Guid userId)
+	{
+		var entities = new List<Debt>();
+		var random = new Random();
+
+		for (var year = DateTime.Today.AddYears(-4).Year; year < 2025; ++year)
+		{
+			for (var month = 1; month <= 12; ++month)
+			{
+				var entityCount = random.Next(1, 2);
+				var dateTimes = DateTimeUtilities.Generate(random, year, month, entityCount)
+												 .ToList();
+
+				for (var entityIndex = 0; entityIndex < entityCount; ++entityIndex)
+				{
+					var entity = DebtFactory.Create(Guid.NewGuid(),
+													DecimalUtilities.Generate(random, 10.0, 2000.0),
+													dateTimes[entityIndex],
+													userId);
+
+					entities.Add(entity);
+				}
+			}
+		}
+
+		return entities;
+	}
+
+	private static List<Expense> GenerateExpenses(IReadOnlyList<User> users)
+	{
+		var expenses = new List<Expense>();
+		expenses.AddRange(GenerateExpenses(users[0].UserId));
+		expenses.AddRange(GenerateExpenses(users[1].UserId));
+		expenses.AddRange(GenerateExpenses(users[2].UserId));
+		expenses.AddRange(GenerateExpenses(users[3].UserId));
+		expenses.AddRange(GenerateExpenses(users[4].UserId));
+
+		return expenses;
+	}
+
+	private static List<Expense> GenerateExpenses(Guid userId)
+	{
+		var entities = new List<Expense>();
+		var random = new Random();
+
+		for (var year = DateTime.Today.AddYears(-4).Year; year < 2025; ++year)
+		{
+			for (var month = 1; month <= 12; ++month)
+			{
+				var entityCount = random.Next(2, 20);
+				var dateTimes = DateTimeUtilities.Generate(random, year, month, entityCount)
+												 .ToList();
+
+				for (var entityIndex = 0; entityIndex < entityCount; ++entityIndex)
+				{
+					var entity = ExpenseFactory.Create(Guid.NewGuid(),
+													   DecimalUtilities.Generate(random, 5.0, 500.0),
+													   dateTimes[entityIndex],
+													   userId);
+
+					entities.Add(entity);
+				}
+			}
+		}
+
+		return entities;
+	}
+
+	private static List<Income> GenerateIncomes(IReadOnlyList<User> users)
+	{
+		var incomes = new List<Income>();
+		incomes.AddRange(GenerateIncomes(users[0].UserId));
+		incomes.AddRange(GenerateIncomes(users[1].UserId));
+		incomes.AddRange(GenerateIncomes(users[2].UserId));
+		incomes.AddRange(GenerateIncomes(users[3].UserId));
+		incomes.AddRange(GenerateIncomes(users[4].UserId));
+
+		return incomes;
+	}
+
+	private static List<Income> GenerateIncomes(Guid userId)
+	{
+		var entities = new List<Income>();
+		var random = new Random();
+
+		for (var year = DateTime.Today.AddYears(-4).Year; year < 2025; ++year)
+		{
+			for (var month = 1; month <= 12; ++month)
+			{
+				var entityCount = random.Next(2, 4);
+				var dateTimes = DateTimeUtilities.Generate(random, year, month, entityCount)
+												 .ToList();
+
+				for (var entityIndex = 0; entityIndex < entityCount; ++entityIndex)
+				{
+					var entity = IncomeFactory.Create(Guid.NewGuid(),
+													  DecimalUtilities.Generate(random, 200.0, 2000.0),
+													  dateTimes[entityIndex],
+													  userId);
+
+					entities.Add(entity);
+				}
+			}
+		}
+
+		return entities;
+	}
+
+	private static List<Saving> GenerateSavings(IReadOnlyList<User> users)
+	{
+		var savings = new List<Saving>();
+		savings.AddRange(GenerateSavings(users[0].UserId));
+		savings.AddRange(GenerateSavings(users[1].UserId));
+		savings.AddRange(GenerateSavings(users[2].UserId));
+		savings.AddRange(GenerateSavings(users[3].UserId));
+		savings.AddRange(GenerateSavings(users[4].UserId));
+
+		return savings;
+	}
+
+	private static List<Saving> GenerateSavings(Guid userId)
+	{
+		var entities = new List<Saving>();
+		var random = new Random();
+
+		for (var year = DateTime.Today.AddYears(-4).Year; year < 2025; ++year)
+		{
+			for (var month = 1; month <= 12; ++month)
+			{
+				var entityCount = random.Next(0, 2);
+				var dateTimes = DateTimeUtilities.Generate(random, year, month, entityCount)
+												 .ToList();
+
+				for (var entityIndex = 0; entityIndex < entityCount; ++entityIndex)
+				{
+					var entity = SavingFactory.Create(Guid.NewGuid(),
+													  DecimalUtilities.Generate(random, 100.0, 500.0),
+													  dateTimes[entityIndex],
+													  userId);
+
+					entities.Add(entity);
+				}
+			}
+		}
+
+		return entities;
+	}
+
+	private static List<Subscription> GenerateSubscriptions(IReadOnlyList<User> users)
+	{
+		var subscriptions = new List<Subscription>();
+		subscriptions.AddRange(GenerateSubscriptions(users[0].UserId));
+		subscriptions.AddRange(GenerateSubscriptions(users[1].UserId));
+		subscriptions.AddRange(GenerateSubscriptions(users[2].UserId));
+		subscriptions.AddRange(GenerateSubscriptions(users[3].UserId));
+		subscriptions.AddRange(GenerateSubscriptions(users[4].UserId));
+
+		return subscriptions;
+	}
+
+	private static List<Subscription> GenerateSubscriptions(Guid userId)
+	{
+		var entities = new List<Subscription>();
+		var random = new Random();
+		var subscriptionAmounts = new List<decimal>
+		{
+			DecimalUtilities.Generate(random, 5.0, 50.0),
+			DecimalUtilities.Generate(random, 5.0, 50.0),
+			DecimalUtilities.Generate(random, 5.0, 50.0),
+			DecimalUtilities.Generate(random, 5.0, 50.0),
+		};
+
+		for (var year = DateTime.Today.AddYears(-4).Year; year < 2025; ++year)
+		{
+			for (var month = 1; month <= 12; ++month)
+			{
+				var entityCount = random.Next(1, 4);
+				var dateTimes = DateTimeUtilities.Generate(random, year, month, entityCount)
+												 .ToList();
+
+				for (var entityIndex = 0; entityIndex < entityCount; ++entityIndex)
+				{
+					var subscriptionAmountIndex = random.Next(0, 4);
+					var entity = SubscriptionFactory.Create(Guid.NewGuid(),
+															subscriptionAmounts[subscriptionAmountIndex],
+															dateTimes[entityIndex],
+															userId);
+
+					entities.Add(entity);
+				}
+			}
+		}
+
+		return entities;
 	}
 }
